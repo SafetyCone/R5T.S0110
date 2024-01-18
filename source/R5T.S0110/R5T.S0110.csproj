@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Version>1.0.0</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1587;1591</NoWarn>
     <Authors>DCoats</Authors>
     <Company>Rivet</Company>
     <Copyright>Copyright (c) Rivet 2024</Copyright>
@@ -13,4 +13,16 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/SafetyCone/R5T.S0110.git</RepositoryUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\R5T.L0077\source\R5T.L0077\R5T.L0077.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0055\source\R5T.L0055\R5T.L0055.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0079\source\R5T.L0079.Z100\R5T.L0079.Z100.csproj" />
+    <ProjectReference Include="..\..\..\R5T.Z0043\source\R5T.Z0043.Z000\R5T.Z0043.Z000.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0079\source\R5T.L0079\R5T.L0079.csproj" />
+    <ProjectReference Include="..\..\..\R5T.T0235\source\R5T.T0235.T001\R5T.T0235.T001.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0080\source\R5T.L0080\R5T.L0080.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0081\source\R5T.L0081\R5T.L0081.csproj" />
+    <ProjectReference Include="..\..\..\R5T.T0239\source\R5T.T0239\R5T.T0239.csproj" />
+    <ProjectReference Include="..\..\..\R5T.T0144\source\R5T.T0144\R5T.T0144.csproj" />
+  </ItemGroup>
 </Project>
