@@ -7,8 +7,9 @@ using R5T.T0240;
 namespace R5T.S0110
 {
     [HasXMarker, DataTypeMarker]
-    public interface IHasGitHubAuthenticationJsonFilePath
+    public interface IWithSolutionName :
+        IHasSolutionName
     {
-        string GitHubAuthenticationJsonFilePath { get; }
+        new string SolutionName { get; set; }
     }
 }

@@ -8,7 +8,12 @@ namespace R5T.S0110
     {
         static async Task Main()
         {
-            await Scripts.Instance.Get_GitHubClient();
+            //await Scripts.Instance.Get_GitHubClient();
+            //await Scripts.Instance.Query_GitHubRepository();
+            //await Scripts.Instance.Delete_RemoteRepositoryOnly();
+            //await Scripts.Instance.Create_RemoteRepositoryOnly();
+            //await Scripts.Instance.In_CreatedRemoteRepositoryContext();
+            await Scripts.Instance.Generate_Repository();
         }
     }
 }
