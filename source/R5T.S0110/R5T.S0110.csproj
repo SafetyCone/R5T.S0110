@@ -34,5 +34,18 @@
     <ProjectReference Include="..\..\..\R5T.F0050\source\R5T.F0050\R5T.F0050.csproj" />
     <ProjectReference Include="..\..\..\R5T.T0234\source\R5T.T0234\R5T.T0234.csproj" />
     <ProjectReference Include="..\..\..\R5T.F0024\source\R5T.F0024\R5T.F0024.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0093\source\R5T.L0093\R5T.L0093.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0095\source\R5T.L0095\R5T.L0095.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0096\source\R5T.L0096\R5T.L0096.csproj" />
+    <ProjectReference Include="..\..\..\R5T.F0055\source\R5T.F0055\R5T.F0055.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0032\source\R5T.L0032.F004\R5T.L0032.F004.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0032\source\R5T.L0032.F001\R5T.L0032.F001.csproj" />
+    <ProjectReference Include="..\..\..\R5T.O0029\source\R5T.O0029.O002\R5T.O0029.O002.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0033\source\R5T.L0033.Z002\R5T.L0033.Z002.csproj" />
+    <ProjectReference Include="..\..\..\R5T.F0088\source\R5T.F0088\R5T.F0088.csproj" />
+    <ProjectReference Include="..\..\..\R5T.F0083\source\R5T.F0083\R5T.F0083.csproj" />
+    <ProjectReference Include="..\..\..\R5T.T0241\source\R5T.T0241\R5T.T0241.csproj" />
+    <ProjectReference Include="..\..\..\R5T.Z0067\source\R5T.Z0067\R5T.Z0067.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0097\source\R5T.L0097\R5T.L0097.csproj" />
   </ItemGroup>
 </Project>

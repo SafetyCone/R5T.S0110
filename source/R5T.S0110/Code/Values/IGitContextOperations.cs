@@ -49,7 +49,7 @@ namespace R5T.S0110
                     context,
                     operations);
 
-                Instances.GitOperator.Push_Changes(
+                Instances.GitOperator.Push_WithStageAndCommit(
                     context.RepositoryDirectoryPath,
                     commitMessage,
                     context.Author.Name,
@@ -72,7 +72,7 @@ namespace R5T.S0110
                     context,
                     operations);
 
-                Instances.GitOperator.Push_Changes(
+                Instances.GitOperator.Push_WithStageAndCommit(
                     context.RepositoryDirectoryPath,
                     commitMessage,
                     authorName,

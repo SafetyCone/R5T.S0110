@@ -2,12 +2,11 @@ using System;
 using System.Threading.Tasks;
 
 using R5T.L0079;
-using R5T.T0144;
+using R5T.T0046;
 
 using SimpleRepositoryContext = R5T.L0080.T001.RepositoryContext;
 using GitHubClientedRepositoryContext = R5T.L0081.T001.RepositoryContext;
 using GitHubRepositoryContext = R5T.S0110.RepositoryContext;
-using R5T.T0046;
 
 
 namespace R5T.S0110
@@ -54,9 +53,19 @@ namespace R5T.S0110
                 Name = repositorySpecification.Name,
             };
 
-            var author = Instances.JsonOperator.Load_FromFile_Synchronous<Author>(
+            var projectName = Instances.ProjectNameOperator.Get_ProjectName_FromLibraryName(repositoryName);
+            var projectDescription = Instances.ProjectDescriptionOperator.Get_ProjectDescription_FromLibraryDescription(repositoryDescription);
+
+            var projectSpecification = new ProjectSpecification
+            {
+                Name = projectName,
+                Description = projectDescription,
+            };
+
+            var gitHubAuthor = Instances.JsonOperator.Load_FromFile_Synchronous<Author>(
                 Instances.Values.GitHubAuthorJsonFilePath,
                 "GitHubAuthor");
+            var nuGetAuthor = Instances.Authors.DCoats;
 
             await Instances.RepositoryOperator.In_RepositoryContext(
                 repositorySpecification.Organization,
@@ -110,8 +119,8 @@ namespace R5T.S0110
                             // In a Git-push context.
                             Instances.GitContextOperations.In_GitPushContext<CloneRepositoryLocallyContext>(
                                 Instances.CommitMessages.InitialCommit,
-                                author.Name,
-                                author.EmailAddress,
+                                gitHubAuthor.Name,
+                                gitHubAuthor.EmailAddress,
                                 context =>
                                 {
                                     var gitIgnoreSourceFilePath = Instances.FilePaths.GitIgnoreTemplateFilePath;
@@ -129,9 +138,77 @@ namespace R5T.S0110
                                     Instances.SolutionDirectoryContextOperations.In_SolutionContext<SolutionDirectoryContext>(
                                         solutionSpecification,
                                         out _,
-                                        Instances.SolutionFileContextOperations.Set_SolutionFilePath,
-                                        Instances.SolutionFileContextOperations.Verify_SolutionFilePath_DoesNotExist
+                                        Instances.ContextOperations.DisplayContext_AtDesignTime_ForAsynchronous<SolutionFileContext>(),
+                                        Instances.SolutionFileContextOperations.Set_SolutionFilePath<SolutionFileContext>(out var solutionFilePathSet),
+                                        Instances.SolutionFileContextOperations.Verify_SolutionFile_DoesNotExist<SolutionFileContext>(out var solutionFileDoesNotExist),
+                                        // Create solution file (including direcctory for file if it does not exist).
+                                        Instances.HasDirectoryPathContextOperations.Create_Directory_IfNotExists<SolutionFileContext>(out var solutionDirectoryExists),
+                                        Instances.SolutionFileContextOperations.Create_SolutionFile<SolutionFileContext>(
+                                            solutionFileDoesNotExist,
+                                            out var solutionfileExists),
+                                        // In project context (a project context that includes solution information).
+                                        Instances.SolutionFileContextOperations.In_ProjectContext<SolutionFileContext>(
+                                            projectSpecification,
+                                            out _,
+                                            Instances.ContextOperations.DisplayContext_AtDesignTime_ForAsynchronous<ProjectContext>(),
+                                            // Set project directory from solution directory and name.
+                                            Instances.ProjectContextOperations.Set_ProjectDirectoryPath<ProjectContext>(out _),
+                                            // Set the project file path.
+                                            Instances.ProjectContextOperations.Set_ProjectFilePath<ProjectContext>(out _),
+                                            // Verify project file does not exist.
+                                            Instances.HasFilePathContextOperations.Verify_File_DoesNotExist<ProjectContext>(out _),
+                                            // Create project file, by running project element context operations.
+                                            Instances.ProjectContextOperations.In_CreateProjectFileContext<ProjectContext>(
+                                                out _,
+                                                context =>
+                                                {
+                                                    var projectXElementContextOperations = Instances.ProjectXElementOperationSets.Console_Net_8(
+                                                        context.ProjectFilePath,
+                                                        context.ProjectDescription,
+                                                        nuGetAuthor.Value,
+                                                        Instances.EnumerableOperator.Empty<string>(),
+                                                        propertyGroupXElement =>
+                                                        {
+                                                            // Use the solution file path, since it should exist by now.
+                                                            var repositoryUrl = Instances.GitOperator.Get_RepositoryUrl(context.SolutionFilePath);
 
+                                                            Instances.PropertyGroupXElementOperator.Set_RepositoryUrl(
+                                                                propertyGroupXElement,
+                                                                repositoryUrl);
+                                                        });
+
+                                                    return projectXElementContextOperations;
+                                                }
+                                            ),
+                                            // Add the project to the solution.
+                                            Instances.ProjectContextOperations.Add_ProjectToSolution<ProjectContext>(),
+                                            // Add files to the project.
+                                            // First, set the namespace name.
+                                            Instances.ProjectContextOperations.Set_NamespaceName<ProjectContext>(out _),
+                                            //Instances.ProjectContextOperations.In_CodeFileContext<ProjectContext>(
+                                            //    out _,
+                                            //    Instances.CodeFileContextOperations.Set_FilePath<CodeFileContext>(
+                                            //        Instances.ProjectDirectoryPathRelativePaths.Program_cs,
+                                            //        out _
+                                            //    ),
+                                            //    //Instances.CodeFileContextOperations.Create_ProgramFile_ForConsole<CodeFileContext>(
+                                            //    //    out _
+                                            //    //)
+                                            //    Instances.CodeFileGenerationContextOperations.Create_ProgramFile_ForConsole<CodeFileContext>(
+                                            //        out _
+                                            //    )
+                                            //)
+                                            Instances.CodeFileGenerationContextOperations.Create_ProgramFile_ForConsole<ProjectContext>(
+                                                out _
+                                            )
+                                        ),
+                                        // Finally, open the solution.
+                                        context =>
+                                        {
+                                            Instances.VisualStudioOperator.Open_SolutionFile(context.SolutionFilePath);
+
+                                            return Task.CompletedTask;
+                                        }
                                     )
                                 )
                             ),
