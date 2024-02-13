@@ -12,7 +12,8 @@ namespace R5T.S0110
         public static F0083.ICodeFileGenerationOperations CodeFileGenerationOperations => F0083.CodeFileGenerationOperations.Instance;
         public static ICommitMessages CommitMessages => S0110.CommitMessages.Instance;
         public static ICodeFileContextOperations CodeFileContextOperations => S0110.CodeFileContextOperations.Instance;
-        public static L0097.ICodeFileGenerationContextOperations CodeFileGenerationContextOperations => L0097.CodeFileGenerationContextOperations.Instance;
+        public static ICodeFileContextOperator CodeFileContextOperator => S0110.CodeFileContextOperator.Instance;
+        public static ICodeFileGenerationContextOperations CodeFileGenerationContextOperations => S0110.CodeFileGenerationContextOperations.Instance;
         public static L0066.IContextOperations ContextOperations => L0066.ContextOperations.Instance;
         public static L0066.IContextOperator ContextOperator => L0066.ContextOperator.Instance;
         public static L0066.IDirectoryNameOperator DirectoryNameOperator => L0066.DirectoryNameOperator.Instance;
