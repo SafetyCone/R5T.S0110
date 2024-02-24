@@ -13,7 +13,9 @@ namespace R5T.S0110
             //await Scripts.Instance.Delete_RemoteRepositoryOnly();
             //await Scripts.Instance.Create_RemoteRepositoryOnly();
             //await Scripts.Instance.In_CreatedRemoteRepositoryContext();
-            await Scripts.Instance.Generate_Repository();
+            //await Scripts.Instance.Generate_Repository();
+            //await Scripts.Instance.Regenerate_ConsoleRepository();
+            await Scripts.Instance.Regenerate_LibraryWithConstructionRepository();
         }
     }
 }

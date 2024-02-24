@@ -49,7 +49,7 @@ namespace R5T.S0110
 
         public Func<TContext, Task> In_SolutionContext<TContext>(
             SolutionSpecification solutionSpecification,
-            out (IsSet<IHasSolutionName>, IsSet<IHasSolutionDirectoryPath>, IsSet<IHasRepositoryDirectoryPath>) propertiesSet,
+            out (IsSet<IHasSolutionName> SolutionNameSet, IsSet<IHasSolutionDirectoryPath> SolutionDirectoryPathSet, IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet) propertiesSet,
             params Func<SolutionFileContext, Task>[] operations)
             where TContext : IHasSolutionDirectoryPath, IHasRepositoryDirectoryPath
         {

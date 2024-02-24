@@ -7,7 +7,7 @@ using R5T.T0235.T000;
 namespace R5T.S0110
 {
     [ContextImplementationMarker, ContextTypeMarker]
-    public class LocalRepositoryContext :
+    public class LocalRepositoryContext : IContextImplementationMarker,
         IWithRepositoryOwnerName,
         IWithRepositoryName,
         IWithRepositoriesDirectoryPath,
