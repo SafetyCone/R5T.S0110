@@ -16,9 +16,9 @@ namespace R5T.S0110
         IWithSolutionSpecification,
         IHasSolutionName,
         IWithSolutionDirectoryPath,
+        IHasDirectoryPath,
         IWithSolutionFilePath,
-        IHasFilePath,
-        IHasDirectoryPath
+        IHasFilePath
     {
         public string RepositoryDirectoryPath { get; set; }
 

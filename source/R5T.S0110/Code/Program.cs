@@ -15,7 +15,10 @@ namespace R5T.S0110
             //await Scripts.Instance.In_CreatedRemoteRepositoryContext();
             //await Scripts.Instance.Generate_Repository();
             //await Scripts.Instance.Regenerate_ConsoleRepository();
-            await Scripts.Instance.Regenerate_LibraryWithConstructionRepository();
+            //await Scripts.Instance.Regenerate_LibraryWithConstructionRepository();
+            //await Scripts.Instance.Regenerate_StaticHtmlWebApplication();
+            //await Scripts.Instance.Regenerate_ClassLibrary();
+            await Scripts.Instance.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibrary();
         }
     }
 }

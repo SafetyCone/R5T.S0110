@@ -19,9 +19,9 @@ namespace R5T.S0110
         IHasProjectName,
         IHasProjectDescription,
         IWithProjectDirectoryPath,
+        IHasDirectoryPath,
         IWithProjectFilePath,
         IHasFilePath,
-        IHasDirectoryPath,
         IWithNamespaceName
     {
         public string RepositoryDirectoryPath { get; set; }

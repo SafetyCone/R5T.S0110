@@ -10,6 +10,12 @@ namespace R5T.S0110
     public partial interface IIsSetOperator : IFunctionalityMarker,
         T0221.IIsSetOperator
     {
+        public ContextPropertiesSet<TContext, T> ContextPropertiesSet<TContext, T>(T value)
+            => new()
+            {
+                PropertiesSet = value
+            };
+
         public ContextPropertiesSet<TContext, IsSet<T>> ContextPropertiesSet<TContext, T>(IsSet<T> set)
             => new()
             {

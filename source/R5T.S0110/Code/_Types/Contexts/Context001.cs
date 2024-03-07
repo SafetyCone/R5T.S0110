@@ -28,29 +28,30 @@ namespace R5T.S0110
         IHasDirectoryPath,
         IWithGitHubAuthor,
         IWithNuGetAuthor,
-        IWithRepository
+        IWithRepository,
+        IWithRepositoryUrl
     {
-        #region Static
+//        #region Static
 
-        public static Task<Context001> Constructor(RepositorySpecification repositorySpecification,
-            out (
-            IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
-            IsSet<IHasRepositoryName> RepositoryNameSet,
-            IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet
-#pragma warning disable IDE0060 // Remove unused parameter
-            ) propertiesSet
-#pragma warning restore IDE0060 // Remove unused parameter
-            )
-        {
-            var context = new Context001
-            {
-                RepositorySpecification = repositorySpecification
-            };
+//        public static Task<Context001> Constructor(RepositorySpecification repositorySpecification,
+//            out (
+//            IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+//            IsSet<IHasRepositoryName> RepositoryNameSet,
+//            IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet
+//#pragma warning disable IDE0060 // Remove unused parameter
+//            ) propertiesSet
+//#pragma warning restore IDE0060 // Remove unused parameter
+//            )
+//        {
+//            var context = new Context001
+//            {
+//                RepositorySpecification = repositorySpecification
+//            };
 
-            return Task.FromResult(context);
-        }
+//            return Task.FromResult(context);
+//        }
 
-        #endregion
+//        #endregion
 
 
         public RepositorySpecification RepositorySpecification { get; set; }
@@ -67,5 +68,7 @@ namespace R5T.S0110
         public string RepositoryDirectoryPath { get; set; }
 
         public string DirectoryPath => this.RepositoryDirectoryPath;
+
+        public string RepositoryUrl { get; set; }
     }
 }

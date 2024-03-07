@@ -6,7 +6,9 @@ namespace R5T.S0110
     public class Instances :
         L0055.Instances
     {
+        public static IActionOperations ActionOperations => S0110.ActionOperations.Instance;
         public static L0066.IActionOperator ActionOperator => L0066.ActionOperator.Instance;
+        public static IApplicationContextOperations ApplicationContextOperations => S0110.ApplicationContextOperations.Instance;
         public static L0033.Z002.IAuthors Authors => L0033.Z002.Authors.Instance;
         public static ICloneRepositoryLocallyContextOperations CloneRepositoryLocallyContextOperations => S0110.CloneRepositoryLocallyContextOperations.Instance;
         public static L0032.Z002.ICompanyNames CompanyNames => L0032.Z002.CompanyNames.Instance;
@@ -17,6 +19,8 @@ namespace R5T.S0110
         public static ICommitMessages CommitMessages => S0110.CommitMessages.Instance;
         public static IContextOperations ContextOperations => S0110.ContextOperations.Instance;
         public static IContextOperator ContextOperator => S0110.ContextOperator.Instance;
+        public static IContextSetIsomorphisms ContextSetIsomorphisms => S0110.ContextSetIsomorphisms.Instance;
+        public static IContextSetOperator ContextSetOperator => S0110.ContextSetOperator.Instance;
         public static L0071.ICopyrightOperator CopyrightOperator => L0071.CopyrightOperator.Instance;
         public static L0066.IDirectoryNameOperator DirectoryNameOperator => L0066.DirectoryNameOperator.Instance;
         public static IDirectoryNames DirectoryNames => S0110.DirectoryNames.Instance;
@@ -41,14 +45,18 @@ namespace R5T.S0110
         public static L0032.IItemGroupXElementOperator ItemGroupXElementOperator => L0032.ItemGroupXElementOperator.Instance;
         public static L0072.IJsonOperator JsonOperator => L0072.JsonOperator.Instance;
         public static ILocalRepositoryContextOperations LocalRepositoryContextOperations => S0110.LocalRepositoryContextOperations.Instance;
+        public static Z0050.Z001.IPackageReferences PackageReferences => Z0050.Z001.PackageReferences.Instance;
         public static L0032.Z000.IPackageLicenseExpressions PackageLicenseExpressions => L0032.Z000.PackageLicenseExpressions.Instance;
         public static IProjectContextOperations ProjectContextOperations => S0110.ProjectContextOperations.Instance;
+        public static IProjectContextSetOperations ProjectContextSetOperations => S0110.ProjectContextSetOperations.Instance;
         public static F0055.IProjectDescriptionOperator ProjectDescriptionOperator => F0055.ProjectDescriptionOperator.Instance;
         public static IProjectDirectoryPathRelativePaths ProjectDirectoryPathRelativePaths => S0110.ProjectDirectoryPathRelativePaths.Instance;
         public static IProjectElementContextOperations ProjectElementContextOperations => S0110.ProjectElementContextOperations.Instance;
+        public static IProjectFileContextOperations ProjectFileContextOperations => S0110.ProjectFileContextOperations.Instance;
         public static F0055.IProjectNameOperator ProjectNameOperator => F0055.ProjectNameOperator.Instance;
         public static IProjectOptionsContextOperations ProjectOptionsContextOperations => S0110.ProjectOptionsContextOperations.Instance;
         public static F0040.F000.IProjectPathsOperator ProjectPathsOperator => F0040.F000.ProjectPathsOperator.Instance;
+        public static L0032.Z001.IProjectSdkNames ProjectSdkNames => L0032.Z001.ProjectSdkNames.Instance;
         public static O0029.O002.IProjectXElementOperationSets ProjectXElementOperationSets => O0029.O002.ProjectXElementOperationSets.Instance;
         public static L0032.IProjectXElementOperator ProjectXElementOperator => L0032.ProjectXElementOperator.Instance;
         public static L0032.IProjectXElementsOperator ProjectXElementsOperator => L0032.ProjectXElementsOperator.Instance;
@@ -60,8 +68,10 @@ namespace R5T.S0110
         public static IRepositoryContextOperations RepositoryContextOperations => S0110.RepositoryContextOperations.Instance;
         public static F0046.IRepositoryDescriptionOperator RepositoryDescriptionOperator => F0046.RepositoryDescriptionOperator.Instance;
         public static IRepositoryDirectoryNameOperator RepositoryDirectoryNameOperator => S0110.RepositoryDirectoryNameOperator.Instance;
-        public static L0080.F001.IRepositoryOperator RepositoryOperator => L0080.F001.RepositoryOperator.Instance;
+        public static IRepositoryOperator RepositoryOperator => S0110.RepositoryOperator.Instance;
+        public static L0079.Z100.INames RepositoryNameExamples => L0079.Z100.Names.Instance;
         public static F0046.IRepositoryNameOperator RepositoryNameOperator => F0046.RepositoryNameOperator.Instance;
+        public static Z0043.Z000.IOwnerNames RepositoryOwnerNameExamples => Z0043.Z000.OwnerNames.Instance;
         public static IRepositoryPathsOperator RepositoryPathsOperator => S0110.RepositoryPathsOperator.Instance;
         public static ISetGitHubClientContextOperations SetGitHubClientContextOperations => S0110.SetGitHubClientContextOperations.Instance;
         public static ISolutionContextOperations SolutionContextOperations => S0110.SolutionContextOperations.Instance;
@@ -70,8 +80,8 @@ namespace R5T.S0110
         public static F0024.F001.ISolutionOperator SolutionOperator => F0024.F001.SolutionOperator.Instance;
         public static F0048.ISolutionNameOperator SolutionNameOperator => F0048.SolutionNameOperator.Instance;
         public static F0050.ISolutionPathsOperator SolutionPathsOperator => F0050.SolutionPathsOperator.Instance;
-        public static Z0043.Z000.IOwnerNames RepositoryOwnerNameExamples => Z0043.Z000.OwnerNames.Instance;
-        public static L0079.Z100.INames RepositoryNameExamples => L0079.Z100.Names.Instance;
+        public static ISolutionSetContextOperations SolutionSetContextOperations => S0110.SolutionSetContextOperations.Instance;
+        public static ISolutionSetContextSetOperations SolutionSetContextSetOperations => S0110.SolutionSetContextSetOperations.Instance;
         public static Z0057.Platform.ITargetFrameworkMonikers TargetFrameworkMonikers => Z0057.Platform.TargetFrameworkMonikers.Instance;
         public static IValues Values => S0110.Values.Instance;
         public static L0066.IVersions Versions => L0066.Versions.Instance;

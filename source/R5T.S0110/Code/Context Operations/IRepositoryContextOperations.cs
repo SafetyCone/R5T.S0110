@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using R5T.L0066.Contexts;
 using R5T.L0078.T000;
 using R5T.L0079;
 using R5T.L0081.O002;
@@ -13,6 +14,8 @@ using R5T.T0235.T000;
 using R5T.T0241;
 
 using GitHubClientedRepositoryContext = R5T.L0081.T001.RepositoryContext;
+
+using R5T.S0110.Contexts;
 
 
 namespace R5T.S0110
@@ -248,6 +251,174 @@ namespace R5T.S0110
             return this.In_GitHubClientContext<TContext>(
                 setGitHubAuthenticationJsonFilePath,
                 operations.AsEnumerable());
+        }
+
+        public Func<TParentContextSet, Task> In_RegeneratedRepositoryContext<TRepositoryContextSet, TParentContextSet, TRepositoryContext, TApplicationContext>(
+            IDirectionalIsomorphism<TParentContextSet, TRepositoryContextSet> parentContextSetIsomorphism,
+            out ContextSetSpecifier<TRepositoryContextSet> repositoryContextSetSpecifier,
+            out TypeSpecifier<TRepositoryContext> repositoryContextSpecifier,
+            RepositorySpecification repositorySpecification,
+            ContextPropertiesSet<TApplicationContext, (
+                IsSet<IHasGitHubClient> GitHubClientSet,
+                IsSet<IHasGitHubAuthor> GitHubAuthorSet,
+                IsSet<N001.IHasAuthentication> GitHubAuthenticationSet
+                )> applicationContextPropertiesSet,
+            out ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet,
+                IsSet<IHasRepository> RepositorySet,
+                IsSet<IHasRepositoryUrl> RepositoryUrlSet
+                )> repositoryPropertiesSet,
+            out (
+                IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+                IChecked<ILocalRepositoryExists> LocalRepositoryExists,
+                IChecked<IFileExists> GitIgnoreFileExists
+                ) checkedRepository,
+            IEnumerable<Func<TRepositoryContextSet, TRepositoryContext, Task>> operations)
+            where TRepositoryContextSet : IHasContext<TApplicationContext>, IWithContext<TRepositoryContext>, new()
+            where TParentContextSet : IHasContext<TApplicationContext>
+            where TApplicationContext : IHasGitHubClient, IHasGitHubAuthor, N001.IHasAuthentication
+            where TRepositoryContext : IWithRepositorySpecification, IHasRepositoryName, IHasRepositoryOwnerName, IWithRepositoryDirectoryPath, IWithRepository, IWithRepositoryUrl, new()
+        {
+            var o = Instances.ContextOperations;
+
+            var output = o.In_ChildContextSet<TRepositoryContextSet, TParentContextSet>(
+                parentContextSetIsomorphism,
+                out _,
+                o.In_Context_OfContextSet<TRepositoryContextSet, TRepositoryContext>(
+                    out repositoryContextSetSpecifier,
+                    out repositoryContextSpecifier,
+                    o.Construct_Context_OfContextSet<TRepositoryContextSet, TRepositoryContext>(
+                        Instances.RepositoryContextOperations.Set_RepositoryProperties<TRepositoryContext>(repositorySpecification,
+                            out (
+                            IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                            IsSet<IHasRepositoryName> RepositoryNameSet,
+                            IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                            IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet
+                            ) repositorySpecificationPropertiesSet).In_ContextSetAndContext(repositoryContextSetSpecifier),
+                        Instances.RepositoryContextOperations.Regenerate_Repository<TRepositoryContext, TApplicationContext>((
+                            repositorySpecificationPropertiesSet.RepositorySpecificationSet,
+                            repositorySpecificationPropertiesSet.RepositoryNameSet,
+                            repositorySpecificationPropertiesSet.RepositoryOwnerNameSet,
+                            applicationContextPropertiesSet.PropertiesSet.GitHubClientSet,
+                            applicationContextPropertiesSet.PropertiesSet.GitHubAuthenticationSet,
+                            repositorySpecificationPropertiesSet.RepositoryDirectoryPathSet),
+                            out var repositorySet,
+                            out checkedRepository).In_ContextSetAndContext(repositoryContextSetSpecifier),
+                        Instances.RepositoryContextOperations.Set_RepositoryUrl<TRepositoryContext>(
+                            repositorySet,
+                            out var repositoryUrlSet).In_ContextSetAndContext(repositoryContextSetSpecifier)
+                    ),
+                    operations
+                )
+            );
+
+            repositoryPropertiesSet = Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+                repositorySpecificationPropertiesSet.RepositorySpecificationSet,
+                repositorySpecificationPropertiesSet.RepositoryNameSet,
+                repositorySpecificationPropertiesSet.RepositoryOwnerNameSet,
+                repositorySpecificationPropertiesSet.RepositoryDirectoryPathSet,
+                repositorySet,
+                repositoryUrlSet);
+
+            return output;
+        }
+
+        public Func<TParentContextSet, Task> In_RegeneratedRepositoryContext<TRepositoryContextSet, TParentContextSet, TRepositoryContext, TApplicationContext>(
+            IDirectionalIsomorphism<TParentContextSet, TRepositoryContextSet> parentContextSetIsomorphism,
+            out ContextSetSpecifier<TRepositoryContextSet> repositoryContextSetSpecifier,
+            out TypeSpecifier<TRepositoryContext> repositoryContextSpecifier,
+            RepositorySpecification repositorySpecification,
+            ContextPropertiesSet<TApplicationContext, (
+                IsSet<IHasGitHubClient> GitHubClientSet,
+                IsSet<IHasGitHubAuthor> GitHubAuthorSet,
+                IsSet<N001.IHasAuthentication> GitHubAuthenticationSet
+                )> applicationContextPropertiesSet,
+            out ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet,
+                IsSet<IHasRepository> RepositorySet,
+                IsSet<IHasRepositoryUrl> RepositoryUrlSet
+                )> repositoryPropertiesSet,
+            out (
+                IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+                IChecked<ILocalRepositoryExists> LocalRepositoryExists,
+                IChecked<IFileExists> GitIgnoreFileExists
+                ) checkedRepository,
+            params Func<TRepositoryContextSet, TRepositoryContext, Task>[] operations)
+            where TRepositoryContextSet : IHasContext<TApplicationContext>, IWithContext<TRepositoryContext>, new()
+            where TParentContextSet : IHasContext<TApplicationContext>
+            where TApplicationContext : IHasGitHubClient, IHasGitHubAuthor, N001.IHasAuthentication
+            where TRepositoryContext : IWithRepositorySpecification, IHasRepositoryName, IHasRepositoryOwnerName, IWithRepositoryDirectoryPath, IWithRepository, IWithRepositoryUrl, new()
+            => this.In_RegeneratedRepositoryContext<TRepositoryContextSet, TParentContextSet, TRepositoryContext, TApplicationContext>(
+                parentContextSetIsomorphism,
+                out repositoryContextSetSpecifier,
+                out repositoryContextSpecifier,
+                repositorySpecification,
+                applicationContextPropertiesSet,
+                out repositoryPropertiesSet,
+                out checkedRepository,
+                operations.AsEnumerable());
+
+        public Func<Context000, Task> In_RegeneratedRepositoryContext(
+                RepositorySpecification repositorySpecification,
+                (
+                IsSet<IHasGitHubClient> GitHubClientSet,
+                IsSet<IHasGitHubAuthor> GitHubAuthorSet,
+                IsSet<N001.IHasAuthentication> GitHubAuthenticationSet
+                ) applicationContextPropertiesSet,
+                out (
+                IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet
+                ) repositoryPropertiesSet,
+                out IsSet<IHasRepository> repositorySet,
+                params Func<Context001, Context000, Task>[] operations)
+        {
+            var o = Instances.ContextOperations;
+
+            var contextSet = Instances.ContextOperator.Get_ContextSetSpecifier<Context001, Context000>();
+
+            return o.In_ContextSet_A_BA<Context001, Context000>(
+                o.Construct_Context_B_BA<Context001, Context000>(
+                    Instances.ContextOperations.Set_ContextProperties<Context001, Context000>((applicationContextPropertiesSet.GitHubAuthorSet, applicationContextPropertiesSet.GitHubAuthenticationSet),
+                        out var repositoryContextPropertiesSet),
+                    Instances.RepositoryContextOperations.Set_RepositoryProperties<Context001>(repositorySpecification,
+                        out repositoryPropertiesSet).In(contextSet),
+                    Instances.RepositoryContextOperations.Regenerate_Repository<Context001, Context000>((
+                        repositoryPropertiesSet.RepositorySpecificationSet,
+                        repositoryPropertiesSet.RepositoryNameSet,
+                        repositoryPropertiesSet.RepositoryOwnerNameSet,
+                        applicationContextPropertiesSet.GitHubClientSet,
+                        applicationContextPropertiesSet.GitHubAuthenticationSet,
+                        repositoryPropertiesSet.RepositoryDirectoryPathSet),
+                        out repositorySet,
+                        out (
+                        IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+                        IChecked<ILocalRepositoryExists> LocalRepositoryExists,
+                        IChecked<IFileExists> GitIgnoreFileExists
+                        ) checkedRepository)
+                ),
+                operations
+            );
+        }
+
+        public Func<TContext, Task> Set_RepositoryUrl<TContext>(
+            IsSet<IHasRepository> repositorySet,
+            out IsSet<IHasRepositoryUrl> repositoryUrlSet)
+            where TContext : IWithRepositoryUrl, IHasRepository
+        {
+            return context =>
+            {
+                context.RepositoryUrl = Instances.RepositoryOperator.Get_RepositoryUrl(context.Repository);
+
+                return Task.CompletedTask;
+            };
         }
 
         public Func<TContext, Task> Set_RepositoryDirectoryPath<TContext>(
