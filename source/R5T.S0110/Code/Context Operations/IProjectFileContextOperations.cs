@@ -8,18 +8,340 @@ using R5T.L0096.T000;
 using R5T.T0221;
 using R5T.T0241;
 
+using R5T.S0110.Contexts;
+
 
 namespace R5T.S0110
 {
     [ContextOperationsMarker]
     public partial interface IProjectFileContextOperations : IContextOperationsMarker
     {
+        public Func<TProjectContextSet, Task> Create_NonWebAssemblyRazorComponentRazorClassLibraryProjectFile<TProjectContextSet>(
+            IDirectionalIsomorphism<TProjectContextSet, ProjectElementContextSet007> projectContextSetIsomorphism,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<ProjectContext001, (
+                IsSet<IHasProjectDescription> ProjectDescriptionSet,
+                IsSet<IHasProjectFilePath> ProjectFilePathSet)> projectContextPropertiesRequired,
+            ContextPropertiesSet<RepositoryContext001, IsSet<IHasRepositoryUrl>> repositoryContextPropertiesRequired,
+            out IChecked<IFileExists> checkedProjectFileExists)
+            where TProjectContextSet :
+            IHasContext<ProjectContext001>,
+            IHasContext<RepositoryContext001>
+        {
+            var o = Instances.ContextOperations;
+
+            var projectContextSpecifier = TypeSpecifier<ProjectContext001>.Instance;
+            var repositoryContextSpecifier = TypeSpecifier<RepositoryContext001>.Instance;
+
+            var output = o.In_ChildContextSet<ProjectElementContextSet007, TProjectContextSet>(
+                projectContextSetIsomorphism,
+                out ContextSetSpecifier<ProjectElementContextSet007> projectElementContextSetSpecifier,
+                o.In_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                    out TypeSpecifier<ProjectElementContext001> projectElementContextSpecifier,
+                    o.Construct_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ProjectElementContextOperations.Set_ProjectElement_New<ProjectElementContext001>(
+                            out var projectElementSet).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                    ),
+                    Instances.ProjectElementContextOperations.Set_SDK_Razor<ProjectElementContext001>().In_ContextSetAndContext(projectElementContextSetSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Main<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers,
+                        projectOptions,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Main,
+                        out var checkedPropertyGroupElementAppended_Main,
+                        Instances.PropertyGroupElementContextOperations.Set_OutputType_Library<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                        Instances.PropertyGroupElementContextOperations.Set_TargetFramework_Default<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Package_ForLibrary<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001, ProjectContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier_Package,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupElementContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers_Package,
+                        projectOptions,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectDescriptionSet),
+                        out var projectOptionsContextPropertiesSet,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Package,
+                        out var checkedPropertyGroupElementAppended_Pacakge,
+                        // Add the repository URL.
+                        Instances.PropertyGroupElementContextOperations.Set_RepositoryUrl<PropertyGroupElementContext001, RepositoryContext001>(
+                            propertyGroupContextPropertiesSet_Package,
+                            repositoryContextPropertiesRequired,
+                            out _).In_ContextSet(propertyGroupContextSetSpecifier_Package)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier),
+                    // Add the package reference item group.
+                    Instances.ProjectElementContextOperations.Add_ItemGroupElement_PackageReferences<ItemGroupElementContextSet007, ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, ItemGroupElementContextSet007>().For_Contexts(
+                            projectElementContextSpecifier),
+                        out ContextSetSpecifier<ItemGroupElementContextSet007> itemGroupElementContextSetSpecifier,
+                        out var itemGroupElementContextSpecifier,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        out ContextPropertiesSet<Context007, IsSet<IHasItemGroupElement>> itemGroupElementContextPropertiesSet,
+                        out var checkedItemGroupElementAppended_PackageReferences,
+                        Instances.ItemGroupElementContextOperations.Add_PackageReference<Context007>(
+                            itemGroupElementContextPropertiesSet.PropertiesSet,
+                            Instances.PackageReferences.Microsoft_AspNetCore_Components_WebAssembly_8_0_0).In_ContextSet(itemGroupElementContextSetSpecifier)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier),
+                    // Add the wwwroot folder include item group.
+                    Instances.ProjectElementContextOperations.Add_ItemGroupElement<ItemGroupElementContextSet007, ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, ItemGroupElementContextSet007>().For_Contexts(
+                            projectElementContextSpecifier),
+                        out itemGroupElementContextSetSpecifier,
+                        out itemGroupElementContextSpecifier,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        out itemGroupElementContextPropertiesSet,
+                        out var checkedItemGroupElementAppended,
+                        Instances.ItemGroupElementContextOperations.Add_Folder<Context007>(
+                            itemGroupElementContextPropertiesSet.PropertiesSet,
+                            @"wwwroot\").In_ContextSet(itemGroupElementContextSetSpecifier)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier)
+                ),
+                // Write out the project element.
+                Instances.ProjectContextOperations.Serialize_ProjectElement_ToFile<ProjectElementContext001, ProjectContext001>(
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectFilePathSet),
+                    out checkedProjectFileExists).In_ContextSet(projectElementContextSetSpecifier)
+            );
+
+            return output;
+        }
+
+        public Func<TProjectContextSet, Task> Create_StaticHtmlApplicationProjectFile<TProjectContextSet>(
+            IDirectionalIsomorphism<TProjectContextSet, ProjectElementContextSet007> projectContextSetIsomorphism,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<ProjectContext001, (
+                IsSet<IHasProjectDescription> ProjectDescriptionSet,
+                IsSet<IHasProjectFilePath> ProjectFilePathSet)> projectContextPropertiesRequired,
+            ContextPropertiesSet<RepositoryContext001, IsSet<IHasRepositoryUrl>> repositoryContextPropertiesRequired,
+            out IChecked<IFileExists> checkedProjectFileExists)
+            where TProjectContextSet :
+            IHasContext<ProjectContext001>,
+            IHasContext<RepositoryContext001>
+        {
+            var o = Instances.ContextOperations;
+
+            var projectContextSpecifier = TypeSpecifier<ProjectContext001>.Instance;
+            var repositoryContextSpecifier = TypeSpecifier<RepositoryContext001>.Instance;
+
+            var output = o.In_ChildContextSet<ProjectElementContextSet007, TProjectContextSet>(
+                projectContextSetIsomorphism,
+                out ContextSetSpecifier<ProjectElementContextSet007> projectElementContextSetSpecifier,
+                o.In_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                    out TypeSpecifier<ProjectElementContext001> projectElementContextSpecifier,
+                    o.Construct_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ProjectElementContextOperations.Set_ProjectElement_New<ProjectElementContext001>(
+                            out var projectElementSet).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                    ),
+                    Instances.ProjectElementContextOperations.Set_SDK_Web<ProjectElementContext001>().In_ContextSetAndContext(projectElementContextSetSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Main<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers,
+                        projectOptions,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Main,
+                        out var checkedPropertyGroupElementAppended_Main,
+                        Instances.PropertyGroupElementContextOperations.Set_OutputType_Exe<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Package<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001, ProjectContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier_Package,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupElementContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers_Package,
+                        projectOptions,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectDescriptionSet),
+                        out var projectOptionsContextPropertiesSet,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Package,
+                        out var checkedPropertyGroupElementAppended_Pacakge,
+                        // Add the repository URL.
+                        Instances.PropertyGroupElementContextOperations.Set_RepositoryUrl<PropertyGroupElementContext001, RepositoryContext001>(
+                            propertyGroupContextPropertiesSet_Package,
+                            repositoryContextPropertiesRequired,
+                            out _).In_ContextSet(propertyGroupContextSetSpecifier_Package)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier)
+                ),
+                // Write out the project element.
+                Instances.ProjectContextOperations.Serialize_ProjectElement_ToFile<ProjectElementContext001, ProjectContext001>(
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectFilePathSet),
+                    out checkedProjectFileExists).In_ContextSet(projectElementContextSetSpecifier)
+            );
+
+            return output;
+        }
+
+        public Func<TProjectContextSet, Task> Create_ConsoleProjectFile<TProjectContextSet>(
+            IDirectionalIsomorphism<TProjectContextSet, ProjectElementContextSet007> projectContextSetIsomorphism,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<ProjectContext001, (
+                IsSet<IHasProjectDescription> ProjectDescriptionSet,
+                IsSet<IHasProjectFilePath> ProjectFilePathSet)> projectContextPropertiesRequired,
+            ContextPropertiesSet<RepositoryContext001, IsSet<IHasRepositoryUrl>> repositoryContextPropertiesRequired,
+            out IChecked<IFileExists> checkedConsoleProjectFileExists)
+            where TProjectContextSet :
+            IHasContext<ProjectContext001>,
+            IHasContext<RepositoryContext001>
+        {
+            var o = Instances.ContextOperations;
+
+            var projectContextSpecifier = TypeSpecifier<ProjectContext001>.Instance;
+            var repositoryContextSpecifier = TypeSpecifier<RepositoryContext001>.Instance;
+
+            var output = o.In_ChildContextSet<ProjectElementContextSet007, TProjectContextSet>(
+                projectContextSetIsomorphism,
+                out ContextSetSpecifier<ProjectElementContextSet007> projectElementContextSetSpecifier,
+                o.In_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                    out TypeSpecifier<ProjectElementContext001> projectElementContextSpecifier,
+                    o.Construct_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ProjectElementContextOperations.Set_ProjectElement_New<ProjectElementContext001>(
+                            out var projectElementSet).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                    ),
+                    Instances.ProjectElementContextOperations.Set_SDK_NET<ProjectElementContext001>().In_ContextSetAndContext(projectElementContextSetSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Main<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers,
+                        projectOptions,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Main,
+                        out var checkedPropertyGroupElementAppended_Main,
+                        Instances.PropertyGroupElementContextOperations.Set_OutputType_Exe<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Package<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001, ProjectContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier_Package,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupElementContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers_Package,
+                        projectOptions,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectDescriptionSet),
+                        out var projectOptionsContextPropertiesSet,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Package,
+                        out var checkedPropertyGroupElementAppended_Pacakge,
+                        // Add the repository URL.
+                        Instances.PropertyGroupElementContextOperations.Set_RepositoryUrl<PropertyGroupElementContext001, RepositoryContext001>(
+                            propertyGroupContextPropertiesSet_Package,
+                            repositoryContextPropertiesRequired,
+                            out _).In_ContextSet(propertyGroupContextSetSpecifier_Package)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier)
+                ),
+                // Write out the project element.
+                Instances.ProjectContextOperations.Serialize_ProjectElement_ToFile<ProjectElementContext001, ProjectContext001>(
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectFilePathSet),
+                    out checkedConsoleProjectFileExists).In_ContextSet(projectElementContextSetSpecifier)
+            );
+
+            return output;
+        }
+
+        public Func<TProjectContextSet, Task> Create_LibraryProjectFile<TProjectContextSet>(
+            IDirectionalIsomorphism<TProjectContextSet, ProjectElementContextSet007> projectContextSetIsomorphism,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<ProjectContext001, (
+                IsSet<IHasProjectDescription> ProjectDescriptionSet,
+                IsSet<IHasProjectFilePath> ProjectFilePathSet)> projectContextPropertiesRequired,
+            ContextPropertiesSet<RepositoryContext001, IsSet<IHasRepositoryUrl>> repositoryContextPropertiesRequired,
+            out IChecked<IFileExists> checkedLibraryProjectFileExists)
+            where TProjectContextSet :
+            IHasContext<ProjectContext001>,
+            IHasContext<RepositoryContext001>
+        {
+            var o = Instances.ContextOperations;
+
+            var projectContextSpecifier = TypeSpecifier<ProjectContext001>.Instance;
+            var repositoryContextSpecifier = TypeSpecifier<RepositoryContext001>.Instance;
+
+            var output = o.In_ChildContextSet<ProjectElementContextSet007, TProjectContextSet>(
+                projectContextSetIsomorphism,
+                out ContextSetSpecifier<ProjectElementContextSet007> projectElementContextSetSpecifier,
+                o.In_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                    out TypeSpecifier<ProjectElementContext001> projectElementContextSpecifier,
+                    o.Construct_Context_OfContextSet<ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ProjectElementContextOperations.Set_ProjectElement_New<ProjectElementContext001>(
+                            out var projectElementSet).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                    ),
+                    Instances.ProjectElementContextOperations.Set_SDK_NET<ProjectElementContext001>().In_ContextSetAndContext(projectElementContextSetSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Main<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers,
+                        projectOptions,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Main,
+                        out var checkedPropertyGroupElementAppended_Main,
+                        Instances.PropertyGroupElementContextOperations.Set_OutputType_Library<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                        Instances.PropertyGroupElementContextOperations.Set_TargetFramework_Default_ForLibrary<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier),
+                    Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Package_ForLibrary<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001, ProjectContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, PropertyGroupElementContextSet009>().For_Contexts(
+                            projectElementContextSpecifier,
+                            projectContextSpecifier,
+                            repositoryContextSpecifier),
+                        out ContextSetSpecifier<PropertyGroupElementContextSet009> propertyGroupContextSetSpecifier_Package,
+                        out (
+                            TypeSpecifier<PropertyGroupElementContext001> PropertyGroupElementContextSpecifier,
+                            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier) contextSpecifiers_Package,
+                        projectOptions,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectDescriptionSet),
+                        out var projectOptionsContextPropertiesSet,
+                        out ContextPropertiesSet<PropertyGroupElementContext001, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet_Package,
+                        out var checkedPropertyGroupElementAppended_Pacakge,
+                        // Add the repository URL.
+                        Instances.PropertyGroupElementContextOperations.Set_RepositoryUrl<PropertyGroupElementContext001, RepositoryContext001>(
+                            propertyGroupContextPropertiesSet_Package,
+                            repositoryContextPropertiesRequired,
+                            out _).In_ContextSet(propertyGroupContextSetSpecifier_Package)
+                    ).In_ContextSetAndContext(projectElementContextSpecifier)
+                ),
+                // Write out the project element.
+                Instances.ProjectContextOperations.Serialize_ProjectElement_ToFile<ProjectElementContext001, ProjectContext001>(
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                    Instances.ContextOperator.Get_ContextPropertiesSet<ProjectContext001>().For(projectContextPropertiesRequired.PropertiesSet.ProjectFilePathSet),
+                    out checkedLibraryProjectFileExists).In_ContextSet(projectElementContextSetSpecifier)
+            );
+
+            return output;
+        }
+
         public Func<ProjectContext001, Task> Create_LibraryProjectFile(
             ProjectOptions projectOptions,
             ContextPropertiesSet<ProjectContext001, (
-            IsSet<IHasProjectFilePath> ProjectFilePathSet,
-            IsSet<IHasProjectDescription> ProjectDescriptionSet
-            )> projectContextPropertiesSet,
+                IsSet<IHasProjectFilePath> ProjectFilePathSet,
+                IsSet<IHasProjectDescription> ProjectDescriptionSet
+                )> projectContextPropertiesSet,
             ContextCapture<Context001> repositoryContextCapture,
             out IChecked<IFileExists> checkedProjectFileExists)
         {

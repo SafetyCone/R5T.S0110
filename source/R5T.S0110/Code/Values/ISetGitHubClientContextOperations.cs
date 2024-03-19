@@ -34,7 +34,7 @@ namespace R5T.S0110
         }
 
         public Func<TContext, Task> Set_GitHubAuthenticationJsonFilePath<TContext>(
-            out IsSet<IHasGitHubAuthenticationJsonFilePath> propertiesSet)
+            out IsSet<IHasGitHubAuthenticationJsonFilePath> gitHubAuthenticationJsonFilePathSet)
             where TContext : IWithGitHubAuthenticationJsonFilePath
         {
             return this.Set_GitHubAuthenticationJsonFilePath;
@@ -47,8 +47,9 @@ namespace R5T.S0110
                 context.GitHubAuthenticationJsonFilePath);
         }
 
-        public Func<TContext, Task> Load_Authentication_N001<TContext>(
-            out IsSet<N001.IHasAuthentication> propertiesSet)
+        public Func<TContext, Task> Load_GitHubAuthentication_N001<TContext>(
+            IsSet<IHasGitHubAuthenticationJsonFilePath> gitHubAuthenticationRequired,
+            out IsSet<N001.IHasAuthentication> gitHubAuthenticationSet)
             where TContext : IHasGitHubAuthenticationJsonFilePath, N001.IWithAuthentication
         {
             return async context =>
@@ -81,7 +82,8 @@ namespace R5T.S0110
         }
 
         public Func<TContext, Task> Set_GitHubClient<TContext>(
-            out IsSet<IHasGitHubClient> propertiesSet)
+            IsSet<N001.IHasAuthentication> gitHubAuthenticationRequired,
+            out IsSet<IHasGitHubClient> gitHubClientSet)
             where TContext : N001.IHasAuthentication, IWithGitHubClient
         {
             return this.Set_GitHubClient_N001;

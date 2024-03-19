@@ -3,7 +3,8 @@
 
 namespace R5T.S0110
 {
-    public struct TypeSpecifier<T>
+    public readonly struct TypeSpecifier<T>
     {
+        public static readonly TypeSpecifier<T> Instance;
     }
 }

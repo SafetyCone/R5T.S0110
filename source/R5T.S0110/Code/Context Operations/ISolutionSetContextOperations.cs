@@ -20,7 +20,7 @@ namespace R5T.S0110
         public Func<TParentContextSet, Task> In_SolutionSetContext<TContextSet, TParentContextSet, TSolutionSetContext, TRepositoryContext>(
             IDirectionalIsomorphism<TParentContextSet, TContextSet> parentContextSetIsomorphism,
             out ContextSetSpecifier<TContextSet> solutionSetContextSetSpecifier,
-            out TypeSpecifier<TSolutionSetContext> solutionContextSpecifier,
+            out TypeSpecifier<TSolutionSetContext> solutionSetContextSpecifier,
             ContextPropertiesSet<TRepositoryContext, 
                 IsSet<IHasRepositoryDirectoryPath>> repositoryContextPropertiesSet,
             out ContextPropertiesSet<TSolutionSetContext,
@@ -38,7 +38,7 @@ namespace R5T.S0110
                 out _,
                 o.In_Context_OfContextSet<TContextSet, TSolutionSetContext>(
                     out solutionSetContextSetSpecifier,
-                    out solutionContextSpecifier,
+                    out solutionSetContextSpecifier,
                     o.Construct_Context_OfContextSet<TContextSet, TSolutionSetContext>(
                         Instances.SolutionContextOperations.Set_SolutionDirectoryPath_Source<TSolutionSetContext, TRepositoryContext>(repositoryContextPropertiesSet.PropertiesSet,
                             out var solutionDirectoryPathSet).In_ContextSetAndContext(solutionSetContextSetSpecifier)
@@ -56,7 +56,7 @@ namespace R5T.S0110
         public Func<TParentContextSet, Task> In_SolutionSetContext<TContextSet, TParentContextSet, TSolutionSetContext, TRepositoryContext>(
             IDirectionalIsomorphism<TParentContextSet, TContextSet> parentContextSetIsomorphism,
             out ContextSetSpecifier<TContextSet> solutionSetContextSetSpecifier,
-            out TypeSpecifier<TSolutionSetContext> solutionContextSpecifier,
+            out TypeSpecifier<TSolutionSetContext> solutionSetContextSpecifier,
             ContextPropertiesSet<TRepositoryContext,
                 IsSet<IHasRepositoryDirectoryPath>> repositoryContextPropertiesSet,
             out ContextPropertiesSet<TSolutionSetContext,
@@ -69,7 +69,7 @@ namespace R5T.S0110
             => this.In_SolutionSetContext<TContextSet, TParentContextSet, TSolutionSetContext, TRepositoryContext>(
                 parentContextSetIsomorphism,
                 out solutionSetContextSetSpecifier,
-                out solutionContextSpecifier,
+                out solutionSetContextSpecifier,
                 repositoryContextPropertiesSet,
                 out solutionSetContextPropertiesSet,
                 operations.AsEnumerable());

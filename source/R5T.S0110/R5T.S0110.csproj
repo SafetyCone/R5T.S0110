@@ -14,6 +14,9 @@
     <RepositoryUrl>https://github.com/SafetyCone/R5T.S0110.git</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\R5T.L0077\source\R5T.L0077\R5T.L0077.csproj" />
     <ProjectReference Include="..\..\..\R5T.L0055\source\R5T.L0055\R5T.L0055.csproj" />
     <ProjectReference Include="..\..\..\R5T.L0079\source\R5T.L0079.Z100\R5T.L0079.Z100.csproj" />

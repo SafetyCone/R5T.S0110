@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using R5T.L0078.T000;
-using R5T.T0046;
 using R5T.T0221;
 using R5T.T0241;
 
@@ -29,6 +27,13 @@ namespace R5T.S0110
                 return Task.CompletedTask;
             };
         }
+
+        public Func<TContextA, Task> From<TContextA>(
+           IEnumerable<Func<TContextA, Task>> operations = default)
+           => contextA =>
+               Instances.ContextOperator.In_ContextSet(
+                   contextA,
+                   operations);
 
         public Func<TContextA, TContextB, Task> From<TContextA, TContextB>(
             IEnumerable<Func<TContextA, TContextB, Task>> operations = default)
@@ -92,65 +97,6 @@ namespace R5T.S0110
 
                 return Task.CompletedTask;
             };
-        }
-
-        public Func<TContext, Task> Set_ContextProperties<TContext>(
-            out (
-            IsSet<IHasGitHubClient> GitHubClientSet,
-            IsSet<IHasGitHubAuthor> GitHubAuthorSet,
-            IsSet<IHasNuGetAuthor> NuGetAuthorSet,
-            IsSet<N001.IHasAuthentication> GitHubAuthenticationSet
-            ) propertiesSet)
-            where TContext :
-            IWithGitHubClient,
-            IWithGitHubAuthor,
-            IWithNuGetAuthor,
-            N001.IWithAuthentication
-        {
-            return Instances.ContextOperations.In_Context<TContext>(
-                // Get the GitHub client.
-                async context =>
-                {
-                    await Instances.ContextOperator.In_Context(
-                        () =>
-                        {
-                            var context = new Context002();
-
-                            return Task.FromResult(context);
-                        },
-                        Instances.SetGitHubClientContextOperations.Set_GitHubAuthenticationJsonFilePath<Context002>(
-                            out _
-                        ),
-                        Instances.SetGitHubClientContextOperations.Load_Authentication_N001<Context002>(
-                            out _
-                        ),
-                        Instances.SetGitHubClientContextOperations.Set_GitHubClient<Context002>(
-                            out _
-                        ),
-                        childContext =>
-                        {
-                            context.GitHubClient = childContext.GitHubClient;
-                            context.Authentication = childContext.Authentication;
-
-                            return Task.CompletedTask;
-                        }
-                    );
-                },
-                // Get the GitHub author information.
-                async context =>
-                {
-                    context.GitHubAuthor = await Instances.JsonOperator.Load_FromFile<Author>(
-                        Instances.Values.GitHubAuthorJsonFilePath,
-                        "GitHubAuthor");
-                },
-                // Set the NuGet author.
-                context =>
-                {
-                    context.NuGetAuthor = Instances.Authors.DCoats.Value;
-
-                    return Task.CompletedTask;
-                }
-            );
         }
 
         #region Set Context of Context Set

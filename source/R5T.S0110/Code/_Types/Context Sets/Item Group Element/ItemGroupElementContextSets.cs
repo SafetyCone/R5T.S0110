@@ -85,4 +85,32 @@ namespace R5T.S0110
         SolutionSetContext003 IWithContext<SolutionSetContext003>.Context { get => this.SolutionSetContext; set => this.SolutionSetContext = value; }
         SolutionSetContext003 IHasContext<SolutionSetContext003>.Context => (this as IWithContext<SolutionSetContext003>).Context;
     }
+
+    [ContextSetMarker]
+    public class ItemGroupElementContextSet006 :
+        IWithContext<Context005>,
+        IWithContext<Context007>
+    {
+        public Context005 ProjectElementContext { get; set; }
+        Context005 IWithContext<Context005>.Context { get => this.ProjectElementContext; set => this.ProjectElementContext = value; }
+        Context005 IHasContext<Context005>.Context => this.ProjectElementContext;
+
+        public Context007 ItemGroupElementContext { get; set; }
+        Context007 IWithContext<Context007>.Context { get => this.ItemGroupElementContext; set => this.ItemGroupElementContext = value; }
+        Context007 IHasContext<Context007>.Context => this.ItemGroupElementContext;
+    }
+
+    [ContextSetMarker]
+    public class ItemGroupElementContextSet007 :
+        IWithContext<ProjectElementContext001>,
+        IWithContext<Context007>
+    {
+        public ProjectElementContext001 ProjectElementContext { get; set; }
+        ProjectElementContext001 IWithContext<ProjectElementContext001>.Context { get => this.ProjectElementContext; set => this.ProjectElementContext = value; }
+        ProjectElementContext001 IHasContext<ProjectElementContext001>.Context => this.ProjectElementContext;
+
+        public Context007 ItemGroupElementContext { get; set; }
+        Context007 IWithContext<Context007>.Context { get => this.ItemGroupElementContext; set => this.ItemGroupElementContext = value; }
+        Context007 IHasContext<Context007>.Context => this.ItemGroupElementContext;
+    }
 }

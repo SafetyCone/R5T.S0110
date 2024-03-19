@@ -12,11 +12,18 @@ namespace R5T.S0110
     }
 
 
+    /// <summary>
+    /// An application-level context set using the <see cref="ApplicationContext001"/> context.
+    /// <para>
+    /// <see cref="ApplicationContext001"/>:
+    /// </para>
+    /// <inheritdoc cref="ApplicationContext001" path="/summary"/>
+    /// </summary>
     [ContextSetMarker]
     public class ApplicationContextSet002 : ApplicationContextSet001<ApplicationContext001>, IContextSetMarker,
         IWithContext<ApplicationContext001>
     {
         ApplicationContext001 IWithContext<ApplicationContext001>.Context { get => this.ApplicationContext; set => this.ApplicationContext = value; }
-        ApplicationContext001 IHasContext<ApplicationContext001>.Context { get; }
+        ApplicationContext001 IHasContext<ApplicationContext001>.Context { get => this.ApplicationContext; }
     }
 }

@@ -33,44 +33,5 @@ namespace R5T.S0110
                 contextSet,
                 contextSetIsomorphism,
                 operations.AsEnumerable());
-
-        public Task In_ContextSet2<TContextSet>(
-            TContextSet contextSet,
-            IEnumerable<Func<TContextSet, Task>> operations)
-            where TContextSet : new()
-        {
-            return Instances.ActionOperator.Run_Actions<TContextSet>(
-                contextSet,
-                operations);
-        }
-
-        public Task In_ContextSet2<TContextSet>(
-            TContextSet contextSet,
-            params Func<TContextSet, Task>[] operations)
-            where TContextSet : new()
-        {
-            return this.In_ContextSet2<TContextSet>(
-                contextSet,
-                operations.AsEnumerable());
-        }
-
-        public Task In_ContextSet2<TContextSet>(
-            IEnumerable<Func<TContextSet, Task>> operations)
-            where TContextSet : new()
-        {
-            var contextSet = new TContextSet();
-
-            return this.In_ContextSet2<TContextSet>(
-                contextSet,
-                operations);
-        }
-
-        public Task In_ContextSet2<TContextSet>(
-            params Func<TContextSet, Task>[] operations)
-            where TContextSet : new()
-        {
-            return this.In_ContextSet2<TContextSet>(
-                operations.AsEnumerable());
-        }
     }
 }

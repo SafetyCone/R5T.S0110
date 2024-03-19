@@ -64,6 +64,16 @@ namespace R5T.S0110.Contexts
                 contextSet.Get_Context<TContextSet, TContextB>());
         }
 
+        public static Func<TContextSet, TContextB, Task> In_ContextSetAndContext<TContextSet, TContextA, TContextB>(this Func<TContextA, TContextB, Task> operation,
+            ContextSetSpecifier<TContextSet> contextSetSpecifier,
+            TypeSpecifier<TContextB> contextSpecifier)
+            where TContextSet : IHasContext<TContextA>, IHasContext<TContextB>
+        {
+            return (contextSet, contextB) => operation(
+                contextSet.Get_Context<TContextSet, TContextA>(),
+                contextB);
+        }
+
         public static Func<TContextSet, Task> In_ContextSet<TContextSet, TContext>(this Func<TContext, Task> operation,
             ContextSetSpecifier<TContextSet> contextSetSpecifier)
             where TContextSet : IHasContext<TContext>

@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LibGit2Sharp;
-using Microsoft.AspNetCore.Mvc;
+
 using R5T.L0066.Contexts;
 using R5T.L0091.T000;
 using R5T.L0092.T001;
@@ -31,7 +30,7 @@ namespace R5T.S0110
             IEnumerable<Func<TItemGroupElementContextSet, Task>> operations)
             where TItemGroupElementContextSet : IWithContext<Context007>, IHasContext<TProjectElementContext>, new()
             where TProjectElementContextSet : IHasContext<TProjectElementContext>
-            where TProjectElementContext : IHasProjectElement, IHasProjectDescription
+            where TProjectElementContext : IHasProjectElement
         {
             var output = this.Add_ItemGroupElement<TItemGroupElementContextSet, TProjectElementContextSet, TProjectElementContext>(
                 projectElementContextIsomorphism,
@@ -58,7 +57,7 @@ namespace R5T.S0110
             params Func<TItemGroupElementContextSet, Task>[] operations)
             where TItemGroupElementContextSet : IWithContext<Context007>, IHasContext<TProjectElementContext>, new()
             where TProjectElementContextSet : IHasContext<TProjectElementContext>
-            where TProjectElementContext : IHasProjectElement, IHasProjectDescription
+            where TProjectElementContext : IHasProjectElement
             => this.Add_ItemGroupElement_PackageReferences<TItemGroupElementContextSet, TProjectElementContextSet, TProjectElementContext>(
                 projectElementContextIsomorphism,
                 out itemGroupElementContextSetSpecifier,
@@ -80,7 +79,7 @@ namespace R5T.S0110
             IEnumerable<Func<TItemGroupElementContextSet, Task>> operations)
             where TItemGroupElementContextSet : IWithContext<Context007>, IHasContext<TProjectElementContext>, new()
             where TProjectElementContextSet : IHasContext<TProjectElementContext>
-            where TProjectElementContext : IHasProjectElement, IHasProjectDescription
+            where TProjectElementContext : IHasProjectElement
         {
             var o = Instances.ContextOperations;
 
@@ -116,7 +115,7 @@ namespace R5T.S0110
             params Func<TItemGroupElementContextSet, Task>[] operations)
             where TItemGroupElementContextSet : IWithContext<Context007>, IHasContext<TProjectElementContext>, new()
             where TProjectElementContextSet : IHasContext<TProjectElementContext>
-            where TProjectElementContext : IHasProjectElement, IHasProjectDescription
+            where TProjectElementContext : IHasProjectElement
             => this.Add_ItemGroupElement<TItemGroupElementContextSet, TProjectElementContextSet, TProjectElementContext>(
                 projectElementContextIsomorphism,
                 out itemGroupElementContextSetSpecifier,
@@ -130,9 +129,9 @@ namespace R5T.S0110
             IDirectionalIsomorphism<TProjectElementContextSet, TPropertyElementContextSet> projectElementContextIsomorphism,
             out ContextSetSpecifier<TPropertyElementContextSet> propertyGroupContextSetSpecifier,
             out (
-            TypeSpecifier<Context006> PropertyElementContextSpecifier,
-            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
-            ) contextSpecifiers,
+                TypeSpecifier<Context006> PropertyElementContextSpecifier,
+                TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
+                ) contextSpecifiers,
             ProjectOptions projectOptions,
             ContextPropertiesSet<TProjectElementContext, (
                 IsSet<IHasProjectElement> ProjectElementSet,
@@ -239,6 +238,188 @@ namespace R5T.S0110
 
             return output;
         }
+
+        public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Package_ForLibrary<TPropertyElementContextSet, TProjectElementContextSet, TPropertyElementContext, TProjectElementContext, TProjectContext>(
+            IDirectionalIsomorphism<TProjectElementContextSet, TPropertyElementContextSet> projectElementContextSetIsomorphism,
+            out ContextSetSpecifier<TPropertyElementContextSet> propertyGroupContextSetSpecifier,
+            out (
+                TypeSpecifier<TPropertyElementContext> PropertyGroupElementContextSpecifier,
+                TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
+                ) contextSpecifiers,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<TProjectElementContext, IsSet<IHasProjectElement>> projectElementContextPropertiesSet,
+            ContextPropertiesSet<TProjectContext, IsSet<IHasProjectDescription>> projectContextPropertiesSet,
+            out ContextPropertiesSet<ProjectOptionsContext,
+                IsSet<IHasProjectOptions>> projectOptionsContextPropertiesSet,
+            out ContextPropertiesSet<TPropertyElementContext,
+                IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet,
+            out IChecked checkedPropertyGroupElementAppended,
+            IEnumerable<Func<TPropertyElementContextSet, Task>> operations)
+            where TProjectElementContextSet : IHasContext<TProjectElementContext>
+            where TPropertyElementContextSet : IWithContext<TPropertyElementContext>, IWithContext<ProjectOptionsContext>, IHasContext<TProjectElementContext>, IHasContext<TProjectContext>, new()
+            where TProjectElementContext : IHasProjectElement
+            where TProjectContext : IHasProjectDescription
+            where TPropertyElementContext : IWithPropertyGroupElement, new()
+        {
+            var output = this.Add_PropertyGroupElement_Package<TPropertyElementContextSet, TProjectElementContextSet, TPropertyElementContext, TProjectElementContext, TProjectContext>(
+                projectElementContextSetIsomorphism,
+                out propertyGroupContextSetSpecifier,
+                out contextSpecifiers,
+                projectOptions,
+                projectElementContextPropertiesSet,
+                projectContextPropertiesSet,
+                out projectOptionsContextPropertiesSet,
+                out propertyGroupContextPropertiesSet,
+                out checkedPropertyGroupElementAppended,
+                 Instances.IsSetContextOperations.Implies<ProjectOptionsContext, IHasProjectOptions, IHasPackageLicenseExpression, IHasPackageRequireLicenseAcceptance>(
+                     projectOptionsContextPropertiesSet.PropertiesSet,
+                    out (
+                        IsSet<IHasPackageLicenseExpression> PackageLicenseExpressionSet,
+                        IsSet<IHasPackageRequireLicenseAcceptance> PackageRequireLicenseAcceptanceSet
+                        ) projectOptionContextPropertiesSet_Implied
+                ).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_PackageLicenseExpression<TPropertyElementContext, ProjectOptionsContext>(
+                    Instances.IsSetOperator.ContextPropertiesSet<TPropertyElementContext, IHasPropertyGroupElement>(propertyGroupContextPropertiesSet.PropertiesSet),
+                    Instances.IsSetOperator.ContextPropertiesSet<ProjectOptionsContext, IHasPackageLicenseExpression>(projectOptionContextPropertiesSet_Implied.PackageLicenseExpressionSet),
+                    out var packageLicenseExpressionSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_PackageRequireLicenseAcceptance<TPropertyElementContext, ProjectOptionsContext>(
+                    Instances.IsSetOperator.ContextPropertiesSet<TPropertyElementContext, IHasPropertyGroupElement>(propertyGroupContextPropertiesSet.PropertiesSet),
+                    Instances.IsSetOperator.ContextPropertiesSet<ProjectOptionsContext, IHasPackageRequireLicenseAcceptance>(projectOptionContextPropertiesSet_Implied.PackageRequireLicenseAcceptanceSet),
+                    out var packageRequireLicenseAcceptance).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.ActionOperations.From(operations)
+            );
+
+            return output;
+        }
+
+        public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Package_ForLibrary<TPropertyElementContextSet, TProjectElementContextSet, TPropertyElementContext, TProjectElementContext, TProjectContext>(
+            IDirectionalIsomorphism<TProjectElementContextSet, TPropertyElementContextSet> projectElementContextSetIsomorphism,
+            out ContextSetSpecifier<TPropertyElementContextSet> propertyGroupContextSetSpecifier,
+            out (
+                TypeSpecifier<TPropertyElementContext> PropertyGroupElementContextSpecifier,
+                TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
+                ) contextSpecifiers,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<TProjectElementContext, IsSet<IHasProjectElement>> projectElementContextPropertiesSet,
+            ContextPropertiesSet<TProjectContext, IsSet<IHasProjectDescription>> projectContextPropertiesSet,
+            out ContextPropertiesSet<ProjectOptionsContext,
+                IsSet<IHasProjectOptions>> projectOptionsContextPropertiesSet,
+            out ContextPropertiesSet<TPropertyElementContext,
+                IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet,
+            out IChecked checkedPropertyGroupElementAppended,
+            params Func<TPropertyElementContextSet, Task>[] operations)
+            where TProjectElementContextSet : IHasContext<TProjectElementContext>
+            where TPropertyElementContextSet : IWithContext<TPropertyElementContext>, IWithContext<ProjectOptionsContext>, IHasContext<TProjectElementContext>, IHasContext<TProjectContext>, new()
+            where TProjectElementContext : IHasProjectElement
+            where TProjectContext : IHasProjectDescription
+            where TPropertyElementContext : IWithPropertyGroupElement, new()
+            => this.Add_PropertyGroupElement_Package_ForLibrary<TPropertyElementContextSet, TProjectElementContextSet, TPropertyElementContext, TProjectElementContext, TProjectContext>(
+                projectElementContextSetIsomorphism,
+                out propertyGroupContextSetSpecifier,
+                out contextSpecifiers,
+                projectOptions,
+                projectElementContextPropertiesSet,
+                projectContextPropertiesSet,
+                out projectOptionsContextPropertiesSet,
+                out propertyGroupContextPropertiesSet,
+                out checkedPropertyGroupElementAppended,
+                operations.AsEnumerable());
+
+        public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Package<TPropertyElementContextSet, TProjectElementContextSet, TPropertyElementContext, TProjectElementContext, TProjectContext>(
+            IDirectionalIsomorphism<TProjectElementContextSet, TPropertyElementContextSet> projectElementContextSetIsomorphism,
+            out ContextSetSpecifier<TPropertyElementContextSet> propertyGroupContextSetSpecifier,
+            out (
+            TypeSpecifier<TPropertyElementContext> PropertyGroupElementContextSpecifier,
+            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
+            ) contextSpecifiers,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<TProjectElementContext, IsSet<IHasProjectElement>> projectElementContextPropertiesSet,
+            ContextPropertiesSet<TProjectContext, IsSet<IHasProjectDescription>> projectContextPropertiesSet,
+            out ContextPropertiesSet<ProjectOptionsContext,
+                IsSet<IHasProjectOptions>> projectOptionsContextPropertiesSet,
+            out ContextPropertiesSet<TPropertyElementContext,
+                IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet,
+            out IChecked checkedPropertyGroupElementAppended,
+            IEnumerable<Func<TPropertyElementContextSet, Task>> operations)
+            where TProjectElementContextSet : IHasContext<TProjectElementContext>
+            where TPropertyElementContextSet : IWithContext<TPropertyElementContext>, IWithContext<ProjectOptionsContext>, IHasContext<TProjectElementContext>, IHasContext<TProjectContext>, new()
+            where TProjectElementContext : IHasProjectElement
+            where TProjectContext : IHasProjectDescription
+            where TPropertyElementContext : IWithPropertyGroupElement, new()
+        {
+            var o = Instances.ContextOperations;
+
+            var output = o.In_ChildContextSet<TPropertyElementContextSet, TProjectElementContextSet>(
+                projectElementContextSetIsomorphism,
+                out propertyGroupContextSetSpecifier,
+                o.Set_Context_OfContextSet<TPropertyElementContextSet, TPropertyElementContext>(
+                    out var context006ContextSpecifier,
+                    o.Construct_Context_OfContextSet<TPropertyElementContextSet, TPropertyElementContext>(
+                        Instances.PropertyGroupElementContextOperations.Set_PropertyGroupElement_New<TPropertyElementContext>(
+                            out var propertyGroupElementSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                    )
+                ),
+                o.Set_Context_OfContextSet<TPropertyElementContextSet, ProjectOptionsContext>(
+                    out TypeSpecifier<ProjectOptionsContext> projectOptionsContextSpecifier,
+                    o.Construct_Context_OfContextSet<TPropertyElementContextSet, ProjectOptionsContext>(
+                        Instances.ProjectOptionsContextOperations.Set_ProjectOptions<ProjectOptionsContext>(projectOptions,
+                            out var projectOptionsSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier),
+                        Instances.IsSetContextOperations.Implies<ProjectOptionsContext, IHasProjectOptions, IHasCompany, IHasCopyright, IHasNuGetAuthor, IHasVersion>(projectOptionsSet,
+                            out (
+                            IsSet<IHasCompany> CompanySet,
+                            IsSet<IHasCopyright> CopyrightSet,
+                            IsSet<IHasNuGetAuthor> NuGetAuthorSet,
+                            IsSet<IHasVersion> VersionSet
+                            ) impliedProjectOptionsSet_Package).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                    )
+                ),
+                Instances.PropertyGroupElementContextOperations.Set_Label_Package<TPropertyElementContext>(propertyGroupElementSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_Version<TPropertyElementContext, ProjectOptionsContext>(propertyGroupElementSet, impliedProjectOptionsSet_Package.VersionSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_Author<TPropertyElementContext, ProjectOptionsContext>(propertyGroupElementSet, impliedProjectOptionsSet_Package.NuGetAuthorSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_Company<TPropertyElementContext, ProjectOptionsContext>(propertyGroupElementSet, impliedProjectOptionsSet_Package.CompanySet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_Copyright<TPropertyElementContext, ProjectOptionsContext>(propertyGroupElementSet, impliedProjectOptionsSet_Package.CopyrightSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_Description<TPropertyElementContext, TProjectContext>(propertyGroupElementSet, projectContextPropertiesSet.PropertiesSet,
+                    out var projectDescriptionSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.ActionOperations.From(operations),
+                Instances.PropertyGroupElementContextOperations.Append_PropertyGroupElement<TPropertyElementContext, TProjectElementContext>(propertyGroupElementSet,
+                    out checkedPropertyGroupElementAppended).In_ContextSet(propertyGroupContextSetSpecifier)
+            );
+
+            return output;
+        }
+
+        public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Package<TPropertyElementContextSet, TProjectElementContextSet, TPropertyElementContext, TProjectElementContext, TProjectContext>(
+            IDirectionalIsomorphism<TProjectElementContextSet, TPropertyElementContextSet> projectElementContextSetIsomorphism,
+            out ContextSetSpecifier<TPropertyElementContextSet> propertyGroupContextSetSpecifier,
+            out (
+            TypeSpecifier<TPropertyElementContext> PropertyGroupElementContextSpecifier,
+            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
+            ) contextSpecifiers,
+            ProjectOptions projectOptions,
+            ContextPropertiesSet<TProjectElementContext, IsSet<IHasProjectElement>> projectElementContextPropertiesSet,
+            ContextPropertiesSet<TProjectContext, IsSet<IHasProjectDescription>> projectContextPropertiesSet,
+            out ContextPropertiesSet<ProjectOptionsContext,
+                IsSet<IHasProjectOptions>> projectOptionsContextPropertiesSet,
+            out ContextPropertiesSet<TPropertyElementContext,
+                IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesSet,
+            out IChecked checkedPropertyGroupElementAppended,
+            params Func<TPropertyElementContextSet, Task>[] operations)
+            where TProjectElementContextSet : IHasContext<TProjectElementContext>
+            where TPropertyElementContextSet : IWithContext<TPropertyElementContext>, IWithContext<ProjectOptionsContext>, IHasContext<TProjectElementContext>, IHasContext<TProjectContext>, new()
+            where TProjectElementContext : IHasProjectElement
+            where TProjectContext : IHasProjectDescription
+            where TPropertyElementContext : IWithPropertyGroupElement, new()
+            => this.Add_PropertyGroupElement_Package<TPropertyElementContextSet, TProjectElementContextSet, TPropertyElementContext, TProjectElementContext, TProjectContext>(
+                projectElementContextSetIsomorphism,
+                out propertyGroupContextSetSpecifier,
+                out contextSpecifiers,
+                projectOptions,
+                projectElementContextPropertiesSet,
+                projectContextPropertiesSet,
+                out projectOptionsContextPropertiesSet,
+                out propertyGroupContextPropertiesSet,
+                out checkedPropertyGroupElementAppended,
+                operations.AsEnumerable());
 
         public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Package<TPropertyElementContextSet, TProjectElementContextSet, TProjectElementContext>(
             IDirectionalIsomorphism<TProjectElementContextSet, TPropertyElementContextSet> projectElementContextIsomorphism,
@@ -420,6 +601,91 @@ namespace R5T.S0110
                 out checkedPropertyGroupElementAppended,
                 propertyGroupProjectOptionsOperations.AsEnumerable());
         }
+
+        /// <summary>
+        /// Sets:
+        /// <list type="bullet">
+        /// <item>Target framework (from project options)</item>
+        /// <item>NoWarn (from project options)</item>
+        /// </list>
+        /// </summary>
+        public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Main<TPropertyGroupElementContextSet, TProjectElementContextSet, TPropertyGroupElementContext, TProjectElementContext>(
+            IDirectionalIsomorphism<TProjectElementContextSet, TPropertyGroupElementContextSet> propertyGroupContextSetIsomorphism,
+            out ContextSetSpecifier<TPropertyGroupElementContextSet> propertyGroupContextSetSpecifier,
+            out (
+            TypeSpecifier<TPropertyGroupElementContext> PropertyGroupContextSpecifier,
+            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
+            ) contextSpecifiers,
+            ProjectOptions projectOptions,
+            out ContextPropertiesSet<TPropertyGroupElementContext, IsSet<IHasPropertyGroupElement>> propertyElementContextPropertiesSet,
+            out IChecked checkedPropertyGroupElementAppended,
+            IEnumerable<Func<TPropertyGroupElementContextSet, Task>> operations)
+            where TPropertyGroupElementContextSet : IWithContext<TPropertyGroupElementContext>, IWithContext<ProjectOptionsContext>, IHasContext<TProjectElementContext>, new()
+            where TProjectElementContextSet : IHasContext<TProjectElementContext>
+            where TPropertyGroupElementContext : IWithPropertyGroupElement, new()
+            where TProjectElementContext : IHasProjectElement
+        {
+            var o = Instances.ContextOperations;
+
+            var output = o.In_ChildContextSet<TPropertyGroupElementContextSet, TProjectElementContextSet>(
+                propertyGroupContextSetIsomorphism,
+                out propertyGroupContextSetSpecifier,
+                o.Set_Context_OfContextSet<TPropertyGroupElementContextSet, TPropertyGroupElementContext>(
+                    out var context006ContextSpecifier,
+                    o.Construct_Context_OfContextSet<TPropertyGroupElementContextSet, TPropertyGroupElementContext>(
+                        Instances.PropertyGroupElementContextOperations.Set_PropertyGroupElement_New<TPropertyGroupElementContext>(
+                            out var propertyGroupElementSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                    )
+                ),
+                o.Set_Context_OfContextSet<TPropertyGroupElementContextSet, ProjectOptionsContext>(
+                    out var projectOptionsContextSpecifier,
+                    o.Construct_Context_OfContextSet<TPropertyGroupElementContextSet, ProjectOptionsContext>(
+                        Instances.ProjectOptionsContextOperations.Set_ProjectOptions<ProjectOptionsContext>(projectOptions,
+                            out var projectOptionsSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier),
+                        Instances.IsSetContextOperations.Implies<ProjectOptionsContext, IHasProjectOptions, IHasTargetFramework, IHasIgnoreWarningNumbersList>(projectOptionsSet,
+                            out (
+                            IsSet<IHasTargetFramework> TargetFrameworkSet,
+                            IsSet<IHasIgnoreWarningNumbersList> IgnoreWarningNumbersListSet
+                            ) impliedProjectOptionsSet_Main).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                    )
+                ),
+                Instances.PropertyGroupElementContextOperations.Set_Label_Main<TPropertyGroupElementContext>(propertyGroupElementSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_TargetFramework<TPropertyGroupElementContext, ProjectOptionsContext>(propertyGroupElementSet, impliedProjectOptionsSet_Main.TargetFrameworkSet,
+                    out var targetFrameworkSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.PropertyGroupElementContextOperations.Set_NoWarn<TPropertyGroupElementContext, ProjectOptionsContext>(propertyGroupElementSet, impliedProjectOptionsSet_Main.IgnoreWarningNumbersListSet,
+                    out var ignoreWarningNumbersListSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                Instances.ActionOperations.From(operations),
+                Instances.PropertyGroupElementContextOperations.Append_PropertyGroupElement<TPropertyGroupElementContext, TProjectElementContext>(propertyGroupElementSet,
+                    out checkedPropertyGroupElementAppended).In_ContextSet(propertyGroupContextSetSpecifier)
+            );
+
+            return output;
+        }
+
+        /// <inheritdoc cref="Add_PropertyGroupElement_Main{TPropertyGroupElementContextSet, TProjectElementContextSet, TPropertyGroupElementContext, TProjectElementContext}(IDirectionalIsomorphism{TProjectElementContextSet, TPropertyGroupElementContextSet}, out ContextSetSpecifier{TPropertyGroupElementContextSet}, out ValueTuple{TypeSpecifier{TPropertyGroupElementContext}, TypeSpecifier{ProjectOptionsContext}}, ProjectOptions, out ContextPropertiesSet{TPropertyGroupElementContext, IsSet{IHasPropertyGroupElement}}, out IChecked, IEnumerable{Func{TPropertyGroupElementContextSet, Task}})"/>
+        public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Main<TPropertyGroupElementContextSet, TProjectElementContextSet, TPropertyGroupElementContext, TProjectElementContext>(
+            IDirectionalIsomorphism<TProjectElementContextSet, TPropertyGroupElementContextSet> propertyGroupContextSetIsomorphism,
+            out ContextSetSpecifier<TPropertyGroupElementContextSet> propertyGroupContextSetSpecifier,
+            out (
+            TypeSpecifier<TPropertyGroupElementContext> PropertyGroupContextSpecifier,
+            TypeSpecifier<ProjectOptionsContext> ProjectOptionsContextSpecifier
+            ) contextSpecifiers,
+            ProjectOptions projectOptions,
+            out ContextPropertiesSet<TPropertyGroupElementContext, IsSet<IHasPropertyGroupElement>> propertyElementContextPropertiesSet,
+            out IChecked checkedPropertyGroupElementAppended,
+            params Func<TPropertyGroupElementContextSet, Task>[] operations)
+            where TPropertyGroupElementContextSet : IWithContext<TPropertyGroupElementContext>, IWithContext<ProjectOptionsContext>, IHasContext<TProjectElementContext>, new()
+            where TProjectElementContextSet : IHasContext<TProjectElementContext>
+            where TPropertyGroupElementContext : IWithPropertyGroupElement, new()
+            where TProjectElementContext : IHasProjectElement
+            => this.Add_PropertyGroupElement_Main<TPropertyGroupElementContextSet, TProjectElementContextSet, TPropertyGroupElementContext, TProjectElementContext>(
+                propertyGroupContextSetIsomorphism,
+                out propertyGroupContextSetSpecifier,
+                out contextSpecifiers,
+                projectOptions,
+                out propertyElementContextPropertiesSet,
+                out checkedPropertyGroupElementAppended,
+                operations.AsEnumerable());
 
         public Func<TProjectElementContextSet, Task> Add_PropertyGroupElement_Main<TPropertyGroupElementContextSet, TProjectElementContextSet, TProjectElementContext>(
             IDirectionalIsomorphism<TProjectElementContextSet, TPropertyGroupElementContextSet> propertyGroupContextSetIsomorphism,

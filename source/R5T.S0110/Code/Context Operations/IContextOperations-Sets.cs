@@ -38,31 +38,6 @@ namespace R5T.S0110
             => this.Construct_Context_OfContextSet<TContextSet, TContext>(
                 operations.AsEnumerable());
 
-        public Func<TContextSet, Task<TContext>> Construct_Context2<TContextSet, TContext>(
-            IEnumerable<Func<TContextSet, TContext, Task>> operations)
-            where TContextSet : IWithContext<TContext>
-            where TContext : new()
-        {
-            return async contextSet =>
-            {
-                var context = new TContext();
-
-                await Instances.ActionOperator.Run_Actions<TContextSet, TContext>(
-                    contextSet,
-                    context,
-                    operations);
-
-                return context;
-            };
-        }
-
-        public Func<TContextSet, Task<TContext>> Construct_Context2<TContextSet, TContext>(
-            params Func<TContextSet, TContext, Task>[] operations)
-            where TContextSet : IWithContext<TContext>
-            where TContext : new()
-            => this.Construct_Context2<TContextSet, TContext>(
-                operations.AsEnumerable());
-
         public Func<TContext, Task> Get<TContext, T>(
             T value,
             out T outputValue)
@@ -125,6 +100,31 @@ namespace R5T.S0110
                 operations.AsEnumerable());
 
         public Func<TContextSet, Task> In_Context_OfContextSet<TContextSet, TContext>(
+            out TypeSpecifier<TContext> contextSet,
+            Func<TContextSet, Task<TContext>> contextConstructor,
+            IEnumerable<Func<TContextSet, TContext, Task>> operations)
+            where TContextSet : IWithContext<TContext>
+            => async contextSet =>
+            {
+                contextSet.Context = await contextConstructor(contextSet);
+
+                await Instances.ActionOperator.Run_Actions<TContextSet, TContext>(
+                    contextSet,
+                    contextSet.Context,
+                    operations);
+            };
+
+        public Func<TContextSet, Task> In_Context_OfContextSet<TContextSet, TContext>(
+            out TypeSpecifier<TContext> contextSet,
+            Func<TContextSet, Task<TContext>> contextConstructor,
+            params Func<TContextSet, TContext, Task>[] operations)
+            where TContextSet : IWithContext<TContext>
+            => this.In_Context_OfContextSet<TContextSet, TContext>(
+                out contextSet,
+                contextConstructor,
+                operations.AsEnumerable());
+
+        public Func<TContextSet, Task> In_Context_OfContextSet<TContextSet, TContext>(
             out ContextSetSpecifier<TContextSet> contextSetSpecifier,
             out TypeSpecifier<TContext> contextSet,
             Func<TContextSet, Task<TContext>> contextConstructor,
@@ -173,7 +173,7 @@ namespace R5T.S0110
                 contextConstructor,
                 operations.AsEnumerable());
 
-        public Func<TContextSet, Task> In_ContextSet2<TContextSet, TContext>(
+        public Func<TContextSet, Task> In_ContextSetAndContext<TContextSet, TContext>(
             out ContextSetSpecifier<TContextSet> contextSetSpecifier,
             out TypeSpecifier<TContext> contextSet,
             Func<TContextSet, Task<TContext>> contextConstructor,
@@ -189,29 +189,17 @@ namespace R5T.S0110
                     operations);
             };
 
-        public Func<TContextSet, Task> In_ContextSet2<TContextSet, TContext>(
+        public Func<TContextSet, Task> In_ContextSetAndContext<TContextSet, TContext>(
             out ContextSetSpecifier<TContextSet> contextSetSpecifier,
             out TypeSpecifier<TContext> contextSet,
             Func<TContextSet, Task<TContext>> contextConstructor,
             params Func<TContextSet, TContext, Task>[] operations)
             where TContextSet : IWithContext<TContext>
-            => this.In_ContextSet2<TContextSet, TContext>(
+            => this.In_ContextSetAndContext<TContextSet, TContext>(
                 out contextSetSpecifier,
                 out contextSet,
                 contextConstructor,
                 operations.AsEnumerable());
-
-        //public Func<Task> In_Context2<TContextSet, TContext>(
-        //    params Func<TContextSet, Task>[] operations)
-        //    where TContextSet : IWithContext<TContext>, new()
-        //    where TContext : new()
-        //{
-        //    var o = Instances.ContextOperations;
-
-        //    return o.In_ContextSet2<TContextSet>(
-        //        operations
-        //    );
-        //}
 
         public Func<TContextSet, Task> In_ChildContextSet<TChildContextSet, TContextSet>(
             Func<TContextSet, Task<TChildContextSet>> contextSetConstructor,

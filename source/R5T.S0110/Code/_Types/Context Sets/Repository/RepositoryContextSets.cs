@@ -15,6 +15,9 @@ namespace R5T.S0110
         TApplicationContext IHasApplicationContext<TApplicationContext>.ApplicationContext => this.ApplicationContext;
     }
 
+    /// <summary>
+    /// A repository-level context set using the <see cref="ApplicationContext001"/> application context, and allowing for a generic repository context type.
+    /// </summary>
     [ContextSetMarker]
     public class RepositoryContextSet002<TRepositoryContext> : RepositoryContextSet001<TRepositoryContext, ApplicationContext001>, IContextSetMarker,
         IWithContext<ApplicationContext001>
@@ -23,6 +26,9 @@ namespace R5T.S0110
         ApplicationContext001 IHasContext<ApplicationContext001>.Context => (this as IWithContext<ApplicationContext001>).Context;
     }
 
+    /// <summary>
+    /// A repository-elvel context set using the <see cref="RepositoryContext001"/> (and <see cref="ApplicationContext001"/>).
+    /// </summary>
     [ContextSetMarker]
     public class RepositoryContextSet003 : RepositoryContextSet002<RepositoryContext001>, IContextSetMarker,
         IWithContext<RepositoryContext001>

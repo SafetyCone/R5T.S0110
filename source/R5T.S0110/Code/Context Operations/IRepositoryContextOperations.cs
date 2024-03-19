@@ -16,6 +16,7 @@ using R5T.T0241;
 using GitHubClientedRepositoryContext = R5T.L0081.T001.RepositoryContext;
 
 using R5T.S0110.Contexts;
+using Octokit;
 
 
 namespace R5T.S0110
@@ -270,7 +271,7 @@ namespace R5T.S0110
                 IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet,
                 IsSet<IHasRepository> RepositorySet,
                 IsSet<IHasRepositoryUrl> RepositoryUrlSet
-                )> repositoryPropertiesSet,
+                )> repositoryContextPropertiesSet,
             out (
                 IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
                 IChecked<ILocalRepositoryExists> LocalRepositoryExists,
@@ -315,7 +316,7 @@ namespace R5T.S0110
                 )
             );
 
-            repositoryPropertiesSet = Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+            repositoryContextPropertiesSet = Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
                 repositorySpecificationPropertiesSet.RepositorySpecificationSet,
                 repositorySpecificationPropertiesSet.RepositoryNameSet,
                 repositorySpecificationPropertiesSet.RepositoryOwnerNameSet,
@@ -343,7 +344,7 @@ namespace R5T.S0110
                 IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet,
                 IsSet<IHasRepository> RepositorySet,
                 IsSet<IHasRepositoryUrl> RepositoryUrlSet
-                )> repositoryPropertiesSet,
+                )> repositoryContextPropertiesSet,
             out (
                 IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
                 IChecked<ILocalRepositoryExists> LocalRepositoryExists,
@@ -360,7 +361,7 @@ namespace R5T.S0110
                 out repositoryContextSpecifier,
                 repositorySpecification,
                 applicationContextPropertiesSet,
-                out repositoryPropertiesSet,
+                out repositoryContextPropertiesSet,
                 out checkedRepository,
                 operations.AsEnumerable());
 
@@ -448,6 +449,32 @@ namespace R5T.S0110
                         return Task.CompletedTask;
                     }
                 );
+            };
+        }
+
+        public Func<TRepositoryContext, TApplicationContext, Task> Push_AllFiles<TRepositoryContext, TApplicationContext>(
+            string commitMessage,
+            ContextPropertiesSet<TRepositoryContext, IsSet<IHasRepositoryDirectoryPath>> repositoryContextPropertiesSet,
+            ContextPropertiesSet<TApplicationContext, (
+                IsSet<IHasGitHubAuthor> gitHubAuthorSet,
+                IsSet<N001.IHasAuthentication> AuthenticationSet)> applicationContextPropertiesSet,
+            out IChecked<ILocalChangesPushedToRemote> checkedLocalChangesPushedToRemote)
+            where TRepositoryContext : IHasRepositoryDirectoryPath
+            where TApplicationContext : IHasGitHubAuthor, N001.IHasAuthentication
+        {
+            checkedLocalChangesPushedToRemote = Checked.Check<ILocalChangesPushedToRemote>();
+
+            return (repositoryContext, applicationContext) =>
+            {
+                Instances.GitOperator.Push_WithStageAndCommit(
+                    repositoryContext.RepositoryDirectoryPath,
+                    commitMessage,
+                    applicationContext.GitHubAuthor.Name,
+                    applicationContext.GitHubAuthor.EmailAddress,
+                    applicationContext.Authentication.Username,
+                    applicationContext.Authentication.Password);
+
+                return Task.CompletedTask;
             };
         }
 

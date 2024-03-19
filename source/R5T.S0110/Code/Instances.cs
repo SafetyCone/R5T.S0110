@@ -11,6 +11,7 @@ namespace R5T.S0110
         public static IApplicationContextOperations ApplicationContextOperations => S0110.ApplicationContextOperations.Instance;
         public static L0033.Z002.IAuthors Authors => L0033.Z002.Authors.Instance;
         public static ICloneRepositoryLocallyContextOperations CloneRepositoryLocallyContextOperations => S0110.CloneRepositoryLocallyContextOperations.Instance;
+        public static ICheckLists CheckLists => S0110.CheckLists.Instance;
         public static L0032.Z002.ICompanyNames CompanyNames => L0032.Z002.CompanyNames.Instance;
         public static F0083.ICodeFileGenerationOperations CodeFileGenerationOperations => F0083.CodeFileGenerationOperations.Instance;
         public static ICodeFileContextOperations CodeFileContextOperations => S0110.CodeFileContextOperations.Instance;
@@ -43,6 +44,7 @@ namespace R5T.S0110
         public static IIsSetOperator IsSetOperator => S0110.IsSetOperator.Instance;
         public static IItemGroupElementContextOperations ItemGroupElementContextOperations => S0110.ItemGroupElementContextOperations.Instance;
         public static L0032.IItemGroupXElementOperator ItemGroupXElementOperator => L0032.ItemGroupXElementOperator.Instance;
+        public static S0110.IJsonKeys JsonKeys => S0110.JsonKeys.Instance;
         public static L0072.IJsonOperator JsonOperator => L0072.JsonOperator.Instance;
         public static ILocalRepositoryContextOperations LocalRepositoryContextOperations => S0110.LocalRepositoryContextOperations.Instance;
         public static Z0050.Z001.IPackageReferences PackageReferences => Z0050.Z001.PackageReferences.Instance;
@@ -53,6 +55,7 @@ namespace R5T.S0110
         public static IProjectDirectoryPathRelativePaths ProjectDirectoryPathRelativePaths => S0110.ProjectDirectoryPathRelativePaths.Instance;
         public static IProjectElementContextOperations ProjectElementContextOperations => S0110.ProjectElementContextOperations.Instance;
         public static IProjectFileContextOperations ProjectFileContextOperations => S0110.ProjectFileContextOperations.Instance;
+        public static F0020.IProjectFileOperator ProjectFileOperator => F0020.ProjectFileOperator.Instance;
         public static F0055.IProjectNameOperator ProjectNameOperator => F0055.ProjectNameOperator.Instance;
         public static IProjectOptionsContextOperations ProjectOptionsContextOperations => S0110.ProjectOptionsContextOperations.Instance;
         public static F0040.F000.IProjectPathsOperator ProjectPathsOperator => F0040.F000.ProjectPathsOperator.Instance;

@@ -3,7 +3,8 @@
 
 namespace R5T.S0110
 {
-    public struct ContextSetSpecifier<TContextSet>
+    public readonly struct ContextSetSpecifier<TContextSet>
     {
+        public static readonly ContextSetSpecifier<TContextSet> Instance;
     }
 }

@@ -12,6 +12,8 @@ using R5T.L0096.T000;
 using R5T.T0221;
 using R5T.T0241;
 
+using R5T.S0110.Contexts;
+
 
 namespace R5T.S0110
 {
@@ -19,6 +21,146 @@ namespace R5T.S0110
     public partial interface ISolutionFileContextOperations : IContextOperationsMarker,
         L0095.ISolutionFileContextOperations
     {
+        public Func<TSolutionSetContextSet, Task> Create_SolutionFile<TSolutionSetContextSet, TSolutionContextSet, TSolutionSetContext, TSolutionContext>(
+            IDirectionalIsomorphism<TSolutionSetContextSet, TSolutionContextSet> solutionSetIsomorphism,
+            out ContextSetSpecifier<TSolutionContextSet> solutionContextSetSpecifier,
+            out TypeSpecifier<TSolutionContext> solutionContextSpecifier,
+            SolutionSpecification solutionSpecification,
+            ContextPropertiesSet<TSolutionSetContext, IsSet<IHasSolutionDirectoryPath>> solutionSetContextPropertiesSet,
+            out ContextPropertiesSet<TSolutionContext, (
+                IsSet<IHasSolutionSpecification> SolutionSpecificationSet,
+                IsSet<IHasSolutionFilePath> SolutionFilePathSet)> solutionContextPropertiesSet,
+            out IChecked<IFileExists> checkedSolutionFileExists,
+            IEnumerable<Func<TSolutionContextSet, TSolutionContext, Task>> operations
+            )
+            where TSolutionContextSet : IWithContext<TSolutionContext>, IHasContext<TSolutionSetContext>, new()
+            where TSolutionSetContext : IHasSolutionDirectoryPath
+            where TSolutionContext :
+            IWithSolutionDirectoryPath,
+            IHasDirectoryPath,
+            IWithSolutionSpecification,
+            IWithSolutionFilePath,
+            IHasFilePath,
+            IHasSolutionName, new()
+        {
+            var o = Instances.ContextOperations;
+
+            var output = o.In_ChildContextSet<TSolutionContextSet, TSolutionSetContextSet>(
+                solutionSetIsomorphism,
+                out solutionContextSetSpecifier,
+                o.In_Context_OfContextSet<TSolutionContextSet, TSolutionContext>(
+                    out solutionContextSpecifier,
+                    o.Construct_Context_OfContextSet<TSolutionContextSet, TSolutionContext>(
+                        (solutionContextSet, solutionContext) =>
+                        {
+                            var solutionSetContext = solutionContextSet.Get_Context<TSolutionContextSet, TSolutionSetContext>();
+
+                            solutionContext.SolutionDirectoryPath = solutionSetContext.SolutionDirectoryPath;
+
+                            return Task.CompletedTask;
+                        },
+                        Instances.SolutionContextOperations.Set_SolutionSpecification<TSolutionContext>(solutionSpecification,
+                            out (
+                            IsSet<IHasSolutionSpecification> SolutionSpecificationSet,
+                            IsSet<IHasSolutionName> SolutionNameSet
+                            ) solutionSpecificationPropertiesSet).In_ContextSetAndContext(solutionContextSetSpecifier),
+                        Instances.SolutionContextOperations.Set_SolutionFilePath<TSolutionContext>((new IsSet<IHasSolutionDirectoryPath>(), solutionSpecificationPropertiesSet.SolutionNameSet),
+                            out var solutionFilePathSet).In_ContextSetAndContext(solutionContextSetSpecifier)
+                    ),
+                    Instances.FilePathContextOperations.Verify_File_DoesNotExist<TSolutionContext>(Instances.IsSetOperator.Implies<IHasFilePath, IHasSolutionFilePath>(solutionFilePathSet),
+                        out var checkedSolutionFileDoesNotExist).In_ContextSetAndContext(solutionContextSetSpecifier),
+                    Instances.DirectoryPathContextOperations.Create_Directory_IfNotExists<TSolutionContext>(Instances.IsSetOperator.Implies<IHasDirectoryPath, IHasSolutionDirectoryPath>(new IsSet<IHasSolutionDirectoryPath>()),
+                        out _).In_ContextSetAndContext(solutionContextSetSpecifier),
+                    Instances.SolutionFileContextOperations.Create_SolutionFile<TSolutionContext>(solutionFilePathSet, checkedSolutionFileDoesNotExist,
+                        out checkedSolutionFileExists).In_ContextSetAndContext(solutionContextSetSpecifier),
+                    o.From(operations)
+                )
+            );
+
+            solutionContextPropertiesSet = Instances.ContextOperator.Get_ContextPropertiesSet<TSolutionContext>().For(
+                solutionSpecificationPropertiesSet.SolutionSpecificationSet,
+                solutionFilePathSet);
+
+            return output;
+        }
+
+        public Func<TSolutionSetContextSet, Task> Create_SolutionFile<TSolutionSetContextSet, TSolutionContextSet, TSolutionSetContext, TSolutionContext>(
+            IDirectionalIsomorphism<TSolutionSetContextSet, TSolutionContextSet> solutionSetIsomorphism,
+            out ContextSetSpecifier<TSolutionContextSet> solutionContextSetSpecifier,
+            out TypeSpecifier<TSolutionContext> solutionContextSpecifier,
+            SolutionSpecification solutionSpecification,
+            ContextPropertiesSet<TSolutionSetContext, IsSet<IHasSolutionDirectoryPath>> solutionSetContextPropertiesSet,
+            out ContextPropertiesSet<TSolutionContext, (
+                IsSet<IHasSolutionSpecification> SolutionSpecificationSet,
+                IsSet<IHasSolutionFilePath> SolutionFilePathSet)> solutionContextPropertiesSet,
+            out IChecked<IFileExists> checkedSolutionFileExists,
+            params Func<TSolutionContextSet, TSolutionContext, Task>[] operations
+            )
+            where TSolutionContextSet : IWithContext<TSolutionContext>, IHasContext<TSolutionSetContext>, new()
+            where TSolutionSetContext : IHasSolutionDirectoryPath
+            where TSolutionContext :
+            IWithSolutionDirectoryPath,
+            IHasDirectoryPath,
+            IWithSolutionSpecification,
+            IWithSolutionFilePath,
+            IHasFilePath,
+            IHasSolutionName, new()
+            => this.Create_SolutionFile<TSolutionSetContextSet, TSolutionContextSet, TSolutionSetContext, TSolutionContext>(
+                solutionSetIsomorphism,
+                out solutionContextSetSpecifier,
+                out solutionContextSpecifier,
+                solutionSpecification,
+                solutionSetContextPropertiesSet,
+                out solutionContextPropertiesSet,
+                out checkedSolutionFileExists,
+                operations.AsEnumerable());
+
+        public Func<TSolutionSetContext, Task> Create_SolutionFile<TSolutionSetContext, TSolutionContext>(
+            SolutionSpecification solutionSpecification,
+            IsSet<IHasSolutionDirectoryPath> solutionDirectoryPathSet,
+            out IChecked<IFileExists> checkedSolutionFileExists,
+            IEnumerable<Func<TSolutionContext, TSolutionSetContext, Task>> operations = default)
+            where TSolutionSetContext : IHasSolutionDirectoryPath
+            where TSolutionContext :
+            IWithSolutionDirectoryPath,
+            IHasDirectoryPath,
+            IWithSolutionSpecification,
+            IWithSolutionFilePath,
+            IHasFilePath,
+            IHasSolutionName, new()
+        {
+            var o = Instances.ContextOperations;
+
+            var solutionContextSet = Instances.ContextOperator.Get_ContextSetSpecifier<TSolutionContext, TSolutionSetContext>();
+
+            var output = o.In_ContextSet_A_BA<TSolutionContext, TSolutionSetContext>(
+                o.Construct_Context_B_BA<TSolutionContext, TSolutionSetContext>(
+                    (c, a) =>
+                    {
+                        c.SolutionDirectoryPath = a.SolutionDirectoryPath;
+
+                        return Task.CompletedTask;
+                    },
+                    Instances.SolutionContextOperations.Set_SolutionSpecification<TSolutionContext>(solutionSpecification,
+                        out (
+                        IsSet<IHasSolutionSpecification> SolutionSpecificationSet,
+                        IsSet<IHasSolutionName> SolutionNameSet
+                        ) solutionSpecificationPropertiesSet).In(solutionContextSet),
+                    Instances.SolutionContextOperations.Set_SolutionFilePath<TSolutionContext>((new IsSet<IHasSolutionDirectoryPath>(), solutionSpecificationPropertiesSet.SolutionNameSet),
+                        out var solutionFilePathSet).In(solutionContextSet)
+                ),
+                Instances.FilePathContextOperations.Verify_File_DoesNotExist<TSolutionContext>(Instances.IsSetOperator.Implies<IHasFilePath, IHasSolutionFilePath>(solutionFilePathSet),
+                    out var checkedSolutionFileDoesNotExist).In(solutionContextSet),
+                Instances.DirectoryPathContextOperations.Create_Directory_IfNotExists<TSolutionContext>(Instances.IsSetOperator.Implies<IHasDirectoryPath, IHasSolutionDirectoryPath>(new IsSet<IHasSolutionDirectoryPath>()),
+                    out var checkedSolutionDirectoryExists).In(solutionContextSet),
+                Instances.SolutionFileContextOperations.Create_SolutionFile<TSolutionContext>(solutionFilePathSet, checkedSolutionFileDoesNotExist,
+                    out checkedSolutionFileExists).In(solutionContextSet),
+                o.From(operations)
+            );
+
+            return output;
+        }
+
         public Func<TSolutionSetContext, Task> Create_SolutionFile<TSolutionSetContext>(
             SolutionSpecification solutionSpecification,
             IsSet<IHasSolutionDirectoryPath> solutionDirectoryPathSet,
@@ -57,6 +199,18 @@ namespace R5T.S0110
 
             return output;
         }
+
+        public Func<TSolutionSetContext, Task> Create_SolutionFile<TSolutionSetContext>(
+            SolutionSpecification solutionSpecification,
+            IsSet<IHasSolutionDirectoryPath> solutionDirectoryPathSet,
+            out IChecked<IFileExists> checkedSolutionFileExists,
+            params Func<Context003, TSolutionSetContext, Task>[] operations)
+            where TSolutionSetContext : IHasSolutionDirectoryPath
+            => this.Create_SolutionFile<TSolutionSetContext>(
+                solutionSpecification,
+                solutionDirectoryPathSet,
+                out checkedSolutionFileExists,
+                operations.AsEnumerable());
 
         public Func<TSolutionSetContext, Task> Create_SolutionFile<TSolutionSetContext>(
             SolutionSpecification solutionSpecification,

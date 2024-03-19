@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
-
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Octokit;
 using R5T.L0091.T000;
 using R5T.L0096.T000;
 using R5T.T0221;
@@ -317,6 +318,23 @@ namespace R5T.S0110
                 Instances.PropertyGroupXElementOperator.Set_RepositoryUrl(
                     propertyGroupContext.PropertyGroupElement,
                     repositoryUrl);
+            };
+        }
+
+        public Func<TPropertyGroupElementContext, TRepositoryContext, Task> Set_RepositoryUrl<TPropertyGroupElementContext, TRepositoryContext>(
+            ContextPropertiesSet<TPropertyGroupElementContext, IsSet<IHasPropertyGroupElement>> propertyGroupElementContextPropertiesRequired,
+            ContextPropertiesSet<TRepositoryContext, IsSet<IHasRepositoryUrl>> repositoryContextPropertiesRequired,
+            out IsSet<IHasRepositoryUrl> repositoryUrlSet)
+            where TPropertyGroupElementContext : IHasPropertyGroupElement
+            where TRepositoryContext : IHasRepositoryUrl
+        {
+            return (propertyGroupContext, repositoryContext) =>
+            {
+                Instances.PropertyGroupXElementOperator.Set_RepositoryUrl(
+                    propertyGroupContext.PropertyGroupElement,
+                    repositoryContext.RepositoryUrl);
+
+                return Task.CompletedTask;
             };
         }
 
