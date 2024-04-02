@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 
 namespace R5T.S0110.Contexts
@@ -6,6 +7,27 @@ namespace R5T.S0110.Contexts
     public static class ContextSetTypesPairSpecificationExtensions
     {
 #pragma warning disable IDE0060 // Remove unused parameter
+
+        public static IDirectionalIsomorphism<TParentContextSet, TContextSet> For_Contexts<TParentContextSet, TContextSet, TContextA, TContextB, TContextC>(
+            this ContextSetTypesPairSpecification<TParentContextSet, TContextSet> contextSetTypesPairSpecification,
+            AccessorTypeAdapter<TParentContextSet, TContextA, TContextB, TContextC> parentContextSetAdapter,
+            TypeAdapter<TContextSet, TContextA, TContextB, TContextC> contextSetAdapter)
+        {
+            var output = new FunctionBasedDirectionalIsomorphism<TParentContextSet, TContextSet>((parentContextSet, contextSet) =>
+            {
+                var contextA = parentContextSetAdapter.Get_T1(parentContextSet);
+                var contextB = parentContextSetAdapter.Get_T2(parentContextSet);
+                var contextC = parentContextSetAdapter.Get_T3(parentContextSet);
+
+                contextSetAdapter.Set_T1(contextSet, contextA);
+                contextSetAdapter.Set_T2(contextSet, contextB);
+                contextSetAdapter.Set_T3(contextSet, contextC);
+
+                return Task.CompletedTask;
+            });
+
+            return output;
+        }
 
         public static IDirectionalIsomorphism<TParentContextSet, TContextSet> For_Contexts<TParentContextSet, TContextSet, TContext>(
             this ContextSetTypesPairSpecification<TParentContextSet, TContextSet> contextSetTypesPairSpecification,
@@ -42,6 +64,28 @@ namespace R5T.S0110.Contexts
             IHasContext<TContextB>,
             IHasContext<TContextC>
             => Instances.ContextSetIsomorphisms.From_ContextSet<TParentContextSet, TContextSet, TContextA, TContextB, TContextC>();
+
+        //public static IDirectionalIsomorphism<TParentContextSet, TContextSet> For_Contexts<TParentContextSet, TContextSet, TProjectContext, TRepositoryContext, TApplicationContext>(
+        //    this ContextSetTypesPairSpecification<TParentContextSet, TContextSet> contextSetTypesPairSpecification,
+        //    TypeSpecifier<TProjectContext> contextTypeASpecifier,
+        //    TypeSpecifier<TRepositoryContext> contextTypeBSpecifier,
+        //    TypeSpecifier<TApplicationContext> contextTypeCSpecifier)
+        //    where TContextSet :
+        //    IWithProjectContext<TProjectContext>,
+        //    IWithRepositoryContext<TRepositoryContext>,
+        //    IWithApplicationContext<TApplicationContext>
+        //    where TParentContextSet :
+        //    IHasProjectContext<TProjectContext>,
+        //    IHasRepositoryContext<TRepositoryContext>,
+        //    IHasApplicationContext<TApplicationContext>
+        //    => new FunctionBasedDirectionalIsomorphism<TParentContextSet, TContextSet>((parentContext, context) =>
+        //    {
+        //        context.ProjectContext = parentContext.ProjectContext;
+        //        context.RepositoryContext = parentContext.RepositoryContext;
+        //        context.ApplicationContext = parentContext.ApplicationContext;
+
+        //        return Task.CompletedTask;
+        //    });
 
         public static IDirectionalIsomorphism<TParentContextSet, TContextSet> For_Contexts<TParentContextSet, TContextSet, TContextA, TContextB, TContextC, TContextD>(
             this ContextSetTypesPairSpecification<TParentContextSet, TContextSet> contextSetTypesPairSpecification,

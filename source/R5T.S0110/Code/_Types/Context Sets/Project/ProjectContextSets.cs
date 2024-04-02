@@ -70,4 +70,26 @@ namespace R5T.S0110
         SolutionSetContext003 IWithContext<SolutionSetContext003>.Context { get => this.SolutionSetContext; set => this.SolutionSetContext = value; }
         SolutionSetContext003 IHasContext<SolutionSetContext003>.Context => (this as IWithContext<SolutionSetContext003>).Context;
     }
+
+    /// <summary>
+    /// For projects in client-and-server (<see cref="SolutionSetContext004"/>) solution sets.
+    /// </summary>
+    [ContextSetMarker]
+    public class ProjectContextSet006 : ProjectContextSet003<SolutionSetContext004>, IContextSetMarker,
+        IWithContext<SolutionSetContext004>
+    {
+        SolutionSetContext004 IWithContext<SolutionSetContext004>.Context { get => this.SolutionSetContext; set => this.SolutionSetContext = value; }
+        SolutionSetContext004 IHasContext<SolutionSetContext004>.Context => (this as IWithContext<SolutionSetContext004>).Context;
+    }
+
+    /// <summary>
+    /// For projects in client-and-server (<see cref="SolutionSetContext004"/>) solution sets.
+    /// </summary>
+    [ContextSetMarker]
+    public class ProjectContextSet007 : ProjectContextSet003<SolutionSetContext005>, IContextSetMarker,
+        IWithContext<SolutionSetContext005>
+    {
+        SolutionSetContext005 IWithContext<SolutionSetContext005>.Context { get => this.SolutionSetContext; set => this.SolutionSetContext = value; }
+        SolutionSetContext005 IHasContext<SolutionSetContext005>.Context => (this as IWithContext<SolutionSetContext005>).Context;
+    }
 }

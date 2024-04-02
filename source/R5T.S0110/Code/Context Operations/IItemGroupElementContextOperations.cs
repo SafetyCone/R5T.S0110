@@ -13,6 +13,22 @@ namespace R5T.S0110
     [ContextOperationsMarker]
     public partial interface IItemGroupElementContextOperations : IContextOperationsMarker
     {
+        public Func<TItemGroupElementContext, Task> Add_SupportedPlatform<TItemGroupElementContext>(
+            IsSet<IHasItemGroupElement> itemGroupElementSet,
+            string includeValue)
+            where TItemGroupElementContext : IHasItemGroupElement
+        {
+            return itemGroupElementContext =>
+            {
+                // Ignore the package reference element.
+                _ = Instances.ItemGroupXElementOperator.Add_SupportedPlatform(
+                    itemGroupElementContext.ItemGroupElement,
+                    includeValue);
+
+                return Task.CompletedTask;
+            };
+        }
+
         public Func<TItemGroupElementContext, Task> Add_Folder<TItemGroupElementContext>(
             IsSet<IHasItemGroupElement> itemGroupElementSet,
             string relativePath)

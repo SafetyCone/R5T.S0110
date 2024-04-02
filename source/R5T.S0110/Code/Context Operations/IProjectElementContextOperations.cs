@@ -90,7 +90,7 @@ namespace R5T.S0110
                     out var context006ContextSpecifier,
                     o.Construct_Context_OfContextSet<TItemGroupElementContextSet, Context007>(
                         Instances.ItemGroupElementContextOperations.Set_ItemGroupElement_New<Context007>(
-                            out var itemGroupElementSet).In_ContextSetAndContext(itemGroupElementContextSetSpecifier)
+                            out var itemGroupElementSet).In_ContextSetWithContext(itemGroupElementContextSetSpecifier)
                     )
                 ),
                 Instances.ActionOperations.From(operations),
@@ -356,21 +356,21 @@ namespace R5T.S0110
                     out var context006ContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyElementContextSet, TPropertyElementContext>(
                         Instances.PropertyGroupElementContextOperations.Set_PropertyGroupElement_New<TPropertyElementContext>(
-                            out var propertyGroupElementSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            out var propertyGroupElementSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 o.Set_Context_OfContextSet<TPropertyElementContextSet, ProjectOptionsContext>(
                     out TypeSpecifier<ProjectOptionsContext> projectOptionsContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyElementContextSet, ProjectOptionsContext>(
                         Instances.ProjectOptionsContextOperations.Set_ProjectOptions<ProjectOptionsContext>(projectOptions,
-                            out var projectOptionsSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier),
+                            out var projectOptionsSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier),
                         Instances.IsSetContextOperations.Implies<ProjectOptionsContext, IHasProjectOptions, IHasCompany, IHasCopyright, IHasNuGetAuthor, IHasVersion>(projectOptionsSet,
                             out (
                             IsSet<IHasCompany> CompanySet,
                             IsSet<IHasCopyright> CopyrightSet,
                             IsSet<IHasNuGetAuthor> NuGetAuthorSet,
                             IsSet<IHasVersion> VersionSet
-                            ) impliedProjectOptionsSet_Package).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            ) impliedProjectOptionsSet_Package).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 Instances.PropertyGroupElementContextOperations.Set_Label_Package<TPropertyElementContext>(propertyGroupElementSet).In_ContextSet(propertyGroupContextSetSpecifier),
@@ -451,21 +451,21 @@ namespace R5T.S0110
                     out var context006ContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyElementContextSet, Context006>(
                         Instances.PropertyGroupElementContextOperations.Set_PropertyGroupElement_New<Context006>(
-                            out var propertyGroupElementSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            out var propertyGroupElementSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 o.Set_Context_OfContextSet<TPropertyElementContextSet, ProjectOptionsContext>(
                     out TypeSpecifier<ProjectOptionsContext> projectOptionsContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyElementContextSet, ProjectOptionsContext>(
                         Instances.ProjectOptionsContextOperations.Set_ProjectOptions<ProjectOptionsContext>(projectOptions,
-                            out var projectOptionsSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier),
+                            out var projectOptionsSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier),
                         Instances.IsSetContextOperations.Implies<ProjectOptionsContext, IHasProjectOptions, IHasCompany, IHasCopyright, IHasNuGetAuthor, IHasVersion>(projectOptionsSet,
                             out (
                             IsSet<IHasCompany> CompanySet,
                             IsSet<IHasCopyright> CopyrightSet,
                             IsSet<IHasNuGetAuthor> NuGetAuthorSet,
                             IsSet<IHasVersion> VersionSet
-                            ) impliedProjectOptionsSet_Package).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            ) impliedProjectOptionsSet_Package).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 Instances.PropertyGroupElementContextOperations.Set_Label_Package<Context006>(propertyGroupElementSet).In_ContextSet(propertyGroupContextSetSpecifier),
@@ -634,19 +634,19 @@ namespace R5T.S0110
                     out var context006ContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyGroupElementContextSet, TPropertyGroupElementContext>(
                         Instances.PropertyGroupElementContextOperations.Set_PropertyGroupElement_New<TPropertyGroupElementContext>(
-                            out var propertyGroupElementSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            out var propertyGroupElementSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 o.Set_Context_OfContextSet<TPropertyGroupElementContextSet, ProjectOptionsContext>(
                     out var projectOptionsContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyGroupElementContextSet, ProjectOptionsContext>(
                         Instances.ProjectOptionsContextOperations.Set_ProjectOptions<ProjectOptionsContext>(projectOptions,
-                            out var projectOptionsSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier),
+                            out var projectOptionsSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier),
                         Instances.IsSetContextOperations.Implies<ProjectOptionsContext, IHasProjectOptions, IHasTargetFramework, IHasIgnoreWarningNumbersList>(projectOptionsSet,
                             out (
                             IsSet<IHasTargetFramework> TargetFrameworkSet,
                             IsSet<IHasIgnoreWarningNumbersList> IgnoreWarningNumbersListSet
-                            ) impliedProjectOptionsSet_Main).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            ) impliedProjectOptionsSet_Main).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 Instances.PropertyGroupElementContextOperations.Set_Label_Main<TPropertyGroupElementContext>(propertyGroupElementSet).In_ContextSet(propertyGroupContextSetSpecifier),
@@ -711,19 +711,19 @@ namespace R5T.S0110
                     out var context006ContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyGroupElementContextSet, Context006>(
                         Instances.PropertyGroupElementContextOperations.Set_PropertyGroupElement_New<Context006>(
-                            out var propertyGroupElementSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            out var propertyGroupElementSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 o.Set_Context_OfContextSet<TPropertyGroupElementContextSet, ProjectOptionsContext>(
                     out var projectOptionsContextSpecifier,
                     o.Construct_Context_OfContextSet<TPropertyGroupElementContextSet, ProjectOptionsContext>(
                         Instances.ProjectOptionsContextOperations.Set_ProjectOptions<ProjectOptionsContext>(projectOptions,
-                            out var projectOptionsSet).In_ContextSetAndContext(propertyGroupContextSetSpecifier),
+                            out var projectOptionsSet).In_ContextSetWithContext(propertyGroupContextSetSpecifier),
                         Instances.IsSetContextOperations.Implies<ProjectOptionsContext, IHasProjectOptions, IHasTargetFramework, IHasIgnoreWarningNumbersList>(projectOptionsSet,
                             out (
                             IsSet<IHasTargetFramework> TargetFrameworkSet,
                             IsSet<IHasIgnoreWarningNumbersList> IgnoreWarningNumbersListSet
-                            ) impliedProjectOptionsSet_Main).In_ContextSetAndContext(propertyGroupContextSetSpecifier)
+                            ) impliedProjectOptionsSet_Main).In_ContextSetWithContext(propertyGroupContextSetSpecifier)
                     )
                 ),
                 Instances.PropertyGroupElementContextOperations.Set_Label_Main<Context006>(propertyGroupElementSet).In_ContextSet(propertyGroupContextSetSpecifier),
@@ -971,6 +971,20 @@ namespace R5T.S0110
                 return Instances.ProjectXElementOperator.To_File_Separated(
                     context.ProjectFilePath,
                     context.ProjectElement);
+            };
+        }
+
+        /// <inheritdoc cref="L0032.Z001.IProjectSdkNames.BlazorWebAssembly"/>
+        public Func<TContext, Task> Set_SDK_BlazorWebAssembly<TContext>()
+            where TContext : IHasProjectElement
+        {
+            return context =>
+            {
+                Instances.ProjectXElementOperator.Set_Sdk(
+                    context.ProjectElement,
+                    Instances.ProjectSdkNames.BlazorWebAssembly);
+
+                return Task.CompletedTask;
             };
         }
 

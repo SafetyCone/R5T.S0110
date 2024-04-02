@@ -39,7 +39,8 @@ namespace R5T.S0110
         IWithRepositoryDirectoryPath,
         IHasDirectoryPath,
         IWithRepository,
-        IWithRepositoryUrl
+        IWithRepositoryUrl,
+        IHasLicenseName
     {
         public RepositorySpecification RepositorySpecification { get; set; }
         public string RepositoryName => this.RepositorySpecification.Name;
@@ -51,5 +52,7 @@ namespace R5T.S0110
         public string DirectoryPath => this.RepositoryDirectoryPath;
 
         public string RepositoryUrl { get; set; }
+
+        public string LicenseName => this.RepositorySpecification.License.ToString();
     }
 }

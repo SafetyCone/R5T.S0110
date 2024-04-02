@@ -62,32 +62,32 @@ namespace R5T.S0110
                 //    Instances.ContextSetIsomorphisms.To_ContextSet004<TProjectContextSet>(
                 //        ContextSetContextTypesSpecifier<Context000, Context001, ProjectContext001>.Instance),
                 //    projectContextSpecifier),
-                ).In_ContextSetAndContext(projectContextSpecifier),
+                ).In_ContextSetWithContext(projectContextSpecifier),
                 o.Get<ProjectContext001, (IsSet<IHasProjectFilePath>, IsSet<IHasNamespaceName>)>(
                     (projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.NamespaceNameSet),
                     out (IsSet<IHasProjectFilePath>, IsSet<IHasNamespaceName>) codeFilePropertiesRequired
-                ).In_ContextSetAndContext(projectContextSetSpecifier),
+                ).In_ContextSetWithContext(projectContextSetSpecifier),
                 // Create project's files.
                 Instances.CodeFileGenerationContextOperations.Create_DocumentationFile<ProjectContext001>((projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.NamespaceNameSet, projectContextPropertiesSet.PropertiesSet.ProjectDescriptionSet),
-                    out var checkedDocumentationFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedDocumentationFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_InstancesFile<ProjectContext001>((projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.NamespaceNameSet),
-                    out var checkedInstancesFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedInstancesFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_ProjectPlanFile<ProjectContext001>((projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.ProjectNameSet, projectContextPropertiesSet.PropertiesSet.ProjectDescriptionSet),
-                    out var checkedProjectPlanFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedProjectPlanFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_ProgramFile_ForStaticHtmlWebApplication<ProjectContext001>(codeFilePropertiesRequired,
-                    out var checkedProgramFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedProgramFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_HostRazorPageFile_ForStaticHtmlWebApplication<ProjectContext001>(codeFilePropertiesRequired,
-                    out var checkedHostFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedHostFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_AppRazorComponentFile_ForStaticHtmlWebApplication<ProjectContext001>(codeFilePropertiesRequired,
-                    out var checkedAppFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedAppFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_IndexRazorComponentFile_ForStaticHtmlWebApplication<ProjectContext001>(codeFilePropertiesRequired,
-                    out var checkedIndexFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedIndexFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_AppSettingsJsonFile<ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet,
-                    out var checkedAppSettingsJsonFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedAppSettingsJsonFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_DevelopmentAppSettingsJsonFile<ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet,
-                    out var checkedDevelopmentAppSettingsJsonFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedDevelopmentAppSettingsJsonFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_LaunchSettingsJsonFile<ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet,
-                    out var checkedLaunchSettingsJsonFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedLaunchSettingsJsonFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 o.From(operations)
             );
 
@@ -131,19 +131,19 @@ namespace R5T.S0110
                 //    Instances.ContextSetIsomorphisms.To_ContextSet004<TProjectContextSet>(
                 //        ContextSetContextTypesSpecifier<Context000, Context001, ProjectContext001>.Instance),
                 //    projectContextSpecifier),
-                ).In_ContextSetAndContext(projectContextSpecifier),
+                ).In_ContextSetWithContext(projectContextSpecifier),
                 // Create project's files.
                 Instances.CodeFileGenerationContextOperations.Create_DocumentationFile<ProjectContext001>((projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.NamespaceNameSet, projectContextPropertiesSet.PropertiesSet.ProjectDescriptionSet),
-                    out var checkedDocumentationFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedDocumentationFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_InstancesFile<ProjectContext001>((projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.NamespaceNameSet),
-                    out var checkedInstancesFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedInstancesFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_ProjectPlanFile<ProjectContext001>((projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.ProjectNameSet, projectContextPropertiesSet.PropertiesSet.ProjectDescriptionSet),
-                    out var checkedProjectPlanFileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedProjectPlanFileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_Component1File<ProjectContext001>((projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet, projectContextPropertiesSet.PropertiesSet.NamespaceNameSet),
-                    out var checkedComponent1FileExists).In_ContextSetAndContext(projectContextSetSpecifier),
+                    out var checkedComponent1FileExists).In_ContextSetWithContext(projectContextSetSpecifier),
                 Instances.CodeFileGenerationContextOperations.Create_WwwrootDirectory<ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet,
-                    out var checkedWwwrootDirectoryExists).In_ContextSetAndContext(projectContextSetSpecifier),
-                Instances.ActionOperations.From(operations).In_ContextSetAndContext(projectContextSpecifier)
+                    out var checkedWwwrootDirectoryExists).In_ContextSetWithContext(projectContextSetSpecifier),
+                Instances.ActionOperations.From(operations).In_ContextSetWithContext(projectContextSpecifier)
             );
 
             return output;

@@ -227,6 +227,19 @@ namespace R5T.S0110
             };
         }
 
+        public Func<TContext, Task> Set_OutputType_WinExe<TContext>(
+            IsSet<IHasPropertyGroupElement> propertyGroupElementSet)
+            where TContext : IHasPropertyGroupElement
+        {
+            return context =>
+            {
+                Instances.PropertyGroupXElementOperator.Set_OutputType_WinExe(
+                    context.PropertyGroupElement);
+
+                return Task.CompletedTask;
+            };
+        }
+
         public Func<TPropertyGroupContext, TOptionsContext, Task> Set_PackageLicenseExpression<TPropertyGroupContext, TOptionsContext>(
             ContextPropertiesSet<TPropertyGroupContext, IsSet<IHasPropertyGroupElement>> propertyGroupContextPropertiesRequired,
             ContextPropertiesSet<TOptionsContext, IsSet<IHasPackageLicenseExpression>> optionsContextPropertiesRequired,
@@ -400,6 +413,47 @@ namespace R5T.S0110
             };
         }
 
+        public Func<TPropertyGroupContext, Task> Set_StaticWebAssetProjectMode<TPropertyGroupContext>(
+            IsSet<IHasPropertyGroupElement> propertyGroupElement_PropertyGroupContextPropertiesRequired)
+            where TPropertyGroupContext : IHasPropertyGroupElement
+        {
+            return propertyGroupContext =>
+            {
+                Instances.PropertyGroupXElementOperator.Set_StaticWebAssetProjectMode(
+                    propertyGroupContext.PropertyGroupElement);
+
+                return Task.CompletedTask;
+            };
+        }
+
+        public Func<TPropertyGroupContext, Task> Set_NoDefaultLaunchSettingsFile<TPropertyGroupContext>(
+            IsSet<IHasPropertyGroupElement> propertyGroupElement_PropertyGroupContextPropertiesRequired)
+            where TPropertyGroupContext : IHasPropertyGroupElement
+        {
+            return propertyGroupContext =>
+            {
+                Instances.PropertyGroupXElementOperator.Set_NoDefaultLaunchSettingsFile(
+                    propertyGroupContext.PropertyGroupElement);
+
+                return Task.CompletedTask;
+            };
+        }
+
+        /// <inheritdoc cref="Z0057.Platform.ITargetFrameworkMonikers.NET_8_Windows"/>
+        public Func<TPropertyGroupContext, Task> Set_TargetFramework_Net8_Windows<TPropertyGroupContext>(
+            IsSet<IHasPropertyGroupElement> propertyGroupElement_PropertyGroupContextPropertiesRequired)
+            where TPropertyGroupContext : IHasPropertyGroupElement
+        {
+            return propertyGroupContext =>
+            {
+                Instances.PropertyGroupXElementOperator.Set_TargetFramework(
+                    propertyGroupContext.PropertyGroupElement,
+                    Instances.TargetFrameworkMonikers.NET_8_Windows);
+
+                return Task.CompletedTask;
+            };
+        }
+
         /// <inheritdoc cref="Z0057.Platform.ITargetFrameworkMonikers.Net_Standard2_1"/>
         public Func<TPropertyGroupContext, Task> Set_TargetFramework_NetStandard2_1<TPropertyGroupContext>(
             IsSet<IHasPropertyGroupElement> propertyGroupElement_PropertyGroupContextPropertiesRequired)
@@ -410,6 +464,19 @@ namespace R5T.S0110
                 Instances.PropertyGroupXElementOperator.Set_TargetFramework(
                     propertyGroupContext.PropertyGroupElement,
                     Instances.TargetFrameworkMonikers.Net_Standard2_1);
+
+                return Task.CompletedTask;
+            };
+        }
+
+        public Func<TPropertyGroupContext, Task> Set_UseWindowsForms<TPropertyGroupContext>(
+            IsSet<IHasPropertyGroupElement> propertyGroupElement_PropertyGroupContextPropertiesRequired)
+            where TPropertyGroupContext : IHasPropertyGroupElement
+        {
+            return propertyGroupContext =>
+            {
+                Instances.PropertyGroupXElementOperator.Set_UseWindowsForms(
+                    propertyGroupContext.PropertyGroupElement);
 
                 return Task.CompletedTask;
             };

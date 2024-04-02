@@ -36,12 +36,12 @@ namespace R5T.S0110
         {
             var o = Instances.ContextOperations;
 
-            return o.In_ContextSetAndContext<TContextSet, TApplicationContext>(
+            return o.In_ContextSetWithContext<TContextSet, TApplicationContext>(
                 out applicationContextSetSpecifier,
                 out applicationContextSpecifier,
                 o.Construct_Context_OfContextSet<TContextSet, TApplicationContext>(
                     this.Set_ApplicationContextProperties<TApplicationContext>(
-                        out applicationContextPropertiesSet).In_ContextSetAndContext(applicationContextSetSpecifier)
+                        out applicationContextPropertiesSet).In_ContextSetWithContext(applicationContextSetSpecifier)
                 ),
                 operations
             );

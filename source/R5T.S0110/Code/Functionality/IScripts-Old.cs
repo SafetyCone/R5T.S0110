@@ -212,7 +212,7 @@ namespace R5T.S0110
                                     // Set the project file path.
                                     Set_LibraryProjectFilePath(out var libraryProjectFilePathSet).In_ContextSet(projectContextSetSpecifier_Library)
                                 )
-                            ).In_ContextSetAndContext(solutionSetContextSpecifier),
+                            ).In_ContextSetWithContext(solutionSetContextSpecifier),
                             Instances.SolutionFileContextOperations.Create_SolutionFile<SolutionSetContext003>(librarySolutionSpecification, solutionSetContextPropertiesSet.PropertiesSet,
                                 out var checkedSolutionFileExists_Library,
                                 Instances.EnumerableOperator.From(
@@ -226,7 +226,7 @@ namespace R5T.S0110
                                     },
                                     Set_LibrarySolutionFilePath<Context003>(out var librarySolutionFilePathSet)
                                 )
-                            ).In_ContextSetAndContext(solutionSetContextSetSpecifier),
+                            ).In_ContextSetWithContext(solutionSetContextSetSpecifier),
                             // Create the construction project.
                             Instances.SolutionSetContextSetOperations.Create_StaticHtmlWebApplicationProject<SolutionSetContextSet004, ProjectContextSet005, SolutionSetContext003>(
                                 Instances.ContextSetIsomorphisms.For_ContextSets<SolutionSetContextSet004, ProjectContextSet005>().For_Contexts(
@@ -246,7 +246,7 @@ namespace R5T.S0110
                                     Instances.CodeFileGenerationContextOperations.Create_IndexRazorComponentFile_ForStaticHtmlWebApplication_WithLibrary<ProjectContext001>(
                                         (Instances.IsSetOperator.IsSet<IHasProjectFilePath>(), Instances.IsSetOperator.IsSet<IHasNamespaceName>()),
                                         out _
-                                    ).In_ContextSetAndContext(projectContextSetSpecifier_Construction),
+                                    ).In_ContextSetWithContext(projectContextSetSpecifier_Construction),
                                     // Add the library project reference.
                                     (projectContextSet, projectContext) =>
                                     {
@@ -255,9 +255,9 @@ namespace R5T.S0110
                                             projectContextSet.SolutionSetContext.LibraryProjectFilePath);
                                     },
                                     // Set the project file path.
-                                    Set_ConstructionProjectFilePath(out var constructionProjectFilePathSet).In_ContextSetAndContext(projectContextSetSpecifier_Library)
+                                    Set_ConstructionProjectFilePath(out var constructionProjectFilePathSet).In_ContextSetWithContext(projectContextSetSpecifier_Library)
                                 )
-                            ).In_ContextSetAndContext(solutionSetContextSpecifier),
+                            ).In_ContextSetWithContext(solutionSetContextSpecifier),
                             Instances.SolutionFileContextOperations.Create_SolutionFile<SolutionSetContext003>(constructionSolutionSpecification, solutionSetContextPropertiesSet.PropertiesSet,
                                 out var checkedSolutionFileExists_Construction,
                                 Instances.EnumerableOperator.From(
@@ -272,12 +272,12 @@ namespace R5T.S0110
                                     },
                                     Set_ConstructionSolutionFilePath<Context003>(out var constructionSolutionFilePathSet)
                                 )
-                            ).In_ContextSetAndContext(solutionSetContextSetSpecifier),
+                            ).In_ContextSetWithContext(solutionSetContextSetSpecifier),
                             // Open the construction solution file.
                             Instances.VisualStudioContextOperations.Open_VisualStudioSolution<SolutionSetContext003>(
-                                x => Task.FromResult(x.ConstructionSolutionFilePath)).In_ContextSetAndContext(solutionSetContextSetSpecifier)
-                        ).In_ContextSetAndContext(repositoryContextSpecifier)
-                    ).In_ContextSetAndContext(applicationContextSpecifier)
+                                x => Task.FromResult(x.ConstructionSolutionFilePath)).In_ContextSetWithContext(solutionSetContextSetSpecifier)
+                        ).In_ContextSetWithContext(repositoryContextSpecifier)
+                    ).In_ContextSetWithContext(applicationContextSpecifier)
                 )
             );
         }
@@ -546,15 +546,15 @@ namespace R5T.S0110
                                     Instances.SolutionSetContextOperations.Set_ProjectFilePath<ProjectContext001, SolutionSetContext002>(
                                         out var libraryProjectFilePathSet).In_ContextSet(projectContextSetSpecifier)
                                 )
-                            ).In_ContextSetAndContext(solutionContextSpecifier),
+                            ).In_ContextSetWithContext(solutionContextSpecifier),
                             Instances.SolutionFileContextOperations.Create_SolutionFile<SolutionSetContext002>(solutionSpecification, (solutionSetContextPropertiesSet.PropertiesSet, libraryProjectFilePathSet.PropertiesSet),
                                 out var solutionFilePathSet,
-                                out var checkedSolutionFileExists).In_ContextSetAndContext(solutionSetContextSetSpecifier),
+                                out var checkedSolutionFileExists).In_ContextSetWithContext(solutionSetContextSetSpecifier),
                             // Open the construction solution file.
                             Instances.VisualStudioContextOperations.Open_VisualStudioSolution<SolutionSetContext002>(
-                                x => Task.FromResult(x.SolutionFilePath)).In_ContextSetAndContext(solutionSetContextSetSpecifier)
-                        ).In_ContextSetAndContext(repositoryContextSpecifier)
-                    ).In_ContextSetAndContext(applicationContextSpecifier)
+                                x => Task.FromResult(x.SolutionFilePath)).In_ContextSetWithContext(solutionSetContextSetSpecifier)
+                        ).In_ContextSetWithContext(repositoryContextSpecifier)
+                    ).In_ContextSetWithContext(applicationContextSpecifier)
                 )
             );
         }

@@ -28,6 +28,380 @@ namespace R5T.S0110
         L0081.O001.IRepositoryContextOperations,
         L0081.O002.IRepositoryContextOperations
     {
+        /// <summary>
+        /// Allow deleting a repository if it already exists, based on an input parameter.
+        /// If the repository exists, but deletion is not allowed, an exception is thrown.
+        /// If the repository exists, and deletion is allowed, the repository is deleted, and the repository generation operations are run.
+        /// If the repository does not exist, the repository generation operations are run.
+        /// </summary>
+        public Func<TContextSet, Task> Regenerate_Repository_OrExceptionIfExists<TContextSet, TRepositoryContext, TGitHubContext>(
+            // No default value since allowing deletion is an important thing.
+            bool allowDeletionIfExists,
+            ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet)> repositoryContextPropertiesRequired,
+            ContextPropertiesSet<TGitHubContext, IsSet<IHasGitHubClient>> gitHubContextPropertiesRequired,
+            IEnumerable<Func<TContextSet, Task>> repositoryGenerationOperations)
+            where TContextSet :
+            IHasContext<TRepositoryContext>,
+            IHasContext<TGitHubContext>
+            where TRepositoryContext :
+            IHasRepositoryName,
+            IHasRepositoryOwnerName,
+            IHasRepositoryDirectoryPath
+            where TGitHubContext :
+            IHasGitHubClient
+        {
+            var contextSetSpecifier = ContextSetSpecifier<TContextSet>.Instance;
+
+            return Instances.ContextOperations.In_ContextSetAndContext<TContextSet, CheckRepositoryExistsContext>(
+                contextSet =>
+                {
+                    var checkRepositoryExistsContext = new CheckRepositoryExistsContext();
+
+                    return Task.FromResult(checkRepositoryExistsContext);
+                },
+                out TypeSpecifier<CheckRepositoryExistsContext> contextSpecifier,
+                Instances.ContextOperations.If_InContextSetAndContext<TContextSet, CheckRepositoryExistsContext>(
+                    allowDeletionIfExists,
+                    // Since we are allowed to delete the repository, go ahead and delete it idempotently since we are inside of a regenerate method.
+                    this.Clear_Repository<TRepositoryContext, TGitHubContext>(
+                        repositoryContextPropertiesRequired,
+                        gitHubContextPropertiesRequired,
+                        out var @checked
+                    ).In_ContextSetAndContext_ABC<TContextSet, CheckRepositoryExistsContext, TRepositoryContext, TGitHubContext>(contextSetSpecifier, contextSpecifier),
+                    // Since we are not allowed to delete the repository, verify it does not already exist.
+                    Instances.ContextOperations.From(
+                        this.Check_LocalRepositoryExists<TRepositoryContext>(
+                            Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+                                repositoryContextPropertiesRequired.PropertiesSet.RepositoryDirectoryPathSet),
+                            out var localRepositoryExistsSet
+                        ).In_ContextSetAndContext(contextSetSpecifier),
+                        this.Check_RemoteRepositoryExists<TRepositoryContext, TGitHubContext>(
+                            Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+                                repositoryContextPropertiesRequired.PropertiesSet.RepositoryNameSet,
+                                repositoryContextPropertiesRequired.PropertiesSet.RepositoryOwnerNameSet),
+                            gitHubContextPropertiesRequired,
+                            out var remoteRepositoryExistsSet
+                        ).In_ContextSetAndContext(contextSetSpecifier),
+                        this.Verify_RepositoryDoesNotExist<TRepositoryContext>(
+                            Instances.ContextOperator.Get_ContextPropertiesSet<CheckRepositoryExistsContext>().For(
+                                localRepositoryExistsSet.PropertiesSet,
+                                remoteRepositoryExistsSet.PropertiesSet),
+                            repositoryContextPropertiesRequired
+                        ).In_ContextSetAndContext(contextSetSpecifier)
+                    )
+                ),
+                Instances.ContextOperations.From(repositoryGenerationOperations).In_ContextSetAndContext(contextSpecifier)
+            );
+        }
+
+        /// <inheritdoc cref="Regenerate_Repository_OrExceptionIfExists{TContextSet, TRepositoryContext, TGitHubContext}(bool, ContextPropertiesSet{TRepositoryContext, ValueTuple{IsSet{IHasRepositoryName}, IsSet{IHasRepositoryOwnerName}, IsSet{IHasRepositoryDirectoryPath}}}, ContextPropertiesSet{TGitHubContext, IsSet{IHasGitHubClient}}, Func{TContextSet, Task}[])"/>
+        public Func<TContextSet, Task> Regenerate_Repository_OrExceptionIfExists<TContextSet, TRepositoryContext, TGitHubContext>(
+            // No default value since allowing deletion is an important thing.
+            bool allowDeletionIfExists,
+            ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet)> repositoryContextPropertiesRequired,
+            ContextPropertiesSet<TGitHubContext, IsSet<IHasGitHubClient>> gitHubContextPropertiesRequired,
+            params Func<TContextSet, Task>[] repositoryGenerationOperations)
+            where TContextSet :
+            IHasContext<TRepositoryContext>,
+            IHasContext<TGitHubContext>
+            where TRepositoryContext :
+            IHasRepositoryName,
+            IHasRepositoryOwnerName,
+            IHasRepositoryDirectoryPath
+            where TGitHubContext :
+            IHasGitHubClient
+            => this.Regenerate_Repository_OrExceptionIfExists<TContextSet, TRepositoryContext, TGitHubContext>(
+                allowDeletionIfExists,
+                repositoryContextPropertiesRequired,
+                gitHubContextPropertiesRequired,
+                repositoryGenerationOperations.AsEnumerable());
+
+        public Func<CheckRepositoryExistsContext, TRepositoryContext, Task> Check_LocalRepositoryExists<TRepositoryContext>(
+            ContextPropertiesSet<TRepositoryContext, IsSet<IHasRepositoryDirectoryPath>> repositoryContextPropertiesRequired,
+            out ContextPropertiesSet<CheckRepositoryExistsContext, IsSet<IHasValue>> localRepositoryExistsSet)
+            where TRepositoryContext :
+            IHasRepositoryDirectoryPath
+        {
+            return (checkRepositoryExistsContext, repositoryContext) =>
+            {
+                checkRepositoryExistsContext.LocalRepositoryExists = Instances.FileSystemOperator.Exists_Directory(
+                    repositoryContext.RepositoryDirectoryPath);
+
+                return Task.CompletedTask;
+            };
+        }
+
+        public Func<CheckRepositoryExistsContext, TRepositoryContext, TGitHubContext, Task> Check_RemoteRepositoryExists<TRepositoryContext, TGitHubContext>(
+            ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet)> repositoryContextPropertiesRequired,
+            ContextPropertiesSet<TGitHubContext, IsSet<IHasGitHubClient>> gitHubContextPropertiesRequired,
+            out ContextPropertiesSet<CheckRepositoryExistsContext, IsSet<IHasValue>> remoteRepositoryExistsSet)
+            where TRepositoryContext :
+            IHasRepositoryName,
+            IHasRepositoryOwnerName
+            where TGitHubContext :
+            IHasGitHubClient
+        {
+            return async (checkRepositoryExistsContext, repositoryContext, gitHubContext) =>
+            {
+                checkRepositoryExistsContext.RemoteRepositoryExists = await Instances.GitHubClientOperator.Exists_Repository(
+                    gitHubContext.GitHubClient,
+                    repositoryContext.RepositoryOwnerName,
+                    repositoryContext.RepositoryName);
+            };
+        }
+
+        public Func<CheckRepositoryExistsContext, TRepositoryContext, Task> Verify_RepositoryDoesNotExist<TRepositoryContext>(
+            ContextPropertiesSet<CheckRepositoryExistsContext, (
+                IsSet<IHasValue> localRepositoryExistsSet,
+                IsSet<IHasValue> remoteRepositoryExistsSet)> checkRepositoryExistsContextPropertiesRequired,
+            ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet)> propertiesRequired)
+            where TRepositoryContext :
+            IHasRepositoryName,
+            IHasRepositoryOwnerName,
+            IHasRepositoryDirectoryPath
+        {
+            return (checkRepositoryExistsContext, repositoryContext) =>
+            {
+                if (checkRepositoryExistsContext.LocalRepositoryExists || checkRepositoryExistsContext.RemoteRepositoryExists)
+                {
+                    Console.WriteLine($"Local repository for {repositoryContext.RepositoryName}/{repositoryContext.RepositoryOwnerName} exists: {checkRepositoryExistsContext.LocalRepositoryExists}");
+                    Console.WriteLine($"Remote repository for {repositoryContext.RepositoryName}/{repositoryContext.RepositoryOwnerName} exists: {checkRepositoryExistsContext.LocalRepositoryExists}");
+
+                    var message = $"{repositoryContext.RepositoryName}/{repositoryContext.RepositoryOwnerName}: repository exists.\n\tDirectory path: {repositoryContext.RepositoryDirectoryPath}";
+
+                    Console.WriteLine(message);
+
+                    throw new Exception(message);
+                }
+
+                return Task.CompletedTask;
+            };
+        }
+
+        public Func<TRepositoryContext, TGitHubContext, Task> Generate_Repository<TRepositoryContext, TGitHubContext>(
+            ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet)> repositoryContextPropertiesRequired,
+            ContextPropertiesSet<TGitHubContext, (
+                IsSet<IHasGitHubClient> GitHubClientSet,
+                IsSet<N001.IHasAuthentication> GitHubAuthenticationSet)> gitHubContextPropertiesRequired,
+            out ContextPropertiesSet<TRepositoryContext, IsSet<IHasRepository>> repositoryContextPropertiesSet,
+            out (
+            IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+            IChecked<ILocalRepositoryExists> LocalRepositoryExists
+            ) checkedResults
+            )
+            where TGitHubContext :
+            IHasGitHubClient,
+            N001.IHasAuthentication
+            where TRepositoryContext :
+            IHasRepositorySpecification,
+            IHasRepositoryDirectoryPath,
+            IWithRepository
+        {
+            var output = Instances.ContextOperations.In_ContextSet<TRepositoryContext, TGitHubContext>(
+                // Create the repository, both remote and local.
+                // Create the remote repository.
+                Instances.GitHubClientContextOperations.Create_Repository_NonIdempotent<TRepositoryContext, TGitHubContext>(
+                    (gitHubContextPropertiesRequired.PropertiesSet.GitHubClientSet, repositoryContextPropertiesRequired.PropertiesSet.RepositorySpecificationSet),
+                    out var repositorySet,
+                    out var checkedGitHubRepositoryExists
+                ),
+                // Create the local repository.
+                Instances.GitContextOperations.Clone_ToLocalRepository<TRepositoryContext, TGitHubContext>(
+                    (repositorySet, gitHubContextPropertiesRequired.PropertiesSet.GitHubAuthenticationSet, repositoryContextPropertiesRequired.PropertiesSet.RepositoryDirectoryPathSet),
+                    out var checkedLocalRepositoryExists
+                )
+            );
+
+            repositoryContextPropertiesSet = Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+                repositorySet);
+
+            checkedResults = (
+                checkedGitHubRepositoryExists,
+                checkedLocalRepositoryExists
+                );
+
+            return output;
+        }
+
+        public Func<TRepositoryContext, TGitHubContext, Task> Generate_Repository<TRepositoryContext, TGitHubContext>(
+            ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet)> repositoryContextPropertiesRequired,
+            ContextPropertiesSet<TGitHubContext, (
+                IsSet<IHasGitHubClient> GitHubClientSet,
+                IsSet<N001.IHasAuthentication> GitHubAuthenticationSet)> gitHubContextPropertiesRequired,
+            out ContextPropertiesSet<TRepositoryContext, IsSet<IHasRepository>> repositoryContextPropertiesSet,
+            out (
+            IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+            IChecked<ILocalRepositoryExists> LocalRepositoryExists,
+            IChecked<IFileExists> GitIgnoreFileExists
+            ) checkedResults
+            )
+            where TGitHubContext :
+            IHasGitHubClient,
+            N001.IHasAuthentication
+            where TRepositoryContext :
+            IHasRepositorySpecification,
+            IHasRepositoryDirectoryPath,
+            IWithRepository
+        {
+            var output = Instances.ContextOperations.In_ContextSet<TRepositoryContext, TGitHubContext>(
+                this.Generate_Repository<TRepositoryContext, TGitHubContext>(
+                    repositoryContextPropertiesRequired,
+                    gitHubContextPropertiesRequired,
+                    out repositoryContextPropertiesSet,
+                    out (
+                    IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+                    IChecked<ILocalRepositoryExists> LocalRepositoryExists
+                    ) checkedResults_Inner),
+                Instances.ContextOperations.In_ContextSet_AB_A<TRepositoryContext, TGitHubContext>(
+                    this.Add_GitIgnoreFile<TRepositoryContext>(
+                        repositoryContextPropertiesRequired.PropertiesSet.RepositoryDirectoryPathSet,
+                        out var checkedGitIgnoreFileExists))
+            );
+
+            checkedResults = (
+                checkedResults_Inner.GitHubRepositoryExists,
+                checkedResults_Inner.LocalRepositoryExists,
+                checkedGitIgnoreFileExists
+                );
+
+            return output;
+        }
+
+        public Func<TParentContextSet, Task> In_RegeneratedRepositoryContext<TRepositoryContextSet, TParentContextSet, TRepositoryContext, TApplicationContext>(
+            // Most important argument, first.
+            bool allowDeletionIfExists,
+            IDirectionalIsomorphism<TParentContextSet, TRepositoryContextSet> parentContextSetIsomorphism,
+            out ContextSetSpecifier<TRepositoryContextSet> repositoryContextSetSpecifier,
+            out TypeSpecifier<TRepositoryContext> repositoryContextSpecifier,
+            RepositorySpecification repositorySpecification,
+            ContextPropertiesSet<TApplicationContext, (
+                IsSet<IHasGitHubClient> GitHubClientSet,
+                IsSet<IHasGitHubAuthor> GitHubAuthorSet,
+                IsSet<N001.IHasAuthentication> GitHubAuthenticationSet)> applicationContextPropertiesRequired,
+            out ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet,
+                IsSet<IHasRepository> RepositorySet,
+                IsSet<IHasRepositoryUrl> RepositoryUrlSet)> repositoryContextPropertiesSet,
+            out (
+                IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+                IChecked<ILocalRepositoryExists> LocalRepositoryExists,
+                IChecked<IFileExists> GitIgnoreFileExists) checkedRepositoryResults,
+            IEnumerable<Func<TRepositoryContextSet, TRepositoryContext, Task>> operations)
+            where TRepositoryContextSet : IHasContext<TApplicationContext>, IWithContext<TRepositoryContext>, new()
+            where TParentContextSet : IHasContext<TApplicationContext>
+            where TApplicationContext : IHasGitHubClient, IHasGitHubAuthor, N001.IHasAuthentication
+            where TRepositoryContext : IWithRepositorySpecification, IHasRepositoryName, IHasRepositoryOwnerName, IWithRepositoryDirectoryPath, IWithRepository, IWithRepositoryUrl, new()
+        {
+            var o = Instances.ContextOperations;
+
+            var output = o.In_ChildContextSet<TRepositoryContextSet, TParentContextSet>(
+                parentContextSetIsomorphism,
+                out _,
+                o.In_Context_OfContextSet<TRepositoryContextSet, TRepositoryContext>(
+                    out repositoryContextSetSpecifier,
+                    out repositoryContextSpecifier,
+                    o.Construct_Context_OfContextSet<TRepositoryContextSet, TRepositoryContext>(
+                        Instances.RepositoryContextOperations.Set_RepositoryProperties<TRepositoryContext>(repositorySpecification,
+                            out (
+                            IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                            IsSet<IHasRepositoryName> RepositoryNameSet,
+                            IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                            IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet
+                            ) repositorySpecificationPropertiesSet).In_ContextSetWithContext(repositoryContextSetSpecifier)
+                    ),
+                    this.Regenerate_Repository_OrExceptionIfExists<TRepositoryContextSet, TRepositoryContext, TApplicationContext>(
+                        allowDeletionIfExists,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+                            repositorySpecificationPropertiesSet.RepositoryNameSet,
+                            repositorySpecificationPropertiesSet.RepositoryOwnerNameSet,
+                            repositorySpecificationPropertiesSet.RepositoryDirectoryPathSet),
+                        Instances.ContextOperator.Get_ContextPropertiesSet<TApplicationContext>().For(
+                            applicationContextPropertiesRequired.PropertiesSet.GitHubClientSet),
+                        this.Generate_Repository<TRepositoryContext, TApplicationContext>(
+                            Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+                                repositorySpecificationPropertiesSet.RepositorySpecificationSet,
+                                repositorySpecificationPropertiesSet.RepositoryDirectoryPathSet),
+                            Instances.ContextOperator.Get_ContextPropertiesSet<TApplicationContext>().For(
+                                applicationContextPropertiesRequired.PropertiesSet.GitHubClientSet,
+                                applicationContextPropertiesRequired.PropertiesSet.GitHubAuthenticationSet),
+                            out ContextPropertiesSet<TRepositoryContext, IsSet<IHasRepository>> repositoryContextPropertiesSet_Inner,
+                            out checkedRepositoryResults
+                        ).In_ContextSet(repositoryContextSetSpecifier)
+                    ).In_ContextSetAndContext(repositoryContextSetSpecifier, repositoryContextSpecifier),
+                    Instances.RepositoryContextOperations.Set_RepositoryUrl<TRepositoryContext>(
+                        repositoryContextPropertiesSet_Inner.PropertiesSet,
+                        out var repositoryUrlSet).In_ContextSetWithContext(repositoryContextSetSpecifier),
+                    Instances.ContextOperations.From(operations)
+                )
+            );
+
+            repositoryContextPropertiesSet = Instances.ContextOperator.Get_ContextPropertiesSet<TRepositoryContext>().For(
+                repositorySpecificationPropertiesSet.RepositorySpecificationSet,
+                repositorySpecificationPropertiesSet.RepositoryNameSet,
+                repositorySpecificationPropertiesSet.RepositoryOwnerNameSet,
+                repositorySpecificationPropertiesSet.RepositoryDirectoryPathSet,
+                repositoryContextPropertiesSet_Inner.PropertiesSet,
+                repositoryUrlSet);
+
+            return output;
+        }
+
+        public Func<TParentContextSet, Task> In_RegeneratedRepositoryContext<TRepositoryContextSet, TParentContextSet, TRepositoryContext, TApplicationContext>(
+            // Most important argument, first.
+            bool allowDeletionIfExists,
+            IDirectionalIsomorphism<TParentContextSet, TRepositoryContextSet> parentContextSetIsomorphism,
+            out ContextSetSpecifier<TRepositoryContextSet> repositoryContextSetSpecifier,
+            out TypeSpecifier<TRepositoryContext> repositoryContextSpecifier,
+            RepositorySpecification repositorySpecification,
+            ContextPropertiesSet<TApplicationContext, (
+                IsSet<IHasGitHubClient> GitHubClientSet,
+                IsSet<IHasGitHubAuthor> GitHubAuthorSet,
+                IsSet<N001.IHasAuthentication> GitHubAuthenticationSet)> applicationContextPropertiesRequired,
+            out ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositorySpecification> RepositorySpecificationSet,
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet,
+                IsSet<IHasRepository> RepositorySet,
+                IsSet<IHasRepositoryUrl> RepositoryUrlSet)> repositoryContextPropertiesSet,
+            out (
+                IChecked<IGitHubRepositoryExists> GitHubRepositoryExists,
+                IChecked<ILocalRepositoryExists> LocalRepositoryExists,
+                IChecked<IFileExists> GitIgnoreFileExists) checkedRepositoryResults,
+            params Func<TRepositoryContextSet, TRepositoryContext, Task>[] operations)
+            where TRepositoryContextSet : IHasContext<TApplicationContext>, IWithContext<TRepositoryContext>, new()
+            where TParentContextSet : IHasContext<TApplicationContext>
+            where TApplicationContext : IHasGitHubClient, IHasGitHubAuthor, N001.IHasAuthentication
+            where TRepositoryContext : IWithRepositorySpecification, IHasRepositoryName, IHasRepositoryOwnerName, IWithRepositoryDirectoryPath, IWithRepository, IWithRepositoryUrl, new()
+            => this.In_RegeneratedRepositoryContext<TRepositoryContextSet, TParentContextSet, TRepositoryContext, TApplicationContext>(
+                allowDeletionIfExists,
+                parentContextSetIsomorphism,
+                out repositoryContextSetSpecifier,
+                out repositoryContextSpecifier,
+                repositorySpecification,
+                applicationContextPropertiesRequired,
+                out repositoryContextPropertiesSet,
+                out checkedRepositoryResults,
+                operations.AsEnumerable());
+
         public Func<TContext, Task> Add_GitIgnoreFile<TContext>(
             IsSet<IHasRepositoryDirectoryPath> repositoryDirectoryPathSet,
             out IChecked<IFileExists> gitIgnoreFileExists)
@@ -119,6 +493,46 @@ namespace R5T.S0110
 
         public Func<TRepositoryContext, TGitHubContext, Task> Clear_Repository<TRepositoryContext, TGitHubContext>(
             (IsSet<IHasRepositoryName>, IsSet<IHasRepositoryOwnerName>, IsSet<IHasGitHubClient>, IsSet<IHasRepositoryDirectoryPath>) propertiesRequired,
+            out (IChecked<IGitHubRepositoryDoesNotExist> GitHubRepositoryDoesNotExist, IChecked<ILocalRepositoryDoesNotExist> LocalRepositoryDoesNotExist) @checked)
+            where TGitHubContext :
+            IHasGitHubClient
+            where TRepositoryContext :
+            IHasRepositoryName,
+            IHasRepositoryOwnerName,
+            IHasRepositoryDirectoryPath
+        {
+            @checked = (Checked.Check<IGitHubRepositoryDoesNotExist>(), Checked.Check<ILocalRepositoryDoesNotExist>());
+
+            return Instances.ContextOperations.In_ContextSet<TRepositoryContext, TGitHubContext>(
+                // Delete the remote repository, if it exists.
+                Instances.GitHubClientContextOperations.Delete_Repository_Idempotent<TRepositoryContext, TGitHubContext>(
+                    (context, gitHubRepositoryExisted) =>
+                    {
+                        Console.WriteLine($"{gitHubRepositoryExisted}: GitHub-repository-existed, {context.RepositoryOwnerName}/{context.RepositoryName}");
+
+                        return Task.CompletedTask;
+                    }
+                ),
+                // Delete the local repository, if it exists.
+                Instances.ContextOperations.In_ContextSet_AB_A<TRepositoryContext, TGitHubContext>(
+                    Instances.LocalRepositoryContextOperations.Delete_LocalRepositoryDirectory_Idempotent<TRepositoryContext>(
+                        (context, directoryExisted) =>
+                        {
+                            Console.WriteLine($"{directoryExisted}: local-repository-directory-existed, {context.RepositoryOwnerName}/{context.RepositoryName}\n\t{context.RepositoryDirectoryPath}");
+
+                            return Task.CompletedTask;
+                        }
+                    )
+                )
+            );
+        }
+
+        public Func<TRepositoryContext, TGitHubContext, Task> Clear_Repository<TRepositoryContext, TGitHubContext>(
+            ContextPropertiesSet<TRepositoryContext, (
+                IsSet<IHasRepositoryName> RepositoryNameSet,
+                IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
+                IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet)> repositoryContextPropertiesRequired,
+            ContextPropertiesSet<TGitHubContext, IsSet<IHasGitHubClient>> gitHubContextPropertiesRequired,
             out (IChecked<IGitHubRepositoryDoesNotExist> GitHubRepositoryDoesNotExist, IChecked<ILocalRepositoryDoesNotExist> LocalRepositoryDoesNotExist) @checked)
             where TGitHubContext :
             IHasGitHubClient
@@ -298,21 +712,21 @@ namespace R5T.S0110
                             IsSet<IHasRepositoryName> RepositoryNameSet,
                             IsSet<IHasRepositoryOwnerName> RepositoryOwnerNameSet,
                             IsSet<IHasRepositoryDirectoryPath> RepositoryDirectoryPathSet
-                            ) repositorySpecificationPropertiesSet).In_ContextSetAndContext(repositoryContextSetSpecifier),
-                        Instances.RepositoryContextOperations.Regenerate_Repository<TRepositoryContext, TApplicationContext>((
-                            repositorySpecificationPropertiesSet.RepositorySpecificationSet,
-                            repositorySpecificationPropertiesSet.RepositoryNameSet,
-                            repositorySpecificationPropertiesSet.RepositoryOwnerNameSet,
-                            applicationContextPropertiesSet.PropertiesSet.GitHubClientSet,
-                            applicationContextPropertiesSet.PropertiesSet.GitHubAuthenticationSet,
-                            repositorySpecificationPropertiesSet.RepositoryDirectoryPathSet),
-                            out var repositorySet,
-                            out checkedRepository).In_ContextSetAndContext(repositoryContextSetSpecifier),
-                        Instances.RepositoryContextOperations.Set_RepositoryUrl<TRepositoryContext>(
-                            repositorySet,
-                            out var repositoryUrlSet).In_ContextSetAndContext(repositoryContextSetSpecifier)
+                            ) repositorySpecificationPropertiesSet).In_ContextSetWithContext(repositoryContextSetSpecifier)
                     ),
-                    operations
+                    Instances.RepositoryContextOperations.Regenerate_Repository<TRepositoryContext, TApplicationContext>((
+                        repositorySpecificationPropertiesSet.RepositorySpecificationSet,
+                        repositorySpecificationPropertiesSet.RepositoryNameSet,
+                        repositorySpecificationPropertiesSet.RepositoryOwnerNameSet,
+                        applicationContextPropertiesSet.PropertiesSet.GitHubClientSet,
+                        applicationContextPropertiesSet.PropertiesSet.GitHubAuthenticationSet,
+                        repositorySpecificationPropertiesSet.RepositoryDirectoryPathSet),
+                        out var repositorySet,
+                        out checkedRepository).In_ContextSetWithContext(repositoryContextSetSpecifier),
+                    Instances.RepositoryContextOperations.Set_RepositoryUrl<TRepositoryContext>(
+                        repositorySet,
+                        out var repositoryUrlSet).In_ContextSetWithContext(repositoryContextSetSpecifier),
+                    Instances.ContextOperations.From(operations)
                 )
             );
 

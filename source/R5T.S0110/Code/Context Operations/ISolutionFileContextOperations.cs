@@ -63,16 +63,16 @@ namespace R5T.S0110
                             out (
                             IsSet<IHasSolutionSpecification> SolutionSpecificationSet,
                             IsSet<IHasSolutionName> SolutionNameSet
-                            ) solutionSpecificationPropertiesSet).In_ContextSetAndContext(solutionContextSetSpecifier),
+                            ) solutionSpecificationPropertiesSet).In_ContextSetWithContext(solutionContextSetSpecifier),
                         Instances.SolutionContextOperations.Set_SolutionFilePath<TSolutionContext>((new IsSet<IHasSolutionDirectoryPath>(), solutionSpecificationPropertiesSet.SolutionNameSet),
-                            out var solutionFilePathSet).In_ContextSetAndContext(solutionContextSetSpecifier)
+                            out var solutionFilePathSet).In_ContextSetWithContext(solutionContextSetSpecifier)
                     ),
                     Instances.FilePathContextOperations.Verify_File_DoesNotExist<TSolutionContext>(Instances.IsSetOperator.Implies<IHasFilePath, IHasSolutionFilePath>(solutionFilePathSet),
-                        out var checkedSolutionFileDoesNotExist).In_ContextSetAndContext(solutionContextSetSpecifier),
+                        out var checkedSolutionFileDoesNotExist).In_ContextSetWithContext(solutionContextSetSpecifier),
                     Instances.DirectoryPathContextOperations.Create_Directory_IfNotExists<TSolutionContext>(Instances.IsSetOperator.Implies<IHasDirectoryPath, IHasSolutionDirectoryPath>(new IsSet<IHasSolutionDirectoryPath>()),
-                        out _).In_ContextSetAndContext(solutionContextSetSpecifier),
+                        out _).In_ContextSetWithContext(solutionContextSetSpecifier),
                     Instances.SolutionFileContextOperations.Create_SolutionFile<TSolutionContext>(solutionFilePathSet, checkedSolutionFileDoesNotExist,
-                        out checkedSolutionFileExists).In_ContextSetAndContext(solutionContextSetSpecifier),
+                        out checkedSolutionFileExists).In_ContextSetWithContext(solutionContextSetSpecifier),
                     o.From(operations)
                 )
             );

@@ -10,6 +10,11 @@ namespace R5T.S0110
     [ContextOperationsMarker]
     public partial interface IIsSetContextOperations : IContextOperationsMarker
     {
+        public IsSet<TImplied> Implies<TImplication, TImplied>(IsSet<TImplication> implicationSet)
+        {
+            return new IsSet<TImplied>();
+        }
+
         public Func<TContext, Task> Implies<TContext, TImplication, TImplied>(
             IsSet<TImplication> implicationSet,
             out IsSet<TImplied> impliedSet)

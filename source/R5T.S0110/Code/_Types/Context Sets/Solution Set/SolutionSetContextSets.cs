@@ -69,4 +69,36 @@ namespace R5T.S0110
         SolutionSetContext003 IWithContext<SolutionSetContext003>.Context { get => this.SolutionSetContext; set => this.SolutionSetContext = value; }
         SolutionSetContext003 IHasContext<SolutionSetContext003>.Context => (this as IWithContext<SolutionSetContext003>).Context;
     }
+
+    /// <summary>
+    /// A good client-and-server solution set context using:
+    /// <list type="bullet">
+    /// <item><see cref="SolutionSetContext004"/></item>
+    /// <item><see cref="RepositoryContext001"/></item>
+    /// <item><see cref="ApplicationContext001"/></item>
+    /// </list>
+    /// </summary>
+    [ContextSetMarker]
+    public class SolutionSetContextSet005 : SolutionSetContextSet002<SolutionSetContext004>, IContextSetMarker,
+        IWithContext<SolutionSetContext004>
+    {
+        SolutionSetContext004 IWithContext<SolutionSetContext004>.Context { get => this.SolutionSetContext; set => this.SolutionSetContext = value; }
+        SolutionSetContext004 IHasContext<SolutionSetContext004>.Context => (this as IWithContext<SolutionSetContext004>).Context;
+    }
+
+    /// <summary>
+    /// A good web library with construction client-and-server web application solution set context using:
+    /// <list type="bullet">
+    /// <item><see cref="SolutionSetContext005"/> (for web library project with client-and-server construction web application projects)</item>
+    /// <item><see cref="RepositoryContext001"/></item>
+    /// <item><see cref="ApplicationContext001"/></item>
+    /// </list>
+    /// </summary>
+    [ContextSetMarker]
+    public class SolutionSetContextSet006 : SolutionSetContextSet002<SolutionSetContext005>, IContextSetMarker,
+        IWithContext<SolutionSetContext005>
+    {
+        SolutionSetContext005 IWithContext<SolutionSetContext005>.Context { get => this.SolutionSetContext; set => this.SolutionSetContext = value; }
+        SolutionSetContext005 IHasContext<SolutionSetContext005>.Context => (this as IWithContext<SolutionSetContext005>).Context;
+    }
 }

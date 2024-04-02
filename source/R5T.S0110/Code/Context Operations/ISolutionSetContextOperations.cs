@@ -41,7 +41,7 @@ namespace R5T.S0110
                     out solutionSetContextSpecifier,
                     o.Construct_Context_OfContextSet<TContextSet, TSolutionSetContext>(
                         Instances.SolutionContextOperations.Set_SolutionDirectoryPath_Source<TSolutionSetContext, TRepositoryContext>(repositoryContextPropertiesSet.PropertiesSet,
-                            out var solutionDirectoryPathSet).In_ContextSetAndContext(solutionSetContextSetSpecifier)
+                            out var solutionDirectoryPathSet).In_ContextSetWithContext(solutionSetContextSetSpecifier)
                     ),
                     operations
                 )

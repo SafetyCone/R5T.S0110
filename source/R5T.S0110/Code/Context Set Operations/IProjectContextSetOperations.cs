@@ -37,13 +37,13 @@ namespace R5T.S0110
                     out TypeSpecifier<Context005> context005Specifier,
                     o.Construct_Context_OfContextSet<ProjectElementContextSet006, Context005>(
                         Instances.ProjectContextOperations.Set_ProjectFilePath<Context005, ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet,
-                            out var projectElementContextProjectFilePathSet).In_ContextSetAndContext(projectElementContextSetSpecifier),
+                            out var projectElementContextProjectFilePathSet).In_ContextSetWithContext(projectElementContextSetSpecifier),
                         Instances.ProjectContextOperations.Set_ProjectDescription<Context005, ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectDescriptionSet,
-                            out var projectElementContextProjectDescriptionSet).In_ContextSetAndContext(projectElementContextSetSpecifier),
+                            out var projectElementContextProjectDescriptionSet).In_ContextSetWithContext(projectElementContextSetSpecifier),
                         Instances.ProjectElementContextOperations.Set_ProjectElement_New<Context005>(
-                            out var projectElementSet).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                            out var projectElementSet).In_ContextSetWithContext(projectElementContextSetSpecifier)
                     ),
-                    Instances.ProjectElementContextOperations.Set_SDK_Web<Context005>().In_ContextSetAndContext(projectElementContextSetSpecifier),
+                    Instances.ProjectElementContextOperations.Set_SDK_Web<Context005>().In_ContextSetWithContext(projectElementContextSetSpecifier),
                     Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Main<PropertyGroupElementContextSet006, ProjectElementContextSet006, Context005>(
                         //Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet006>(),
                         Instances.ContextSetIsomorphisms.From_ContextSet<ProjectElementContextSet006, PropertyGroupElementContextSet006, Context005>(),
@@ -55,7 +55,7 @@ namespace R5T.S0110
                         Instances.PropertyGroupElementContextOperations.Set_OutputType_Exe<Context006>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
                         // Change the target framework from what is specified in the project options, to the library default.
                         Instances.PropertyGroupElementContextOperations.Set_TargetFramework_Net8<Context006>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Package<PropertyGroupElementContextSet007, ProjectElementContextSet006, Context005>(
                         //Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet006>(),
                         Instances.ContextSetIsomorphisms.From_ContextSet<ProjectElementContextSet006, PropertyGroupElementContextSet007, Context005, RepositoryContext001>(),
@@ -77,7 +77,7 @@ namespace R5T.S0110
                                 repositoryContext => Task.FromResult(repositoryContext.RepositoryUrl),
                                 out _).In_ContextSet<PropertyGroupElementContextSet007, Context006, RepositoryContext001>()
                         )
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     //// Add the wwwroot folder include item group.
                     //Instances.ProjectElementContextOperations.Add_ItemGroupElement<ItemGroupElementContextSet006, ProjectElementContextSet006, Context005>(
                     //    //Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet007>(),
@@ -92,7 +92,7 @@ namespace R5T.S0110
                     //        @"wwwroot\").In_ContextSet(itemGroupElementContextSetSpecifier)
                     //).In_ContextSetAndContext(context005Specifier),
                     Instances.ProjectElementContextOperations.Serialize_ProjectElement_ToFile<Context005>((projectElementSet, projectElementContextProjectFilePathSet),
-                        out checkedProjectFileExists).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                        out checkedProjectFileExists).In_ContextSetWithContext(projectElementContextSetSpecifier)
                 )
             );
 
@@ -124,13 +124,13 @@ namespace R5T.S0110
                     out TypeSpecifier<Context005> context005Specifier,
                     o.Construct_Context_OfContextSet<ProjectElementContextSet006, Context005>(
                         Instances.ProjectContextOperations.Set_ProjectFilePath<Context005, ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet,
-                            out var projectElementContextProjectFilePathSet).In_ContextSetAndContext(projectElementContextSetSpecifier),
+                            out var projectElementContextProjectFilePathSet).In_ContextSetWithContext(projectElementContextSetSpecifier),
                         Instances.ProjectContextOperations.Set_ProjectDescription<Context005, ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectDescriptionSet,
-                            out var projectElementContextProjectDescriptionSet).In_ContextSetAndContext(projectElementContextSetSpecifier),
+                            out var projectElementContextProjectDescriptionSet).In_ContextSetWithContext(projectElementContextSetSpecifier),
                         Instances.ProjectElementContextOperations.Set_ProjectElement_New<Context005>(
-                            out var projectElementSet).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                            out var projectElementSet).In_ContextSetWithContext(projectElementContextSetSpecifier)
                     ),
-                    Instances.ProjectElementContextOperations.Set_SDK_Razor<Context005>().In_ContextSetAndContext(projectElementContextSetSpecifier),
+                    Instances.ProjectElementContextOperations.Set_SDK_Razor<Context005>().In_ContextSetWithContext(projectElementContextSetSpecifier),
                     Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Main<PropertyGroupElementContextSet006, ProjectElementContextSet006, Context005>(
                         //Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet006>(),
                         Instances.ContextSetIsomorphisms.From_ContextSet<ProjectElementContextSet006, PropertyGroupElementContextSet006, Context005>(),
@@ -142,7 +142,7 @@ namespace R5T.S0110
                         Instances.PropertyGroupElementContextOperations.Set_OutputType_Library<Context006>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
                         // Change the target framework from what is specified in the project options, to the library default.
                         Instances.PropertyGroupElementContextOperations.Set_TargetFramework_Default<Context006>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     //o.CaptureContext<Context001>(
                     //    out var repositoryContextCapture).In_ContextSetAndDifferentContext(
                     //        projectElementContextSetSpecifier,
@@ -175,7 +175,7 @@ namespace R5T.S0110
                             //        out _)
                             //).In_ContextSet(propertyGroupContextSetSpecifier_Package)
                         )
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     // Add the package reference item group.
                     Instances.ProjectElementContextOperations.Add_ItemGroupElement_PackageReferences<ItemGroupElementContextSet006, ProjectElementContextSet006, Context005>(
                         //Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet007>(),
@@ -188,7 +188,7 @@ namespace R5T.S0110
                         Instances.ItemGroupElementContextOperations.Add_PackageReference<Context007>(
                             itemGroupElementContextPropertiesSet.PropertiesSet,
                             Instances.PackageReferences.Microsoft_AspNetCore_Components_WebAssembly_8_0_0).In_ContextSet(itemGroupElementContextSetSpecifier)
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     // Add the wwwroot folder include item group.
                     Instances.ProjectElementContextOperations.Add_ItemGroupElement<ItemGroupElementContextSet006, ProjectElementContextSet006, Context005>(
                         //Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet007>(),
@@ -201,9 +201,9 @@ namespace R5T.S0110
                         Instances.ItemGroupElementContextOperations.Add_Folder<Context007>(
                             itemGroupElementContextPropertiesSet.PropertiesSet,
                             @"wwwroot\").In_ContextSet(itemGroupElementContextSetSpecifier)
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     Instances.ProjectElementContextOperations.Serialize_ProjectElement_ToFile<Context005>((projectElementSet, projectElementContextProjectFilePathSet),
-                        out checkedProjectFileExists).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                        out checkedProjectFileExists).In_ContextSetWithContext(projectElementContextSetSpecifier)
                 )
             );
 
@@ -228,13 +228,13 @@ namespace R5T.S0110
                     out TypeSpecifier<Context005> context005Specifier,
                     o.Construct_Context_OfContextSet<ContextSet005, Context005>(
                         Instances.ProjectContextOperations.Set_ProjectFilePath<Context005, ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectFilePathSet,
-                            out var projectElementContextProjectFilePathSet).In_ContextSetAndContext(projectElementContextSetSpecifier),
+                            out var projectElementContextProjectFilePathSet).In_ContextSetWithContext(projectElementContextSetSpecifier),
                         Instances.ProjectContextOperations.Set_ProjectDescription<Context005, ProjectContext001>(projectContextPropertiesSet.PropertiesSet.ProjectDescriptionSet,
-                            out var projectElementContextProjectDescriptionSet).In_ContextSetAndContext(projectElementContextSetSpecifier),
+                            out var projectElementContextProjectDescriptionSet).In_ContextSetWithContext(projectElementContextSetSpecifier),
                         Instances.ProjectElementContextOperations.Set_ProjectElement_New<Context005>(
-                            out var projectElementSet).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                            out var projectElementSet).In_ContextSetWithContext(projectElementContextSetSpecifier)
                     ),
-                    Instances.ProjectElementContextOperations.Set_SDK_Razor<Context005>().In_ContextSetAndContext(projectElementContextSetSpecifier),
+                    Instances.ProjectElementContextOperations.Set_SDK_Razor<Context005>().In_ContextSetWithContext(projectElementContextSetSpecifier),
                     Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Main<ContextSet006, ContextSet005, Context005>(
                         Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet006>(),
                         out ContextSetSpecifier<ContextSet006> propertyGroupContextSetSpecifier,
@@ -245,7 +245,7 @@ namespace R5T.S0110
                         Instances.PropertyGroupElementContextOperations.Set_OutputType_Library<Context006>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
                         // Change the target framework from what is specified in the project options, to the library default.
                         Instances.PropertyGroupElementContextOperations.Set_TargetFramework_Default<Context006>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     //o.CaptureContext<Context001>(
                     //    out var repositoryContextCapture).In_ContextSetAndDifferentContext(
                     //        projectElementContextSetSpecifier,
@@ -277,7 +277,7 @@ namespace R5T.S0110
                             //        out _)
                             //).In_ContextSet(propertyGroupContextSetSpecifier_Package)
                         )
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     // Add the package reference item group.
                     Instances.ProjectElementContextOperations.Add_ItemGroupElement_PackageReferences<ContextSet007, ContextSet005, Context005>(
                         Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet007>(),
@@ -289,7 +289,7 @@ namespace R5T.S0110
                         Instances.ItemGroupElementContextOperations.Add_PackageReference<Context007>(
                             itemGroupElementContextPropertiesSet.PropertiesSet,
                             Instances.PackageReferences.Microsoft_AspNetCore_Components_WebAssembly_8_0_0).In_ContextSet(itemGroupElementContextSetSpecifier)
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     //// Add the wwwroot folder include item group.
                     Instances.ProjectElementContextOperations.Add_ItemGroupElement<ContextSet007, ContextSet005, Context005>(
                         Instances.ContextSetIsomorphisms.From_ContextSet005<ContextSet007>(),
@@ -301,9 +301,9 @@ namespace R5T.S0110
                         Instances.ItemGroupElementContextOperations.Add_Folder<Context007>(
                             itemGroupElementContextPropertiesSet.PropertiesSet,
                             @"wwwroot\").In_ContextSet(itemGroupElementContextSetSpecifier)
-                    ).In_ContextSetAndContext(context005Specifier),
+                    ).In_ContextSetWithContext(context005Specifier),
                     Instances.ProjectElementContextOperations.Serialize_ProjectElement_ToFile<Context005>((projectElementSet, projectElementContextProjectFilePathSet),
-                        out checkedProjectFileExists).In_ContextSetAndContext(projectElementContextSetSpecifier)
+                        out checkedProjectFileExists).In_ContextSetWithContext(projectElementContextSetSpecifier)
                 )
             );
 
