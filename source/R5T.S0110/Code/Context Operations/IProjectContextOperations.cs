@@ -665,6 +665,9 @@ namespace R5T.S0110
                 // Create the Error Razor component for the Blazor WebAssembly server project.
                 Instances.CodeFileGenerationContextOperations.Create_ErrorPageRazorComponent_ForBlazorClient<ProjectContext001>(projectContextPropertiesRequired.PropertiesSet.ProjectFilePathSet,
                     out _).In_ContextSet(projectContextSetSpecifier),
+                // Create an example controller.
+                Instances.CodeFileGenerationContextOperations.Create_StringsController<ProjectContext001>((projectContextPropertiesRequired.PropertiesSet.ProjectFilePathSet, projectContextPropertiesRequired.PropertiesSet.NamespaceNameSet),
+                    out _).In_ContextSet(projectContextSetSpecifier),
                 // Create the package.JSON file (including TailwindCSS).
                 Instances.CodeFileGenerationContextOperations.Create_PackageJson<TProjectContextSet, ProjectContext001, RepositoryContext001, ApplicationContext001>(
                     Instances.ContextSetIsomorphisms.For_ContextSets<TProjectContextSet, CodeFileContextSet001<ProjectContext001, RepositoryContext001, ApplicationContext001>>().For_Contexts<TProjectContextSet, CodeFileContextSet001<ProjectContext001, RepositoryContext001, ApplicationContext001>, ProjectContext001, RepositoryContext001, ApplicationContext001>(

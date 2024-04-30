@@ -215,7 +215,10 @@ namespace R5T.S0110
                         // Fix to the NET8.0 target framework.
                         Instances.PropertyGroupElementContextOperations.Set_TargetFramework_Net8<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
                         Instances.PropertyGroupElementContextOperations.Set_NoDefaultLaunchSettingsFile<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
-                        Instances.PropertyGroupElementContextOperations.Set_StaticWebAssetProjectMode<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier)
+                        Instances.PropertyGroupElementContextOperations.Set_StaticWebAssetProjectMode<PropertyGroupElementContext001>(propertyGroupContextPropertiesSet_Main.PropertiesSet).In_ContextSet(propertyGroupContextSetSpecifier),
+                        Instances.PropertyGroupElementContextOperations.Set_WasmEnableWebcli<PropertyGroupElementContext001>(
+                            propertyGroupContextPropertiesSet_Main.PropertiesSet,
+                            false).In_ContextSet(propertyGroupContextSetSpecifier)
                     // Add 
                     ).In_ContextSetWithContext(projectElementContextSpecifier),
                     Instances.ProjectElementContextOperations.Add_PropertyGroupElement_Package<PropertyGroupElementContextSet009, ProjectElementContextSet007, PropertyGroupElementContext001, ProjectElementContext001, ProjectContext001>(
@@ -264,6 +267,19 @@ namespace R5T.S0110
                         Instances.ItemGroupElementContextOperations.Add_Folder<Context007>(
                             itemGroupElementContextPropertiesSet.PropertiesSet,
                             @"wwwroot\").In_ContextSet(itemGroupElementContextSetSpecifier)
+                    ).In_ContextSetWithContext(projectElementContextSpecifier),
+                    // Add the copy-to-publish-directory item group.
+                    Instances.ProjectElementContextOperations.Add_ItemGroupElement<ItemGroupElementContextSet007, ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, ItemGroupElementContextSet007>().For_Contexts(
+                            projectElementContextSpecifier),
+                        out ContextSetSpecifier<ItemGroupElementContextSet007> itemGroupElementContextSetSpecifier_Content,
+                        out var itemGroupElementContextSpecifier_Content,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        out ContextPropertiesSet<Context007, IsSet<IHasItemGroupElement>> itemGroupElementContextPropertiesSet_Content,
+                        out var checkedItemGroupElementAppended_Content,
+                        Instances.ItemGroupElementContextOperations.Add_Content_CopyToPublishToDirectory_Never<Context007>(
+                            itemGroupElementContextPropertiesSet.PropertiesSet,
+                            Instances.ProjectDirectoryPathRelativePaths.tailwind_contentpaths_json).In_ContextSet(itemGroupElementContextSetSpecifier)
                     ).In_ContextSetWithContext(projectElementContextSpecifier)
                 ),
                 // Write out the project element.
@@ -377,6 +393,19 @@ namespace R5T.S0110
                         Instances.ItemGroupElementContextOperations.Add_Folder<Context007>(
                             itemGroupElementContextPropertiesSet.PropertiesSet,
                             @"wwwroot\").In_ContextSet(itemGroupElementContextSetSpecifier)
+                    ).In_ContextSetWithContext(projectElementContextSpecifier),
+                    // Add the copy-to-publish-directory item group.
+                    Instances.ProjectElementContextOperations.Add_ItemGroupElement<ItemGroupElementContextSet007, ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, ItemGroupElementContextSet007>().For_Contexts(
+                            projectElementContextSpecifier),
+                        out ContextSetSpecifier<ItemGroupElementContextSet007> itemGroupElementContextSetSpecifier_Content,
+                        out var itemGroupElementContextSpecifier_Content,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        out ContextPropertiesSet<Context007, IsSet<IHasItemGroupElement>> itemGroupElementContextPropertiesSet_Content,
+                        out var checkedItemGroupElementAppended_Content,
+                        Instances.ItemGroupElementContextOperations.Add_Content_CopyToPublishToDirectory_Never<Context007>(
+                            itemGroupElementContextPropertiesSet.PropertiesSet,
+                            Instances.ProjectDirectoryPathRelativePaths.tailwind_contentpaths_json).In_ContextSet(itemGroupElementContextSetSpecifier)
                     ).In_ContextSetWithContext(projectElementContextSpecifier)
                 ),
                 // Write out the project element.
@@ -576,6 +605,19 @@ namespace R5T.S0110
                         Instances.ItemGroupElementContextOperations.Add_Folder<Context007>(
                             itemGroupElementContextPropertiesSet.PropertiesSet,
                             @"wwwroot\").In_ContextSet(itemGroupElementContextSetSpecifier)
+                    ).In_ContextSetWithContext(projectElementContextSpecifier),
+                    // Add the copy-to-publish-directory item group.
+                    Instances.ProjectElementContextOperations.Add_ItemGroupElement<ItemGroupElementContextSet007, ProjectElementContextSet007, ProjectElementContext001>(
+                        Instances.ContextSetIsomorphisms.For_ContextSets<ProjectElementContextSet007, ItemGroupElementContextSet007>().For_Contexts(
+                            projectElementContextSpecifier),
+                        out ContextSetSpecifier<ItemGroupElementContextSet007> itemGroupElementContextSetSpecifier_Content,
+                        out var itemGroupElementContextSpecifier_Content,
+                        Instances.ContextOperator.Get_ContextPropertiesSet<ProjectElementContext001>().For(projectElementSet),
+                        out ContextPropertiesSet<Context007, IsSet<IHasItemGroupElement>> itemGroupElementContextPropertiesSet_Content,
+                        out var checkedItemGroupElementAppended_Content,
+                        Instances.ItemGroupElementContextOperations.Add_Content_CopyToPublishToDirectory_Never<Context007>(
+                            itemGroupElementContextPropertiesSet.PropertiesSet,
+                            Instances.ProjectDirectoryPathRelativePaths.tailwind_contentpaths_json).In_ContextSet(itemGroupElementContextSetSpecifier)
                     ).In_ContextSetWithContext(projectElementContextSpecifier)
                 ),
                 // Write out the project element.

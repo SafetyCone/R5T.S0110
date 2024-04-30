@@ -61,6 +61,22 @@ namespace R5T.S0110
             };
         }
 
+        public Func<TItemGroupElementContext, Task> Add_Content_CopyToPublishToDirectory_Never<TItemGroupElementContext>(
+            IsSet<IHasItemGroupElement> itemGroupElementSet,
+            string projectDirectoryRelativeFilePath)
+            where TItemGroupElementContext : IHasItemGroupElement
+        {
+            return itemGroupElementContext =>
+            {
+                // Ignore the package reference element.
+                _ = Instances.ItemGroupXElementOperator.Add_Content_CopyToPublishDirectory_Never(
+                    itemGroupElementContext.ItemGroupElement,
+                    projectDirectoryRelativeFilePath);
+
+                return Task.CompletedTask;
+            };
+        }
+
         public Func<TItemGroupContext, TProjectContext, TContext, Task> Add_ProjectReference<TItemGroupContext, TProjectContext, TContext>(
             Func<TContext, Task<string>> projectReferenceProjectFilePathProvider)
             where TItemGroupContext : IHasItemGroupElement

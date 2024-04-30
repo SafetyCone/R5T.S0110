@@ -17,7 +17,7 @@ namespace R5T.S0110
 
             //await Scripts.Instance.Regenerate_ConsoleRepository();
             //await Scripts.Instance.Regenerate_ClassLibraryRepository();
-            await Scripts.Instance.Regenerate_LibraryWithConstructionRepository();
+            //await Scripts.Instance.Regenerate_LibraryWithConstructionRepository();
             //await Scripts.Instance.Regenerate_StaticHtmlWebApplicationRepository();
             //await Scripts.Instance.Regenerate_BlogStaticHtmlWebApplicationRepository();
             //await Scripts.Instance.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibraryRepository();
@@ -26,7 +26,8 @@ namespace R5T.S0110
             //await Scripts.Instance.Regenerate_WindowsFormsLibraryRepository();
             //await Scripts.Instance.Regenerate_WindowsFormsApplicationRepository();
             //await Scripts.Instance.Regenerate_WindowsFormsApplication_WithWindowsFormsLibraryRepository();
-            //await Scripts.Instance.Regenerate_BlazorComponentsWebAssemblyClientAndServerRepository();
+            await Scripts.Instance.Regenerate_BlazorComponentsWebAssemblyClientAndServerRepository();
+            // Need a without-TailwindCSS.
             //await Scripts.Instance.Regenerate_BlazorComponentsLibrary_WithConstructionWebAssemblyClientAndServerRepository_WithTailwindCss();
         }
     }

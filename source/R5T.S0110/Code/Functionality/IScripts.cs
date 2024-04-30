@@ -39,18 +39,19 @@ namespace R5T.S0110
             var libraryName =
                 //// Use the disposable name since we might have deletion code!
                 //Instances.RepositoryNameExamples.Disposable
-                "D8S.E0017"
+                "R5T.R0014"
                 ;
             var isPrivate =
-                true
+                //true
+                false
                 ;
             var repositoryOwnerName =
-                //Instances.RepositoryOwnerNameExamples.SafetyCone
-                Instances.RepositoryOwnerNameExamples.davidcoats
+                Instances.RepositoryOwnerNameExamples.SafetyCone
+                //Instances.RepositoryOwnerNameExamples.davidcoats
                 ;
             var libraryDescription =
                 //Instances.RepositoryDescriptionExamples.ForTesting
-                "An experimental non-WebAssembly TailwindCSS components library with display construction application."
+                "Razor component-based, non-interactive, non-TailwindCSS-based."
                 ;
 
 
@@ -381,18 +382,19 @@ namespace R5T.S0110
             var libraryName =
                 // Use the disposable name since we might have deletion code!
                 //Instances.RepositoryNameExamples.Disposable
-                "D8S.E0018"
+                "R5T.R0015"
                 ;
             var isPrivate =
-                true
+                //true
+                false
                 ;
             var repositoryOwnerName =
-                //Instances.RepositoryOwnerNameExamples.SafetyCone
-                Instances.RepositoryOwnerNameExamples.davidcoats
+                Instances.RepositoryOwnerNameExamples.SafetyCone
+                //Instances.RepositoryOwnerNameExamples.davidcoats
                 ;
             var libraryDescription =
                 //Instances.RepositoryDescriptionExamples.ForTesting
-                "An experimental WebAssembly TailwindCSS components library with display construction client-and-server application."
+                "Interactive-WebAssembly, non-TailwindCSS-based."
                 ;
 
 
@@ -1000,12 +1002,12 @@ namespace R5T.S0110
         public async Task Regenerate_BlazorComponentsWebAssemblyClientAndServerRepository()
         {
             /// Inputs.
-            var allowDeletionIfExists = false;
+            var allowDeletionIfExists = true;
 
             var libraryName =
                 // Use the disposable name since we might have deletion code!
                 //Instances.RepositoryNameExamples.Disposable
-                "R5T.W0007"
+                "R5T.W0008"
                 ;
             var isPrivate =
                 true
@@ -1015,7 +1017,7 @@ namespace R5T.S0110
                 ;
             var libraryDescription =
                 //Instances.RepositoryDescriptionExamples.ForTesting
-                "A functionality search website."
+                "A projects file search website."
                 ;
 
 
@@ -1995,18 +1997,19 @@ namespace R5T.S0110
             var libraryName =
                 //// Use the disposable name since we might have deletion code!
                 //Instances.RepositoryNameExamples.Disposable
-                "D8S.E0017"
+                "R5T.R0014"
                 ;
             var isPrivate =
-                true
+                //true
+                false
                 ;
             var repositoryOwnerName =
-                //Instances.RepositoryOwnerNameExamples.SafetyCone
-                Instances.RepositoryOwnerNameExamples.davidcoats
+                Instances.RepositoryOwnerNameExamples.SafetyCone
+                //Instances.RepositoryOwnerNameExamples.davidcoats
                 ;
             var libraryDescription =
                 //Instances.RepositoryDescriptionExamples.ForTesting
-                "An experimental non-WebAssembly TailwindCSS components library with display construction application."
+                "Razor component-based, non-interactive, non-TailwindCSS-based."
                 ;
 
 
@@ -2697,22 +2700,23 @@ namespace R5T.S0110
         public async Task Regenerate_LibraryWithConstructionRepository()
         {
             /// Inputs.
-            var allowDeletionIfExists = true;
+            var allowDeletionIfExists = false;
 
             var libraryName =
                 //// Use the disposable name since we might have deletion code!
                 //Instances.RepositoryNameExamples.Disposable
-                "R5T.L0098"
+                "R5T.L0105"
                 ;
             var isPrivate =
-                false
+                //false
+                true
                 ;
             var repositoryOwnerName =
                 Instances.RepositoryOwnerNameExamples.SafetyCone
                 ;
             var libraryDescription =
                 //Instances.RepositoryDescriptionExamples.ForTesting
-                "Example instances or sample instances."
+                "Private repository signature strings library."
                 ;
 
 
@@ -3225,8 +3229,9 @@ namespace R5T.S0110
             var allowDeletionIfExists = false;
 
             var libraryName =
-                // Use the disposable name since we might have deletion code!
-                Instances.RepositoryNameExamples.Disposable
+                //// Use the disposable name since we might have deletion code!
+                //Instances.RepositoryNameExamples.Disposable
+                "R5T.S0112"
                 ;
             var isPrivate =
                 true
@@ -3235,7 +3240,8 @@ namespace R5T.S0110
                 Instances.RepositoryOwnerNameExamples.SafetyCone
                 ;
             var libraryDescription =
-                Instances.RepositoryDescriptionExamples.ForTesting
+                //Instances.RepositoryDescriptionExamples.ForTesting
+                "An ALL-scripts scripts project."
                 ;
 
 
@@ -3829,13 +3835,15 @@ namespace R5T.S0110
             /// Inputs.
             var repositoryName =
                 // Use the disposable name since we might have deletion code!
-                Instances.RepositoryNameExamples.Disposable
+                //Instances.RepositoryNameExamples.Disposable
+                "R5T.R0014"
                 ;
             var isPrivate =
-                true
+                false
                 ;
             var repositoryOwnerName =
                 Instances.RepositoryOwnerNameExamples.SafetyCone
+                //Instances.RepositoryOwnerNameExamples.davidcoats
                 ;
             var repositoryDescription =
                 Instances.RepositoryDescriptionExamples.ForTesting

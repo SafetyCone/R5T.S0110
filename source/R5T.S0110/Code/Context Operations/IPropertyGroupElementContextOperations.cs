@@ -426,6 +426,21 @@ namespace R5T.S0110
             };
         }
 
+        public Func<TPropertyGroupContext, Task> Set_WasmEnableWebcli<TPropertyGroupContext>(
+            IsSet<IHasPropertyGroupElement> propertyGroupElement_PropertyGroupContextPropertiesRequired,
+            bool value = false)
+            where TPropertyGroupContext : IHasPropertyGroupElement
+        {
+            return propertyGroupContext =>
+            {
+                Instances.PropertyGroupXElementOperator.Set_WasmEnableWebcli(
+                    propertyGroupContext.PropertyGroupElement,
+                    value);
+
+                return Task.CompletedTask;
+            };
+        }
+
         public Func<TPropertyGroupContext, Task> Set_NoDefaultLaunchSettingsFile<TPropertyGroupContext>(
             IsSet<IHasPropertyGroupElement> propertyGroupElement_PropertyGroupContextPropertiesRequired)
             where TPropertyGroupContext : IHasPropertyGroupElement
