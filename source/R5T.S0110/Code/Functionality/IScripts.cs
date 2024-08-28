@@ -795,16 +795,19 @@ namespace R5T.S0110
 
             var libraryName =
                 // Use the disposable name since we might have deletion code!
-                Instances.RepositoryNameExamples.Disposable
+                //Instances.RepositoryNameExamples.Disposable
+                "D8S.W0006"
                 ;
             var isPrivate =
                 true
                 ;
             var repositoryOwnerName =
-                Instances.RepositoryOwnerNameExamples.SafetyCone
+                //Instances.RepositoryOwnerNameExamples.SafetyCone
+                Instances.RepositoryOwnerNameExamples.davidcoats
                 ;
             var libraryDescription =
-                Instances.RepositoryDescriptionExamples.ForTesting
+                //Instances.RepositoryDescriptionExamples.ForTesting
+                "An internal, personal, technical blog project."
                 ;
 
 
@@ -2705,18 +2708,19 @@ namespace R5T.S0110
             var libraryName =
                 //// Use the disposable name since we might have deletion code!
                 //Instances.RepositoryNameExamples.Disposable
-                "R5T.L0105"
+                "D8S.L0003"
                 ;
             var isPrivate =
                 //false
                 true
                 ;
             var repositoryOwnerName =
-                Instances.RepositoryOwnerNameExamples.SafetyCone
+                //Instances.RepositoryOwnerNameExamples.SafetyCone
+                Instances.RepositoryOwnerNameExamples.davidcoats
                 ;
             var libraryDescription =
                 //Instances.RepositoryDescriptionExamples.ForTesting
-                "Private repository signature strings library."
+                "Private, personal, latest .NET version catch-all library."
                 ;
 
 
@@ -3231,17 +3235,18 @@ namespace R5T.S0110
             var libraryName =
                 //// Use the disposable name since we might have deletion code!
                 //Instances.RepositoryNameExamples.Disposable
-                "R5T.S0112"
+                "D8S.S0011"
                 ;
             var isPrivate =
                 true
                 ;
             var repositoryOwnerName =
-                Instances.RepositoryOwnerNameExamples.SafetyCone
+                //Instances.RepositoryOwnerNameExamples.SafetyCone
+                Instances.RepositoryOwnerNameExamples.davidcoats
                 ;
             var libraryDescription =
                 //Instances.RepositoryDescriptionExamples.ForTesting
-                "An ALL-scripts scripts project."
+                "Instances survey script."
                 ;
 
 

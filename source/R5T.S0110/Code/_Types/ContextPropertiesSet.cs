@@ -11,6 +11,7 @@ namespace R5T.S0110
         
     }
 
+
     /// <summary>
     /// Allows pairing a context type to a tuple of properties.
     /// </summary>

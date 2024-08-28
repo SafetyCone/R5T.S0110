@@ -9,6 +9,6 @@ namespace R5T.S0110
     public partial interface IDirectoryNames : IValuesMarker,
         F0050.IDirectoryNames
     {
-
+        
     }
 }

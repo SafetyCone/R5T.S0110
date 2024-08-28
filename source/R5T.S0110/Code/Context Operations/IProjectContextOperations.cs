@@ -176,9 +176,9 @@ namespace R5T.S0110
             ContextPropertiesSet<TProjectContext, IsSet<IHasProjectDirectoryPath>> projectContextPropertiesRequired)
             where TProjectContext : IHasProjectDirectoryPath
         {
-            return projectContext =>
+            return async projectContext =>
             {
-                return CliWrap.Cli.Wrap(Instances.ExecutableNames.NPM)
+                await CliWrap.Cli.Wrap(Instances.ExecutableNames.NPM)
                     .WithArguments("install -y")
                     .WithWorkingDirectory(projectContext.ProjectDirectoryPath)
                     .WithConsoleOutput()
