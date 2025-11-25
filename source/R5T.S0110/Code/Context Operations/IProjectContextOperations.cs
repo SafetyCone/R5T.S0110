@@ -710,6 +710,16 @@ namespace R5T.S0110
             return Instances.ContextOperations.From(operations);
         }
 
+        /// <summary>
+        /// Test0101
+        /// </summary>
+        /// <typeparam name="TProjectContextSet"></typeparam>
+        /// <param name="projectContextSetIsomorphism"></param>
+        /// <param name="projectOptions"></param>
+        /// <param name="projectContextPropertiesRequired"></param>
+        /// <param name="repositoryContextPropertiesRequired"></param>
+        /// <param name="checkedProjectFileExists"></param>
+        /// <returns></returns>
         public Func<TProjectContextSet, Task> Create_StaticHtmlApplicationProject<TProjectContextSet>(
             IDirectionalIsomorphism<TProjectContextSet, ProjectElementContextSet007> projectContextSetIsomorphism,
             ProjectOptions projectOptions,
