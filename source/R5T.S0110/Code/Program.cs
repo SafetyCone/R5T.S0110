@@ -10,27 +10,27 @@ namespace R5T.S0110
         {
             await Scripts.Instance
                 //.Get_GitHubClient()
-                //await Scripts.Instance.Query_GitHubRepository();
-                //await Scripts.Instance.Delete_RemoteRepositoryOnly();
-                //await Scripts.Instance.Create_RemoteRepositoryOnly();
-                //await Scripts.Instance.In_CreatedRemoteRepositoryContext();
-                //await Scripts.Instance.Generate_Repository();
+                //.Query_GitHubRepository()
+                //.Delete_RemoteRepositoryOnly()
+                //.Create_RemoteRepositoryOnly()
+                //.In_CreatedRemoteRepositoryContext()
+                //.Generate_Repository()
 
-            //await Scripts.Instance.Regenerate_ConsoleRepository();
-            //await Scripts.Instance.Regenerate_ClassLibraryRepository();
-            //await Scripts.Instance.Regenerate_LibraryWithConstructionRepository();
-            //await Scripts.Instance.Regenerate_StaticHtmlWebApplicationRepository();
-            //.Regenerate_BlogStaticHtmlWebApplicationRepository()
-            //await Scripts.Instance.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibraryRepository();
-            //await Scripts.Instance.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibrary_WithConstructionStaticHtmlWebApplicationRepository();
-            //await Scripts.Instance.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibrary_WithConstructionStaticHtmlWebApplicationRepository_WithTailwindCss();
-            //await Scripts.Instance.Regenerate_WindowsFormsLibraryRepository();
-            //await Scripts.Instance.Regenerate_WindowsFormsApplicationRepository();
-            //await Scripts.Instance.Regenerate_WindowsFormsApplication_WithWindowsFormsLibraryRepository();
-                .Regenerate_BlazorComponentsWebAssemblyClientAndServerRepository()
-            // Need a without-TailwindCSS.
-            //await Scripts.Instance.Regenerate_BlazorComponentsLibrary_WithConstructionWebAssemblyClientAndServerRepository_WithTailwindCss();
-            ;
+                //.Regenerate_ConsoleRepository()
+                .Regenerate_ClassLibraryRepository()
+                //.Regenerate_LibraryWithConstructionRepository()
+                //.Regenerate_StaticHtmlWebApplicationRepository()
+                //.Regenerate_BlogStaticHtmlWebApplicationRepository()
+                //.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibraryRepository()
+                //.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibrary_WithConstructionStaticHtmlWebApplicationRepository()
+                //.Regenerate_NonWebAssemblyRazorComponentsRazorClassLibrary_WithConstructionStaticHtmlWebApplicationRepository_WithTailwindCss()
+                //.Regenerate_WindowsFormsLibraryRepository()
+                //.Regenerate_WindowsFormsApplicationRepository()
+                //.Regenerate_WindowsFormsApplication_WithWindowsFormsLibraryRepository()
+                //.Regenerate_BlazorComponentsWebAssemblyClientAndServerRepository()
+                // Need a without-TailwindCSS.
+                //.Regenerate_BlazorComponentsLibrary_WithConstructionWebAssemblyClientAndServerRepository_WithTailwindCss()
+                ;
         }
     }
 }
